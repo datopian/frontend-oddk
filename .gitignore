@@ -1,0 +1,15 @@
+node_modules/
+
+# yarn
+yarn-error.log
+
+# sass
+.sass-cache
+
+# misc
+sandbox/*
+.nyc_output/*
+deploy/
+
+# VIM swap files
+.*.sw*
