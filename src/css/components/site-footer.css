@@ -10,7 +10,3 @@
 .site-footer_heading {
   @apply font-medium;
 }
-
-.popup-cookie {
-  opacity: 0.8;
-}
