@@ -72,8 +72,5 @@
 	"Som dataejer i en organisation kan du oprette, redigere og publicere data afhængigt af din autorisation. Dette foregår via administrationsmodulet. Hvis I er medlem af Open Data DK, har I modtaget et link til administrationsmodulet.": "Som dataejer i en organisation kan du oprette, redigere og publicere data afhængigt af din autorisation. Dette foregår via administrationsmodulet. Hvis I er medlem af Open Data DK, har I modtaget et link til administrationsmodulet.",
 	"Dataejere har ikke mulighed for selv at kategorisere datasæt. Du er derimod velkommen til at kontakte <a href=\"mailto:info@opendata.dk\">info@opendata.dk</a> med forslag til kategorisering af dine datasæt i de eksisterende grupper.": "Dataejere har ikke mulighed for selv at kategorisere datasæt. Du er derimod velkommen til at kontakte <a href=\"mailto:info@opendata.dk\">info@opendata.dk</a> med forslag til kategorisering af dine datasæt i de eksisterende grupper.",
 	"Preview": "Preview",
-	"Indholdet er for stort til at blive vist.": "Content is too large to be previewed.",
-	"Download dataene.": "Download the data.",
-	"Datavisning ikke tilgængelig.": "Data view unavailable.",
 	"Keywords": "Keywords"
 }
