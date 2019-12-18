@@ -27,8 +27,9 @@
 
   <main class="mb-gutter lg:mb-0 lg:w-2/3 lg:mr-gutter">
     <!-- featured image -->
+    {% if image %}
     <img class="w-full" src="{{ image }}" />
-
+    {% endif %}
     <h1 class="text-4xl font-semibold">{{title}}</h1>
 
     <div class="content">
