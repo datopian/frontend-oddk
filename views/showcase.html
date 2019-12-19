@@ -164,6 +164,18 @@
             {{snippets.listify([dataset.license])}}
           </dd>
           {% endif %}
+          {% if dataset.groups %}
+          <dt class="info-list_title">Grupper</dt>
+          <dd class="info-list_description">
+            {% for group in dataset.groups %}
+            <p
+              <span class="colGroup break-words">
+                {{group.title}}
+              </span>
+            </p>
+            {% endfor %}
+          </dd>
+          {% endif %}
         </dl>
       </div>
       <!-- Metadata -->
