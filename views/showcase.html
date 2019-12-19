@@ -95,6 +95,8 @@
             </dl>
           </a>
           {% endfor %}
+          {% for view in resource.views %}
+          {% if view.specType %}
           <a class="data-file-type mr-1"  href="#resource-{{ resource.name | replace(".", "_") }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
@@ -102,6 +104,8 @@
               </dt>
             </dl>
           <a>
+          {% endif %}
+          {% endfor %}
         </nav>
       </li>
       <!-- data file end -->
