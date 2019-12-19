@@ -34,9 +34,9 @@
 
     <!-- full readme -->
     {% if dataset.readmeHtml %}
-      <div class="leading-relaxed">{{dataset.readmeHtml|safe}}</div>
+      <div class="leading-relaxed">{{dataset.readmeHtml | safe}}</div>
     {% elif dataset.description %}
-      <div class="leading-relaxed">{{dataset.descriptionHtml or dataset.description | processMarkdown | safe }}</div>
+      <div class="leading-relaxed whitespace-pre-wrap">{{dataset.description | processMarkdown | safe }}</div>
     {% endif %}
     <!-- end of full readme -->
 
