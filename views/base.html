@@ -222,28 +222,42 @@
       });
 
       $(".searchInput").on('keyup', function (event) {
-        let homeSeachFlag = $(this).attr('id').includes("Home") ? "Home" : "";
+	if (event.originalEvent.code === "Escape") {
+	  let homeSeachFlag = $(this).attr('id').includes("Home") ? "Home" : "";
 
-        let searchSelect = $("#searchSelect" + homeSeachFlag);
-        let searchSelect1 = $("#searchSelect1" + homeSeachFlag);
-        let searchSelect2 = $("#searchSelect2" + homeSeachFlag);
+          let searchSelect = $("#searchSelect" + homeSeachFlag);
+          let searchSelect1 = $("#searchSelect1" + homeSeachFlag);
+          let searchSelect2 = $("#searchSelect2" + homeSeachFlag);
 
-        searchSelect1.val($(this).val());
-        searchSelect2.val($(this).val());
+	  searchSelect.css('display','none');
 
-        if ($(this).val() !== "") {
-          searchSelect.css('display','block');
-        } else {
-          searchSelect.css('display','none');
-        }
+	} else {
+          let homeSeachFlag = $(this).attr('id').includes("Home") ? "Home" : "";
 
-        if (event.originalEvent.code === "ArrowUp") {
-          $(this).blur();
-          searchSelect2.focus();
-        } else if (event.originalEvent.code === "ArrowDown") {
-          $(this).blur();
-          searchSelect1.focus();
-        }
+          let searchSelect = $("#searchSelect" + homeSeachFlag);
+          let searchSelect1 = $("#searchSelect1" + homeSeachFlag);
+          let searchSelect2 = $("#searchSelect2" + homeSeachFlag);
+
+          searchSelect1.val($(this).val());
+          searchSelect2.val($(this).val());
+	
+	  if ($(this).val() !== "") {
+            searchSelect.css('display','block');
+          } else {
+            searchSelect.css('display','none');
+          }
+
+          if (event.originalEvent.code === "ArrowUp") {
+            $(this).blur();
+            searchSelect2.focus();
+          } else if (event.originalEvent.code === "ArrowDown") {
+            $(this).blur();
+            searchSelect1.focus();	  
+          } else if (event.originalEvent.code === "Enter") {
+            $(this).blur();
+            searchSelect1.focus();
+          }
+	}
       });
 
       $(".searchSelect1").on('keyup', function (event) {
@@ -257,8 +271,11 @@
           searchInput.focus();
         } else if (event.originalEvent.code === "ArrowDown") {
           searchSelect2.focus();
-        } else if (event.originalEvent.code.includes("Enter")) {
+        } else if (event.originalEvent.code === ("Enter")) {
           selectedInput1($(this).val());
+        } else if (event.originalEvent.code === ("Escape")) {
+	  searchInput.focus();
+          searchSelect.css('display','none');
         } else {
           searchInput.val(searchInput.val() + event.key).focus();
         }
@@ -277,6 +294,9 @@
           searchInput.focus();
         } else if (event.originalEvent.code.includes("Enter")) {
           selectedInput2($(this).val());
+        } else if (event.originalEvent.code.includes("Escape")) {
+          searchInput.focus();
+          searchSelect.css('display','none');
         } else {
           searchInput.val(searchInput.val() + event.key).focus();
         }
