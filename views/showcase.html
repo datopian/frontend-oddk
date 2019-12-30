@@ -176,7 +176,7 @@
             {% for group in dataset.groups %}
             <p
               <span class="colGroup break-words">
-                {{group.title}}
+                <a href="/search?q=groups:{{group.name | safe}} {{ query.q }}" class="text-secondary">{{group.title}}</a>
               </span>
             </p>
             {% endfor %}
