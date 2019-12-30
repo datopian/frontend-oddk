@@ -18,7 +18,7 @@
         <a class="breadcrumb_link" href="/search">{{__('Data')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/search/{{ dataset.name }}" aria-current="page">{{ dataset.title or dataset.name }}</a>
+        <a class="breadcrumb_link" href="/{{ dataset.organization.name }}/{{ dataset.name }}" aria-current="page">{{ dataset.title or dataset.name }}</a>
       </li>
     </ol>
   </nav>
@@ -97,7 +97,7 @@
             </dl>
           </a>
           {% endfor %}
-          {% for view in resource.views %}
+          {% for view in dataset.resources.views %}
           {% if view.specType %}
           <a class="data-file-type mr-1"  href="#resource-{{ resource.name | replace(".", "_") }}">
             <dl class="data-file-type_inner">
