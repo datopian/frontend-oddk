@@ -17,7 +17,7 @@
       </li>
       {% endif %}
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="#" aria-current="page">{{ title or __(slug)}}</a>
+        <a class="breadcrumb_link" href="#" aria-current="page">{{ title  | safe }}</a>
       </li>
     </ol>
   </nav>
@@ -30,7 +30,7 @@
     {% if image %}
     <img class="w-full" src="{{ image }}" />
     {% endif %}
-    <h1 class="text-4xl font-semibold">{{title}}</h1>
+    <h1 class="text-4xl font-semibold">{{title | safe}}</h1>
 
     <div class="content">
       {{content | safe}}
