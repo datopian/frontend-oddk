@@ -97,7 +97,7 @@
             </dl>
           </a>
           {% endfor %}
-          {% for view in dataset.resources.views %}
+          {% for view in resources.views %}
           {% if view.specType %}
           <a class="data-file-type mr-1"  href="#resource-{{ resource.name | replace(".", "_") }}">
             <dl class="data-file-type_inner">
