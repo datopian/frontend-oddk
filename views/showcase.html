@@ -97,8 +97,8 @@
             </dl>
           </a>
           {% endfor %}
-          {% for view in resources.views %}
-          {% if view.specType %}
+          <!-- Preview button -->
+          <!-- TODO: It should appear only if we support given view type -->
           <a class="data-file-type mr-1"  href="#resource-{{ resource.name | replace(".", "_") }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
@@ -106,8 +106,7 @@
               </dt>
             </dl>
           <a>
-          {% endif %}
-          {% endfor %}
+          <!-- End of preview button -->
         </nav>
       </li>
       <!-- data file end -->
