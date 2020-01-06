@@ -18,7 +18,7 @@
         <a class="breadcrumb_link" href="/search">{{__('Data')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/search/{{ dataset.name }}" aria-current="page">{{ dataset.title or dataset.name }}</a>
+        <a class="breadcrumb_link" href="//{{ owner.name }}/{{ dataset.name }}" aria-current="page">{{ dataset.title or dataset.name }}</a>
       </li>
     </ol>
   </nav>
@@ -34,23 +34,11 @@
 
     <!-- full readme -->
     {% if dataset.readmeHtml %}
-      <div class="leading-relaxed">{{dataset.readmeHtml|safe}}</div>
+      <div class="leading-relaxed">{{dataset.readmeHtml | safe}}</div>
     {% elif dataset.description %}
-      <div class="leading-relaxed">{{dataset.descriptionHtml or dataset.description | processMarkdown | safe }}</div>
+      <div class="leading-relaxed whitespace-pre-wrap">{{dataset.description | processMarkdown | safe }}</div>
     {% endif %}
     <!-- end of full readme -->
-
-    <!-- Keywords section -->
-      {% if dataset.keywords and dataset.keywords.length !== 0 %}
-        <div class="container">
-          <div class="flex flex-wrap ">
-          {% for t in dataset.keywords %}
-            <a href="/search?q=tags:{{t | safe}}" class="px-4 py-2 text-primary font-sm border-2 rounded-full border-primary mr-3 mb-3 mt-6 lowercase hover:bg-secondary">{{t | safe}}</a>
-          {% endfor %}
-          </div>
-        </div>
-      {% endif %}
-    <!-- end Keywords section -->
 
     <h2 class="text-2xl font-semibold mt-gutter mb-4">{{ dataset.resources | length }} data file{% if dataset.resources | length > 1 %}s{% endif %}</h2>
 
@@ -62,7 +50,9 @@
         XLSX:'#3CBC8D',
         XLS:'#3CBC8D',
         JSON:'blue',
-        GeoJSON:'#2CAAF9',
+        GEOJSON:'#2CAAF9',
+        LINK:'#f6ad55',
+        SHAPE:'#68d391',
         WFS:'#08389c',
         PDF:'#ff1010',
         SHP:'violet',
@@ -74,7 +64,7 @@
       <!-- data file -->
       <li class="mb-6">
         <h3 class="text-xl font-semibold">
-          <a href="#resource-{{resource.name | replace(".", "_")}}" class="text-secondary">{{resource.title or resource.name}}</a>
+          <a href="{{ resource.downloadPath }}" class="text-secondary">{{resource.title or resource.name}}</a>
         </h3>
         <div class="mt-2">
           {% if resource.format %}
@@ -107,6 +97,8 @@
             </dl>
           </a>
           {% endfor %}
+          {% for view in resources.views %}
+          {% if view.specType %}
           <a class="data-file-type mr-1"  href="#resource-{{ resource.name | replace(".", "_") }}">
             <dl class="data-file-type_inner">
               <dt class="data-file-type_term">
@@ -114,6 +106,8 @@
               </dt>
             </dl>
           <a>
+          {% endif %}
+          {% endfor %}
         </nav>
       </li>
       <!-- data file end -->
@@ -176,9 +170,35 @@
             {{snippets.listify([dataset.license])}}
           </dd>
           {% endif %}
+          {% if dataset.groups %}
+          <dt class="info-list_title">Grupper</dt>
+          <dd class="info-list_description">
+            {% for group in dataset.groups %}
+            <p
+              <span class="colGroup break-words">
+                <a href="/collections/{{ group.name }}" class="text-secondary">{{group.title}}</a>
+              </span>
+            </p>
+            {% endfor %}
+          </dd>
+          {% endif %}
         </dl>
       </div>
       <!-- Metadata -->
+
+      <!-- Keywords section -->
+        <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{__('Keywords')}}</h2>
+        {% if dataset.keywords and dataset.keywords.length !== 0 %}
+          <div class="container">
+            <div class="flex flex-wrap ">
+            {% for t in dataset.keywords %}
+              <a href="/search?q=tags:{{t | safe}}" class="h-6 px-3 py-0 text-primary text-xs border rounded-full border-primary mr-3 mb-3 mt-3 lowercase hover:bg-secondary">{{t | safe}}</a>
+            {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      <!-- end Keywords section -->
+
 
       <!-- share links -->
       <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{__('Share')}}</h2>
