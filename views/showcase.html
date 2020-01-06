@@ -15,10 +15,10 @@
         <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/search">{{__('Data')}}</a>
+        <a class="breadcrumb_link" href="/{{ owner.name }}">{{ owner.title or owner.name }}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="//{{ owner.name }}/{{ dataset.name }}" aria-current="page">{{ dataset.title or dataset.name }}</a>
+        <a class="breadcrumb_link" href="/{{ owner.name }}/{{ dataset.name }}" aria-current="page">{{ dataset.title or dataset.name }}</a>
       </li>
     </ol>
   </nav>
