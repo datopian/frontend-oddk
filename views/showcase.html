@@ -107,6 +107,65 @@
             </dl>
           <a>
           <!-- End of preview button -->
+          <!-- Data API -->
+          <a class="data-file-type mr-1 bg-gray-500 text-white modal-open" href="#data-api-info-{{resource.id}}">
+            <dl class="data-file-type_inner">
+              <dt class="data-file-type_term">
+                Data API
+              </dt>
+            </dl>
+          </a>
+          <!-- Data API modal -->
+          <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center" id="data-api-info-{{resource.id}}">
+            <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+
+            <div class="modal-container bg-white w-8/12 mx-auto rounded shadow-lg z-50 overflow-y-auto">
+
+              <!-- Add margin if you want to see some of the overlay behind the modal-->
+              <div class="modal-content py-4 text-left px-6">
+                <!--Title-->
+                <div class="flex justify-between items-center pb-3">
+                  <p class="text-2xl font-bold">CKAN Data API</p>
+                  <div class="modal-close cursor-pointer z-50">
+                    <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                      <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                    </svg>
+                  </div>
+                </div>
+
+                <!--Body-->
+                <p>
+                  <strong>{{__('Access resource data via a web API with powerful query support.')}}</strong>
+                  {{__('Further information in the <a href="http://docs.ckan.org/en/latest/maintaining/datastore.html" target="_blank">main CKAN Data API and DataStore documentation.</a>') | safe}}
+                </p>
+
+                <hr />
+
+                <p class="text-lg font-bold my-2">{{__('Querying')}}</p>
+                <p class="font-semibold">
+                  {{__('Query example (first 5 results)')}}:
+                </p>
+                <p class="bg-gray-200 py-2">
+                  https://admin.opendata.dk/api/3/action/datastore_search?resource_id={{resource.id}}&limit=5
+                </p>
+                <p class="font-semibold">
+                  {{__('Query example (results containing "jones")')}}:
+                </p>
+                <p class="bg-gray-200 py-2">
+                  https://admin.opendata.dk/api/3/action/datastore_search?q=jones&resource_id={{resource.id}}
+                </p>
+                <p class="font-semibold">
+                  {{__('Query example (via SQL statement)')}}:
+                </p>
+                <p class="bg-gray-200 py-2">
+                  https://admin.opendata.dk/api/3/action/datastore_search_sql?sql=SELECT * from "{{resource.id}}" WHERE title LIKE 'jones'
+                </p>
+
+              </div>
+            </div>
+          </div>
+          <!-- End of Data API modal -->
+          <!-- End of Data API -->
         </nav>
       </li>
       <!-- data file end -->
@@ -285,8 +344,48 @@
     console.log(position)
     $("body, html").animate({
       scrollTop: position
-    }) 
+    })
   });
+
+  var modalId
+  var openmodal = document.querySelectorAll('.modal-open')
+  for (var i = 0; i < openmodal.length; i++) {
+    openmodal[i].addEventListener('click', function(event){
+      event.preventDefault()
+      toggleModal(event, this.getAttribute("href"))
+    })
+  }
+
+  const overlay = document.querySelector('.modal-overlay')
+  overlay.addEventListener('click', toggleModal)
+
+  var closemodal = document.querySelectorAll('.modal-close')
+  for (var i = 0; i < closemodal.length; i++) {
+    closemodal[i].addEventListener('click', toggleModal)
+  }
+
+  document.onkeydown = function(evt) {
+    evt = evt || window.event
+    var isEscape = false
+    if ("key" in evt) {
+    isEscape = (evt.key === "Escape" || evt.key === "Esc")
+    } else {
+    isEscape = (evt.keyCode === 27)
+    }
+    if (isEscape && document.body.classList.contains('modal-active')) {
+    toggleModal()
+    }
+  };
+
+
+  function toggleModal (event, id) {
+    modalId = id || modalId
+    const body = document.querySelector('body')
+    const modal = document.querySelector(modalId)
+    modal.classList.toggle('opacity-0')
+    modal.classList.toggle('pointer-events-none')
+    body.classList.toggle('modal-active')
+  }
 
 </script>
 

@@ -72,5 +72,13 @@
 	"Som dataejer i en organisation kan du oprette, redigere og publicere data afhængigt af din autorisation. Dette foregår via administrationsmodulet. Hvis I er medlem af Open Data DK, har I modtaget et link til administrationsmodulet.": "Som dataejer i en organisation kan du oprette, redigere og publicere data afhængigt af din autorisation. Dette foregår via administrationsmodulet. Hvis I er medlem af Open Data DK, har I modtaget et link til administrationsmodulet.",
 	"Dataejere har ikke mulighed for selv at kategorisere datasæt. Du er derimod velkommen til at kontakte <a href=\"mailto:info@opendata.dk\">info@opendata.dk</a> med forslag til kategorisering af dine datasæt i de eksisterende grupper.": "Dataejere har ikke mulighed for selv at kategorisere datasæt. Du er derimod velkommen til at kontakte <a href=\"mailto:info@opendata.dk\">info@opendata.dk</a> med forslag til kategorisering af dine datasæt i de eksisterende grupper.",
 	"Preview": "Preview",
-	"Keywords": "Keywords"
+	"Keywords": "Keywords",
+	"Energi": "Energi",
+	"Fjernvarme, energiforbrug, data om kommunale bygninger (type, energikilde, alder osv.) m.m.": "Fjernvarme, energiforbrug, data om kommunale bygninger (type, energikilde, alder osv.) m.m.",
+	"Access resource data via a web API with powerful query support.": "Tilgå ressourcens data via et web-API med kraftfuld query-support.",
+	"Further information in the <a href=\"http://docs.ckan.org/en/latest/maintaining/datastore.html\" target=\"_blank\">main CKAN Data API and DataStore documentation.</a>": "Further information in the <a href=\"http://docs.ckan.org/en/latest/maintaining/datastore.html\" target=\"_blank\">main CKAN Data API and DataStore documentation.</a>",
+	"Querying": "Forespørger",
+	"Query example (first 5 results)": "Forespørgselseksempel (første fem resultater)",
+	"Query example (results containing \"jones\")": "Forespørgselseksempel (resultater indeholdende 'jones')",
+	"Query example (via SQL statement)": "Forespørgselseksempel (via SQL-sætning)"
 }
