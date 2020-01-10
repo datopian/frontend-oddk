@@ -65,7 +65,7 @@
     filterTarget.setAttribute("data-expanded", !expanded);
   }
   
-  // split whole search query in two parts: filters and term
+  // split whole search query string in two parts: filters and term
   var q_filter = '';
   var q_term = '';
   
@@ -91,13 +91,20 @@
     q_term = $(this).val();
   });
   
-  // this is not working how it should
+  // click on button event
   var searchBtn = document.getElementById("search-button");
 
   searchBtn.onclick = function(event) {
     window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
   };
   
+  // press on Enter event
+  $("#search-input").on('keyup', function (event) {
+	      if (event.originalEvent.code === "Enter") {
+          window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
+        }
+  });
+
   // function removing duplicates from array
   function uniq(a) {
    return Array.from(new Set(a));
