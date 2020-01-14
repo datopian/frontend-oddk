@@ -167,7 +167,7 @@ module.exports = function (app) {
       const currentPage = parseInt(from, 10) / size + 1
       const pages = utils.pagination(currentPage, totalPages)
 
-      req.query.qArray = req.query.q.match(/(?:[^\s"]+|"[^"]*")+/g)
+      req.query.qArray = req.query.q ? req.query.q.match(/(?:[^\s"]+|"[^"]*")+/g) : []
       res.render('search.html', {
         title: 'Search',
         result,
