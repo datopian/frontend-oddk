@@ -11,28 +11,21 @@
   {% set facetNames = {
     organization: 'Organisationer',
     groups: 'Grupper',
-    tags: 'Tags',
+    tags: 'Tag',
     res_format: 'Format',
     license_id: 'Licens'
   } %}
 
+  {# Facets #}
   <div class="lg:flex flex-wrap items-center mb-3">
   {% if query.q %}
   {% for qry in query.q.split(' ') %}
-  {% if qry.includes(':') == true %}
+  {% if qry.includes(':') %}
     <p class="mb-2">
-      <span class="font-sm ml-4">{{facetNames[qry.split(':')[0]] + ':'}}</span>
-      <span class="bg-secondary font-semibold px-3 text-white rounded-lg mr-3 mb-3 mt-3 lowercase">
-          {% for facetId, value in result.search_facets %}
-          {% for item in value.items|sort(true, false, 'count') %}
-          {% if facetId == qry.split(':')[0] %}
-          {% if item.name == qry.split(':')[1] %}
-          {{item.display_name}}
-          {% endif %}
-          {% endif %}
-          {% endfor %}
-          {% endfor %}
-        <a class="pl-2 bold text-primary" href="/search?q={{ query.q | replace(qry, '')}}">
+      <span class="font-sm">{{facetNames[qry.split(':')[0]] + ':'}}</span>
+      <span class="bg-secondary font-semibold px-3 py-1 text-white rounded-lg mr-4 mb-2 mt-3 lowercase">
+        {{ qry.split(':')[1] }}
+        <a class="pl-2 bold text-primary" href="/search?q={{ query.q | replace(qry, '') | trim }}">
           <svg class="w-3 h-3 inline fill-current"><use xlink:href="#cross" /></svg>
         </a>
       </span>
@@ -41,6 +34,8 @@
   {% endfor %}
   {% endif %}
   </div>
+  {# End of Facets #}
+
   <div class="lg:flex items-center justify-between">
     <h1 class="text-4xl font-semibold text-primary">{{ result.count or result.found }} {{__('results found')}}</h1>
 
