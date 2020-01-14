@@ -90,19 +90,23 @@
   $("#search-input").on('input', function (event) {
     q_term = $(this).val();
   });
-  
+
   // click on button event
   var searchBtn = document.getElementById("search-button");
 
   searchBtn.onclick = function(event) {
     window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
   };
-  
+
   // press on Enter event
   $("#search-input").on('keyup', function (event) {
-	      if (event.originalEvent.code === "Enter") {
-          window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
-        }
+    if (event.originalEvent.code === "Enter") {
+      window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
+    }
+  });
+
+  $("#field-order-by").change(function() {
+    window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term + '&sort=' + $(this).val();
   });
 
   // function removing duplicates from array
