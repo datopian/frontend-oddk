@@ -107,6 +107,7 @@
             </dl>
           <a>
           <!-- End of preview button -->
+          {% if resource.datastore_active %}
           <!-- Data API -->
           <a class="data-file-type mr-1 bg-gray-500 text-white modal-open" href="#data-api-info-{{resource.id}}">
             <dl class="data-file-type_inner">
@@ -166,6 +167,7 @@
           </div>
           <!-- End of Data API modal -->
           <!-- End of Data API -->
+          {% endif %}
         </nav>
       </li>
       <!-- data file end -->
