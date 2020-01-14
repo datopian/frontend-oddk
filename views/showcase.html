@@ -247,8 +247,8 @@
       <!-- Metadata -->
 
       <!-- Keywords section -->
-        <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{__('Keywords')}}</h2>
         {% if dataset.keywords and dataset.keywords.length !== 0 %}
+        <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{__('Keywords')}}</h2>        
           <div class="container">
             <div class="flex flex-wrap ">
             {% for keyword in dataset.keywords %}
