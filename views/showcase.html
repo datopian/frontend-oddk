@@ -40,7 +40,7 @@
     {% endif %}
     <!-- end of full readme -->
 
-    <h2 class="text-2xl font-semibold mt-gutter mb-4">{{ dataset.resources | length }} data file{% if dataset.resources | length > 1 %}s{% endif %}</h2>
+    <h2 class="text-2xl font-semibold mt-gutter mb-4">{{ dataset.resources | length }} {% if dataset.resources | length > 1 %}{{__('data files')}}{% else %}{{__('data file')}}{% endif %}</h2>
 
     <!-- data files (downloads) -->
     <ul>
