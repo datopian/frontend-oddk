@@ -291,7 +291,7 @@
       <div id="datapackage-view-{{view.id}}" class="react-me text-sm"></div>
       <!-- End of div elements for React -->
       <p class="text-sm my-4">
-        {{__('This is a preview version. There might be more data in the original version.')}}
+        <a href="{{ (dataset.resources|find(viewName)).downloadPath }}">{{__('This is a preview version. There might be more data in the original version.')}}</a>
       </p>
 
       {% if view.resources[0].schema %}
