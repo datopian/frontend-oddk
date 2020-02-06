@@ -93,6 +93,7 @@ module.exports = function (app) {
         const month = eventDate[0].substring(3, 5)
         const year = eventDate[0].substring(6, 10)
         const date = new Date(`${year}-${month}-${day}`)
+        post.eventDate = date
         post.day = date.getDate()
         post.month = monthNames[date.getMonth()]
         // Check if event is completed:
@@ -100,10 +101,14 @@ module.exports = function (app) {
       } else {
         // If no 'dato' tag is found, use current date:
         const now = new Date()
+        post.eventDate = now
         post.day = now.getUTCDate()
         post.month = monthNames[now.getUTCMonth()]
       }
       return post
+    })
+    res.locals.events = res.locals.events.sort((a, b) => {
+      return b.eventDate - a.eventDate
     })
 
     // Get title and content of about page to display it on front page:
