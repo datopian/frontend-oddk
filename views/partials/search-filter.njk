@@ -19,7 +19,8 @@
     {% endif %}
 
     {% if query.q %}
-    {% if item.name in query.q %}
+    {% set regExpToSplitQuery = r/(?:[^\s"]+|"[^"]*")+/g %}
+    {% if facetId + ':' + item.name in query.q|split(regExpToSplitQuery) %}
     <li class="border-t border-gray-200">
       <a href="/search?q={{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ item.display_name }} ({{ item.count }} results)">
         {{ item.display_name }}
