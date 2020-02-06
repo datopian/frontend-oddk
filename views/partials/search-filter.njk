@@ -6,11 +6,18 @@
   license_id: 'Licens'
 } %}
 
+{% set regExp = r/\s/g %}
+
 {% for facetId, value in result.search_facets %}
 <section class="mb-6 md:pr-10">
   <h2 class="bg-gray-200 px-4 py-3 border-t border-gray-200 font-bold">{{ facetNames[facetId] }}</h2>
   <ul>
     {% for item in value.items|sort(true, false, 'count') %}
+    {% set itemName = item.name %}
+    {% if regExp.test(itemName) %}
+      {% set itemName = '"' + itemName + '"' %}
+    {% endif %}
+
     {% if query.q %}
     {% if item.name in query.q %}
     <li class="border-t border-gray-200">
@@ -21,7 +28,7 @@
     </li>
     {% else %}
     <li class="border-t border-gray-200">
-      <a href="/search?q={{ facetId }}:{{ item.name }} {{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ item.display_name }} ({{ item.count }} results)">
+      <a href="/search?q={{ facetId }}:{{ itemName }} {{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ item.display_name }} ({{ item.count }} results)">
         {{ item.display_name }}
         <span class="filter-button_count">{{ item.count }}</span>
       </a>
@@ -29,7 +36,7 @@
     {% endif %}
     {% else %}
     <li class="border-t border-gray-200">
-      <a href="/search?q={{ facetId }}:{{ item.name }} {{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ item.display_name }} ({{ item.count }} results)">
+      <a href="/search?q={{ facetId }}:{{ itemName }} {{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ item.display_name }} ({{ item.count }} results)">
         {{ item.display_name }}
         <span class="filter-button_count">{{ item.count }}</span>
       </a>
