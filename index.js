@@ -79,10 +79,12 @@ module.exports = function (app) {
         number: 5
       }
     )).map(post => {
-      let eventDate
+      let eventDate, eventFinishDate
       for (let key in post.tags) {
         if (key.startsWith('dato:')) {
           eventDate = post.tags[key].name.match(/\d{2}([\/.-])\d{2}\1\d{4}/g)
+        } else if (key.startsWith('end:')) {
+          eventFinishDate = post.tags[key].name.match(/\d{2}([\/.-])\d{2}\1\d{4}/g)
         }
       }
       const monthNames = ["jan", "feb", "mar", "apr", "maj", "jun", "jul",
@@ -97,7 +99,15 @@ module.exports = function (app) {
         post.day = date.getDate()
         post.month = monthNames[date.getMonth()]
         // Check if event is completed:
-        post.completed = date < new Date() ? true : false
+        if (eventFinishDate) {
+          const day = eventFinishDate[0].substring(0, 2)
+          const month = eventFinishDate[0].substring(3, 5)
+          const year = eventFinishDate[0].substring(6, 10)
+          const date = new Date(`${year}-${month}-${day}`)
+          post.completed = date < new Date() ? true : false
+        } else {
+          post.completed = date < new Date() ? true : false
+        }
       } else {
         // If no 'dato' tag is found, use current date:
         const now = new Date()
