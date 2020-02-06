@@ -64,13 +64,14 @@
     filterToggle.setAttribute('aria-expanded', !expanded);
     filterTarget.setAttribute("data-expanded", !expanded);
   }
-  
+
   // split whole search query string in two parts: filters and term
   var q_filter = '';
   var q_term = '';
-  
+
   let params = new URLSearchParams(location.search);
-  let q_all = params.get('q').split(" ");
+  let regExp = /(?:[^\s"]+|"[^"]*")+/g;
+  let q_all = params.get('q').match(regExp);
 
   // remove duplicates from filters part
   q_all = uniq(q_all);
