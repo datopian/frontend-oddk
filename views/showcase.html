@@ -8,6 +8,11 @@
 
 {% block content %}
 
+  <!-- Data Explorer CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/stylesheets/dataexplorer/main.0e85ebd4.chunk.css">
+  <link rel="stylesheet" type="text/css" href="/static/stylesheets/dataexplorer/2.0f69c0e7.chunk.css">
+  <!-- End Data Explorer CSS -->
+
   <div class="container mx-auto p-gutter">
     <nav class="breadcrumb" aria-label="breadcrumb">
       <ol>
@@ -290,56 +295,19 @@
   </div>
 
 
-  {% for view in dataset.views %}
-    {% set viewName = view.resources[0].name or view.resources[0] %}
-    <!-- view -->
-    <div class="resource">
-      <div class="container mx-auto p-gutter">
-        <div class="">
-          <!-- Heading for each view -->
-          <h2 id="resource-{{ viewName | replace(".", "_") }}" class="text-2xl font-semibold mb-6">
-            {{ view.title }}
-          </h2>
+  <!-- Data Explorer -->
+  {% for displayResource in dataset.displayResources %}
+    <div class="data-explorer">
+      {% for view in displayResource.resource.views %}
+        <!-- preview tables -->
+        <div id="data-explorer-{{ view.id }}" class="data-explorer"
+             data-datapackage='{{ displayResource.dataExplorers[loop.index - 1] | safe }}'></div>
+      {% endfor %}
 
-          <!-- Placeholder div elements for React components: preview tables -->
-          <div id="datapackage-view-{{ view.id }}" class="react-me text-sm"></div>
-          <!-- End of div elements for React -->
-          <p class="text-sm my-4">
-            <a href="{{ (dataset.resources|find(viewName)).downloadPath }}">{{ __('This is a preview version. There might be more data in the original version.') }}</a>
-          </p>
-
-          {% if view.resources[0].schema %}
-            <h3 class="text-lg font-semibold mt-gutter mb-2">{{ __('Field information') }}</h3>
-            <table class="w-full">
-              <thead>
-              <tr>
-                <th class="text-left text-sm py-1">{{ __('Field Name') }}</th>
-                <th class="text-left text-sm py-1">{{ __('Order') }}</th>
-                <th class="text-left text-sm py-1">{{ __('Type (Format)') }}</th>
-                <th class="text-left text-sm py-1">{{ __('Description') }}</th>
-              </tr>
-              </thead>
-              <tbody>
-              {% for field in view.resources[0].schema.fields %}
-                <tr>
-                  <th class="text-left border-t-2 border-gray-200 text-sm py-1">{{ field.name }}</th>
-                  <td class="text-left border-t-2 border-gray-200 text-sm py-1">{{ loop.index }}</td>
-                  <td class="text-left border-t-2 border-gray-200 text-sm py-1"
-                      data-type="{{ field.type }}">{{ field.type }} {% if field.format %}({{ field.format }}) {% endif %}</td>
-                  <td class="text-left border-t-2 border-gray-200 text-sm py-1">{{ field.description }}</td>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
-          {% endif %}
-        </div>
-
-      </div>
     </div>
-    <!-- resource end -->
   {% endfor %}
+  <!-- End of Data Explorer -->
 
-  <div class="react-me-datapackage-views" data-datapackage-json='{{ dpId | safe }}'></div>
 {% endblock %}
 
 
@@ -407,4 +375,8 @@
   <link rel="stylesheet" media="screen" href="/static/stylesheets/main.css">
   <script type="text/javascript" src="/static/js/main.js"></script>
 
+  <!-- data explorer builds -->
+  <script type="text/javascript" src="/static/js/dataexplorer/runtime~main.a8a9905a.js"></script>
+  <script type="text/javascript" src="/static/js/dataexplorer/2.434fb275.chunk.js"></script>
+  <script type="text/javascript" src="/static/js/dataexplorer/main.13d46ca3.chunk.js"></script>
 {% endblock %}
