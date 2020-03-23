@@ -8,11 +8,6 @@
 
 {% block content %}
 
-  <!-- Data Explorer CSS -->
-  <link rel="stylesheet" type="text/css" href="/static/stylesheets/dataexplorer/main.0e85ebd4.chunk.css">
-  <link rel="stylesheet" type="text/css" href="/static/stylesheets/dataexplorer/2.0f69c0e7.chunk.css">
-  <!-- End Data Explorer CSS -->
-
   <div class="container mx-auto p-gutter">
     <nav class="breadcrumb" aria-label="breadcrumb">
       <ol>
@@ -70,7 +65,7 @@
           <!-- data file -->
           <li class="mb-6">
             <h3 class="text-xl font-semibold">
-              <a href="{{ resource.downloadPath }}" class="text-secondary">{{ resource.title or resource.name }}</a>
+              <a href="{{ resource.path }}" class="text-secondary">{{ resource.title or resource.name }}</a>
             </h3>
             <div class="mt-2">
               {% if resource.format %}
@@ -86,7 +81,7 @@
               {{ resource.descriptionHtml | safe }}
             </p>
             <nav>
-              <a class="data-file-type mr-1" href="{{ resource.downloadPath }}">
+              <a class="data-file-type mr-1" href="{{ resource.path }}">
                 <dl class="data-file-type_inner">
                   <dt class="data-file-type_term">
                     {{ __('Download') }}
@@ -297,15 +292,27 @@
 
   <!-- Data Explorer -->
   {% for displayResource in dataset.displayResources %}
-    <div class="data-explorer">
-      {% for view in displayResource.resource.views %}
-        <!-- preview tables -->
-        <div id="data-explorer-{{ view.id }}" class="data-explorer"
-             data-datapackage='{{ displayResource.dataExplorers[loop.index - 1] | safe }}'></div>
-      {% endfor %}
 
+    <div class="resource">
+      <div class="container mx-auto p-gutter">
+
+        <!-- Heading for each view -->
+        <h2 id="resource-{{ displayResource.resource.name }}" class="text-2xl font-semibold mb-6">
+          {{ displayResource.resource.title or displayResource.resource.name }}
+        </h2>
+
+        <div class="data-explorer">
+          {% for dataExplorer in displayResource.dataExplorers %}
+            <!-- preview tables -->
+            <div id="data-explorer-{{ displayResource.slug }}-{{ loop.index0 }}" class="data-explorer"
+                 data-datapackage='{{ dataExplorer | safe }}'></div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
+
   {% endfor %}
+
   <!-- End of Data Explorer -->
 
 {% endblock %}
