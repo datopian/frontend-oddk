@@ -306,7 +306,7 @@
             <!-- preview tables -->
             <div id="data-explorer-{{ displayResource.slug }}-{{ loop.index0 }}"
                  class="data-explorer {% if not loop.last %} border-t-2 pb-16 {% endif %}"
-                 data-datapackage='{{ dataExplorer | safe }}'>
+                 data-datapackage='{{ dataExplorer | safe | replace("http://", "https://")}}'>
             </div>
             {% if not loop.last %}
               <span class="border-t-2 w-full h-1"></span>
