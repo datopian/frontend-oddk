@@ -142,23 +142,5 @@
 }
 
 .dx-share-container{
-  @apply flex items-baseline justify-start pt-3 pb-5;
-  & p{
-    @apply mr-4 text-sm;
-  }
-  & .m-4{
-    @apply m-0 mr-2;
-  }
-  & a{
-    @apply inline-block py-2 px-4 rounded-full leading-none text-sm font-bold border text-primary bg-white border-gray-500;
-    &:hover{
-      @apply border-primary;
-    }
-    & i{
-      @apply font-semibold not-italic;
-    }
-  }
-  & input{
-    @apply hidden;
-  }
+  @apply hidden;
 }
