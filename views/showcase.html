@@ -61,7 +61,8 @@
           KML:'gray',
           ODS:'gray'
         } %}
-        {% for resource in dataset.resources %}
+        {% for displayResource in dataset.displayResources %}
+          {% set resource = displayResource.resource %}
           <!-- data file -->
           <li class="mb-6">
             <h3 class="text-xl font-semibold">
@@ -102,14 +103,15 @@
                 </a>
               {% endfor %}
               <!-- Preview button -->
-              <!-- TODO: It should appear only if we support given view type -->
-              <a class="data-file-type mr-1" href="#resource-{{ resource.name | replace(".", "_") }}">
-                <dl class="data-file-type_inner">
-                  <dt class="data-file-type_term">
-                    {{ __('Preview') }}
-                  </dt>
-                </dl>
-              </a>
+              {% if displayResource.dataExplorers|length %}
+                <a class="data-file-type mr-1" href="#resource-{{ resource.name }}">
+                  <dl class="data-file-type_inner">
+                    <dt class="data-file-type_term">
+                      {{ __('Preview') }}
+                    </dt>
+                  </dl>
+                </a>
+              {% endif %}
               <!-- End of preview button -->
               {% if resource.datastore_active %}
                 <!-- Data API -->
@@ -293,28 +295,32 @@
   <!-- Data Explorer -->
   {% for displayResource in dataset.displayResources %}
 
-    <div class="resource">
-      <div class="container mx-auto p-gutter pb-16">
+    {% if displayResource.dataExplorers|length %}
 
-        <!-- Heading for each view -->
-        <h2 id="resource-{{ displayResource.resource.name }}" class="text-2xl text-secondary font-semibold mb-6">
-          {{ displayResource.resource.title or displayResource.resource.name }}
-        </h2>
+      <div class="resource">
+        <div class="container mx-auto p-gutter pb-16">
 
-        <div class="data-explorer flex flex-col">
-          {% for dataExplorer in displayResource.dataExplorers %}
-            <!-- preview tables, change http:// to https:// to avoid Mixed Content error -->
-            <div id="data-explorer-{{ displayResource.slug }}-{{ loop.index0 }}"
-                 class="data-explorer {% if not loop.last %} border-t-2 pb-16 {% endif %}"
-                 data-datapackage='{{ dataExplorer | safe | replace("http://", "https://") }}'>
-            </div>
-            {% if not loop.last %}
-              <span class="border-t-2 w-full h-1"></span>
-            {% endif %}
-          {% endfor %}
+          <!-- Heading for each view -->
+          <h2 id="resource-{{ displayResource.resource.name }}" class="text-2xl text-secondary font-semibold mb-6">
+            {{ displayResource.resource.title or displayResource.resource.name }}
+          </h2>
+
+          <div class="data-explorer flex flex-col">
+            {% for dataExplorer in displayResource.dataExplorers %}
+              <!-- preview tables, change http:// to https:// to avoid Mixed Content error -->
+              <div id="data-explorer-{{ displayResource.slug }}-{{ loop.index0 }}"
+                   class="data-explorer {% if not loop.last %} border-t-2 pb-16 {% endif %}"
+                   data-datapackage='{{ dataExplorer | safe | replace("http://", "https://") }}'>
+              </div>
+              {% if not loop.last %}
+                <span class="border-t-2 w-full h-1"></span>
+              {% endif %}
+            {% endfor %}
+          </div>
         </div>
       </div>
-    </div>
+
+    {% endif %}
 
   {% endfor %}
 
