@@ -81,5 +81,6 @@
 	"Query example (first 5 results)": "Forespørgselseksempel (første fem resultater)",
 	"Query example (results containing \"jones\")": "Forespørgselseksempel (resultater indeholdende 'jones')",
 	"Query example (via SQL statement)": "Forespørgselseksempel (via SQL-sætning)",
-	"data files": "datasæt"
+	"data files": "datasæt",
+	"Request data": "Efterspørg data"
 }
