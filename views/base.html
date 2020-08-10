@@ -25,6 +25,9 @@
   <body class="{% block bodyclass %}{{bodyclass}}{% endblock %}">
     <div id="page" class="flex flex-col justify-between min-h-screen">
       <div>
+        {% if PROMO_BANNER %}
+          {% include ("./partials/promo-banners/" + PROMO_BANNER) ignore missing %}
+        {% endif %}
         <!-- Page header -->
         <header>
           <div class="container mx-auto lg:flex justify-between p-gutter items-center relative">

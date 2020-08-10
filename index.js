@@ -9,6 +9,11 @@ module.exports = function (app) {
   const CmsModel = new cms.CmsModel()
 
   app.use((req, res, next) => {
+    // toggle promo banner on all not-in-cms pages
+    if (process.env.PROMO_BANNER) {
+      res.locals.PROMO_BANNER = process.env.PROMO_BANNER
+    }
+
     req.setLocale('da')
     next()
   })
@@ -24,6 +29,12 @@ module.exports = function (app) {
   // TODO: fix WP CMS plugin so it doesn't send back the response before theme
   // controller is executed.
   app.param('page', async (req, res, next) => {
+
+    // add promo banner to all in-cms pages
+    if (process.env.PROMO_BANNER) {
+      res.locals.PROMO_BANNER = process.env.PROMO_BANNER
+    }
+
     if (!res.locals.aboutPages) {
       res.locals.aboutPages = (await CmsModel.getListOfPosts({type: 'page'}))
         .filter(page => page.parent && page.parent.ID === 11)
