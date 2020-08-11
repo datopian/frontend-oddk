@@ -1,0 +1,41 @@
+<div>
+{#  <button id="promo-banner-thumbnail" class="">UNDERSØGELSE</button>#}
+  <div
+      id="promo-banner"
+      class="flex flex-col lg:flex-row content-center bg-repeat bg-left-top p-2 lg:p-6"
+      style="background-image: url(/static/img/promo-banner-bg.png); background-size: auto 6em;">
+    <a class="max-w-full mx-auto px-6 py-1 text-2xl font-bold bg-white rounded border-2 border-red-200 text-primary hover:text-secondary flex content-center"
+       target="_blank"
+       href="https://www.survey-xact.dk/LinkCollector?key=6D46XF46SK35">
+      {{ __('Påvirk udviklingen af Open Data DK & vind en sensor') }}
+    </a>
+    <button
+        id="promo-banner-close-button"
+        class="bg-white border-2 border-red-200 w-24 my-2 lg:my-auto mx-auto lg:mx-0 px-6 text-2xl rounded-full focus:bg-red-200 focus:text-white focus:outline-none"
+    >{{ __('TÆT') }}</button>
+    <script src="/static/js/js.cookie.min.js"></script>
+    <script>
+
+      var promoBannerStatus = Cookies.get('promo-banner-status')
+      if (promoBannerStatus && promoBannerStatus === 'hide') {
+        $('#promo-banner').hide()
+        $('#promo-banner-thumbnail').show()
+      } else {
+        $('#promo-banner').show()
+        $('#promo-banner-thumbnail').hide()
+      }
+
+      $('#promo-banner-thumbnail').on('click', function () {
+        Cookies.set('promo-banner-status', 'show', { expires: 30, path: '/' })
+        $('#promo-banner').show()
+        $('#promo-banner-thumbnail').hide()
+      })
+
+      $('#promo-banner-close-button').on('click', function () {
+        Cookies.set('promo-banner-status', 'hide', { expires: 30, path: '/' })
+        $('#promo-banner').hide()
+        $('#promo-banner-thumbnail').show()
+      })
+    </script>
+  </div>
+</div>
