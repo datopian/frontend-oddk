@@ -78,9 +78,9 @@
 
   for (q_part of q_all) {
     if (q_part.includes(':')){
-      q_filter = q_filter + ' ' + q_part;
+      q_filter = (q_filter + " " + q_part).trim();
     } else{
-      q_term = q_term + q_part;
+      q_term = (q_term + " " + q_part).trim();
     }
   };
   
@@ -95,27 +95,27 @@
   // click on button event
   var searchBtn = document.getElementById("search-button");
 
+  queryStrng = (q_filter + " " + q_term).trim()
+
   searchBtn.onclick = function(event) {
-    window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
+    window.location.href = window.location.origin + "/search?q=" + queryStrng;
   };
 
   // press on Enter event
   $("#search-input").on('keyup', function (event) {
     if (event.originalEvent.code === "Enter") {
-      window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
+      window.location.href = window.location.origin + "/search?q=" + queryStrng;
     }
   });
 
   $("#field-order-by").change(function() {
-    window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term + '&sort=' + $(this).val();
+    window.location.href = window.location.origin + "/search?q=" + queryStrng + '&sort=' + $(this).val();
   });
 
   // function removing duplicates from array
   function uniq(a) {
    return Array.from(new Set(a));
   };
-
-
 
 </script>
 {% endblock %}
