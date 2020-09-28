@@ -74,5 +74,10 @@
     filterToggle.setAttribute('aria-expanded', !expanded);
     filterTarget.setAttribute("data-expanded", !expanded);
   }
+
+  $("#field-order-by").change(function() {
+    window.location.href = window.location.origin + "/collections/{{ item.name }}?sort=" + $(this).val();
+  });
+
 </script>
 {% endblock %}
