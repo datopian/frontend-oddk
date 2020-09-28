@@ -228,7 +228,7 @@ module.exports = function (app) {
       const currentPage = parseInt(from, 10) / size + 1
       const pages = utils.pagination(currentPage, totalPages)
 
-      res.render('search.html', {
+      res.render('search-content.html', {
         title: 'Search content',
         result,
         query: req.query,
