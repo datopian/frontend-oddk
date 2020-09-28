@@ -1,0 +1,63 @@
+{% extends "search.html" %}
+
+
+{% block content %}
+<div class="container mx-auto p-gutter">
+  <nav class="breadcrumb" aria-label="breadcrumb">
+    <ol>
+      <li class="breadcrumb_item">
+        <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
+      </li>
+      <li class="breadcrumb_item">
+        <a class="breadcrumb_link" href="/search/content" aria-current="page">{{__('Search')}}</a>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container mx-auto md:flex p-gutter">
+
+<main class="md:w-2/3">
+    {% include "./partials/content-search-form.njk" %}
+    {% include "./partials/content-search-results.njk" %}
+    {% include "./partials/data-search-pagination.njk" %}
+  </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+  var qTerm = "";
+
+  let params = new URLSearchParams(location.search);
+  let regExp = /(?:[^\s"]+|"[^"]*")+/g;
+  let qAll = params.get('q').match(regExp);
+
+  for (qPart of qAll) {
+    qTerm = (qTerm + " " + qPart).trim();
+  };
+  
+  $("#search-content-input").val(qTerm);
+
+  // capture search term changes
+  $("#search-content-input").on('input', function (event) {
+    qTerm = $(this).val();
+  });
+
+  // click on button event
+  var searchBtn = document.getElementById("search-button");
+
+  searchBtn.onclick = function(event) {
+    window.location.href = window.location.origin + "/search/content?q=" + qTerm;
+  };
+
+  // press on Enter event
+  $("#search-content-input").on('keyup', function (event) {
+    if (event.originalEvent.code === "Enter") {
+      window.location.href = window.location.origin + "/search/content?q=" + qTerm;
+    }
+  });
+
+</script>
+{% endblock %}
