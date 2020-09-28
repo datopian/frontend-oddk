@@ -1,0 +1,16 @@
+<!-- Form -->
+<form action="/search/content" method="GET">
+  <div class="relative mb-5">
+    <input id="search-content-input" type="text" class="border-2 border-solid border-gray-200 py-4 pl-4 pr-20 text-xl outline-none focus:border-secondary w-full" placeholder="{{__('Search website')}}" name="q" value="" autofocus>
+      <button id="search-button" class="absolute inset-y-0 right-0 w-16 px-4 text-secondary fill-current" type="button" aria-label="Submit">      
+        <svg class="w-full h-full"><use xlink:href="#search" /></svg>
+      </button>
+    </input>
+  </div>
+
+  <div class="lg:flex items-center justify-between">
+    <h1 class="text-4xl font-semibold text-primary">{{ result.count }} {{__('results found')}}</h1>
+  </div>
+
+</form>
+<!-- End of Form -->
