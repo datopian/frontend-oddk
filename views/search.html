@@ -95,21 +95,19 @@
   // click on button event
   var searchBtn = document.getElementById("search-button");
 
-  queryStrng = (q_filter + " " + q_term).trim()
-
   searchBtn.onclick = function(event) {
-    window.location.href = window.location.origin + "/search?q=" + queryStrng;
+    window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
   };
 
   // press on Enter event
   $("#search-input").on('keyup', function (event) {
     if (event.originalEvent.code === "Enter") {
-      window.location.href = window.location.origin + "/search?q=" + queryStrng;
+      window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
     }
   });
 
   $("#field-order-by").change(function() {
-    window.location.href = window.location.origin + "/search?q=" + queryStrng + '&sort=' + $(this).val();
+    window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term + '&sort=' + $(this).val();
   });
 
   // function removing duplicates from array
