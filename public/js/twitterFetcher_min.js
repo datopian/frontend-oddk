@@ -56,10 +56,10 @@ op+='<p class="tweet">'+strip(tweets[n].innerHTML)+'</p>';if(printTime){if(perma
 times[n].getAttribute('aria-label')+'</p>';}}}else{if(tweets[n].textContent){if(printUser){op+='<p class="user">'+authors[n].textContent+'</p>';}
 op+='<p class="tweet">'+tweets[n].textContent+'</p>';if(printTime){op+='<p class="timePosted">'+times[n].textContent+'</p>';}}else{if(printUser){op+='<p class="user">'+authors[n].textContent+'</p>';}
 op+='<p class="tweet">'+tweets[n].textContent+'</p>';if(printTime){op+='<p class="timePosted">'+times[n].textContent+'</p>';}}}
-if(showInteractionLinks){op+='<p class="interact"><a href="https://twitter.com/intent/'+'tweet?in_reply_to='+tids[n]+'" class="twitter_reply_icon"'+
-(targetBlank?' target="_blank" rel="noopener">':'>')+'Reply</a><a href="https://twitter.com/intent/retweet?'+'tweet_id='+tids[n]+'" class="twitter_retweet_icon"'+
+if(showInteractionLinks){op+='<p class="interact"><a href="https://twitter.com/intent/'+'tweet?in_reply_to='+tids[n]+'" class="twitter_reply_icon" title="Reply to '+tweets[n].textContent+' on Twitter"'+
+(targetBlank?' target="_blank" rel="noopener">':'>')+'Reply</a><a href="https://twitter.com/intent/retweet?'+'tweet_id='+tids[n]+'" class="twitter_retweet_icon" title="Retweet '+tweets[n].textContent+' on Twitter" + tweets[n].innerHTML'+
 (targetBlank?' target="_blank" rel="noopener">':'>')+'Retweet</a>'+'<a href="https://twitter.com/intent/favorite?tweet_id='+
-tids[n]+'" class="twitter_fav_icon"'+
+tids[n]+'" class="twitter_fav_icon" title="Favorite '+tweets[n].textContent+' on Twitter"'+
 (targetBlank?' target="_blank" rel="noopener">':'>')+'Favorite</a></p>';}
 if(showImages&&images[n]!==undefined&&extractImagesUrl(images[n])!==undefined){var extractedImages=extractImagesUrl(images[n]);for(var i=0;i<extractedImages.length;i++){op+='<div class="media">'+'<img src="'+extractedImages[i]+'" alt="Image from tweet" />'+'</div>';}}
 if(showImages){arrayTweets.push(op);}else if(!showImages&&tweets[n].textContent.length){arrayTweets.push(op);}
