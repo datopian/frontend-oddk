@@ -82,10 +82,10 @@
                     <svg class="main-nav_search-toggle-icon w-8 h-6 hover:fill-secondary outline-none" data-toggle="hide"><use xlink:href="#cross" /></svg>
                   </a>
                   <div class="main-nav_search w-full px-6 py-2 lg:p-0 lg:absolute lg:left-0 lg:right-0 lg:pr-12 lg:pointer-events-none" id="header-search">
-<!--                    <input id="searchInput" name="q" type="text" class="searchInput border-2 border-solid px-3 py-2 lg:px-4 lg:py-3 lg:text-xl outline-none border-secondary w-full pointer-events-auto" placeholder="Søg datasæt">-->
+<!--                    <input id="searchInput" aria-label="{{__('Search')}}" name="q" type="text" class="searchInput border-2 border-solid px-3 py-2 lg:px-4 lg:py-3 lg:text-xl outline-none border-secondary w-full pointer-events-auto" placeholder="Søg datasæt">-->
                     <div class="dropdown">
                       <div class="relative">
-                        <input id="searchInput" autocomplete="off" type="text" class="searchInput border-2 border-solid px-3 py-2 lg:px-4 lg:py-3 lg:text-xl outline-none border-secondary w-full pointer-events-auto" placeholder="{{__('Search ...')}}" name="q" required />
+                        <input id="searchInput" aria-label="{{__('Search')}}" autocomplete="off" type="text" class="searchInput border-2 border-solid px-3 py-2 lg:px-4 lg:py-3 lg:text-xl outline-none border-secondary w-full pointer-events-auto" placeholder="{{__('Search ...')}}" name="q" required />
                         <button class="absolute inset-y-0 right-0 px-3 outline-none" type="submit">
                           <svg class="w-6 h-6 fill-white" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
                         </button>
@@ -93,7 +93,7 @@
 
                       <div id="searchSelect" class="searchSelect">
                         <div id="searchSelect1Div" class="searchSelect1Div relative">
-                          <input id="searchSelect1" readonly type="text" class="searchSelect1 cursor-pointer hover:bg-secondary focus:bg-secondary border-2 border-solid pl-10 pr-48 py-3 lg:text-xl border-secondary w-full pointer-events-auto" />
+                          <input id="searchSelect1" aria-label="{{__('Search select 1')}}" readonly type="text" class="searchSelect1 cursor-pointer hover:bg-secondary focus:bg-secondary border-2 border-solid pl-10 pr-48 py-3 lg:text-xl border-secondary w-full pointer-events-auto" />
                           <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                             <svg class="w-6 h-6 fill-primary" aria-label="Search Datasets"><use xlink:href="#search" /></svg>
                           </div>
@@ -105,7 +105,7 @@
                         </div>
 
                         <div id="searchSelect2Div" class="searchSelect2Div relative">
-                          <input id="searchSelect2" readonly type="text" class="searchSelect2 cursor-pointer hover:bg-secondary focus:bg-secondary border-2 border-solid pl-10 pr-48 py-3 lg:text-xl border-secondary w-full pointer-events-auto" />
+                          <input id="searchSelect2" aria-label="{{__('Search select 2')}}" readonly type="text" class="searchSelect2 cursor-pointer hover:bg-secondary focus:bg-secondary border-2 border-solid pl-10 pr-48 py-3 lg:text-xl border-secondary w-full pointer-events-auto" />
                           <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
                             <svg class="w-6 h-6 fill-primary" aria-label="Search content"><use xlink:href="#search" /></svg>
                           </div>
