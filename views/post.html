@@ -25,7 +25,7 @@
 
   <main class="mb-gutter lg:mb-0 lg:w-2/3 lg:mr-gutter">
     <!-- featured image -->
-    <img class="w-full" alt="{{ alt or title }}" src="{{image or '/static/img/placeholder.svg'}}" />
+    <img class="w-full" alt="{{ imageCaption or imageAlt or title }}" src="{{image or '/static/img/placeholder.svg'}}" />
 
     <h1 class="text-4xl font-semibold">{{title | safe}}</h1>
     <div class="mb-3">
