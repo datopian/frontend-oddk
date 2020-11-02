@@ -70,7 +70,7 @@ Welcome - Home
     <!-- article-preview -->
     <article class="article-preview my-gutter pb-gutter md:w-1/3 md:mx-gutter">
       <a class="article-preview_image" href="/blog/{{post.slug}}">
-        <img class="article-preview_img" alt="{{ post.imageCaption or post.imageAlt or post.title }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
+        <img class="article-preview_img" alt="{{ post.imageAlt or post.title or post.imageCaption }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
