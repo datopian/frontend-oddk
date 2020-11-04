@@ -230,7 +230,7 @@ module.exports = function (app) {
 
       for (let item in result.posts){
         if (result.posts[item].type == 'post'){
-          result.posts[item].slug = 'blog/' + result.posts[item].slug;
+          result.posts[item].slug = 'blog/' + result.posts[item].slug
         }
       }
 
