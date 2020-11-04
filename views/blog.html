@@ -9,7 +9,7 @@
   <nav class="breadcrumb" aria-label="breadcrumb">
     <ol>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
+        <a class="breadcrumb_link hover:underline" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
         <a class="breadcrumb_link" href="/blog" aria-current="page">{{__('Blog')}}</a>
@@ -30,11 +30,11 @@
     {% endif %}
     <div class="{{cls}}">
       <a class="article-preview_image" href="/blog/{{post.slug}}">
-        <img class="article-preview_img" src="{{post.image or '/static/img/placeholder.svg'}}" />
+        <img class="article-preview_img" alt="{{ post.imageAlt or post.title or post.imageCaption }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{post.title | safe}}</a>
+          <a class="article-preview_heading-link hover:underline" href="/blog/{{post.slug}}">{{post.title | safe}}</a>
         </h1>
         <div class="mb-3">
           <ul>

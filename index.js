@@ -228,6 +228,12 @@ module.exports = function (app) {
       const currentPage = parseInt(from, 10) / size + 1
       const pages = utils.pagination(currentPage, totalPages)
 
+      for (let item in result.posts){
+        if (result.posts[item].type == 'post'){
+          result.posts[item].slug = 'blog/' + result.posts[item].slug;
+        }
+      }
+
       res.render('search-content.html', {
         title: 'Search content',
         result,
