@@ -68,54 +68,61 @@
   // split whole search query string in two parts: filters and term
   var q_filter = '';
   var q_term = '';
+  let qryString = '';
 
   let params = new URLSearchParams(location.search);
+
   let regExp = /(?:[^\s"]+|"[^"]*")+/g;
-  let q_all = params.get('q').match(regExp);
 
-  // remove duplicates from filters part
-  q_all = uniq(q_all);
+  if (params.get('q')){
 
-  for (q_part of q_all) {
-    if (q_part.includes(':')){
-      q_filter = q_filter + ' ' + q_part;
-    } else{
-      q_term = q_term + q_part;
-    }
-  };
-  
-  // set input field value only to search term without filters
-  $("#search-input").val(q_term);
+    let q_all = params.get('q').match(regExp);
 
-  // capture search term changes
-  $("#search-input").on('input', function (event) {
-    q_term = $(this).val();
-  });
+    // remove duplicates from filters part
+    q_all = uniq(q_all);
 
-  // click on button event
-  var searchBtn = document.getElementById("search-button");
+    for (q_part of q_all) {
+      if (q_part.includes(':')){
+        q_filter = (q_filter + " " + q_part).trim();
+      } else{
+        q_term = (q_term + " " + q_part).trim();
+      }
+    };
 
-  searchBtn.onclick = function(event) {
-    window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
-  };
+    // set input field value only to search term without filters
+    $("#search-input").val(q_term);
 
-  // press on Enter event
-  $("#search-input").on('keyup', function (event) {
-    if (event.originalEvent.code === "Enter") {
-      window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term;
-    }
-  });
+    // capture search term changes
+    $("#search-input").on('input', function (event) {
+      q_term = $(this).val();
+    });
+
+    // click on button event
+    var searchBtn = document.getElementById("search-button");
+
+    searchBtn.onclick = function(event) {
+      qryString = (q_filter + " " + q_term).trim();
+      window.location.href = window.location.origin + "/search?q=" + qryString;
+    };
+
+    // press on Enter event
+    $("#search-input").on('keyup', function (event) {
+      if (event.originalEvent.code === "Enter") {
+        qryString = (q_filter + " " + q_term).trim();
+        window.location.href = window.location.origin + "/search?q=" + qryString;
+      }
+    });
+  }
 
   $("#field-order-by").change(function() {
-    window.location.href = window.location.origin + "/search?q=" + q_filter + " " + q_term + '&sort=' + $(this).val();
+    let searchQry = (q_filter + " " + q_term).trim();
+    window.location.href = window.location.origin + "/search?q=" + searchQry + '&sort=' + $(this).val();
   });
 
   // function removing duplicates from array
   function uniq(a) {
    return Array.from(new Set(a));
   };
-
-
 
 </script>
 {% endblock %}

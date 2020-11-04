@@ -234,7 +234,7 @@ module.exports = function (app) {
         }
       }
 
-      res.render('search.html', {
+      res.render('search-content.html', {
         title: 'Search content',
         result,
         query: req.query,
