@@ -1,5 +1,9 @@
 const moment = require('moment')
 
+// makes date formats Danish only
+// fix this if adding other languages
+moment.locale('da')
+
 module.exports = function (app) {
   const utils = app.get('utils')
   const dms = app.get('dms')
