@@ -12,7 +12,7 @@ Welcome - Home
 
 {% block content %}
 <div class="container mx-auto px-gutter">
-  <header class="mb-gutter">
+  <header class="mb-gutter" aria-label="{{__('Featured groups')}}">
     <h1 class="home_h1">{{ home_heading | safe }}</h1>
 
       <div class="lg:flex mt-gutter">
@@ -65,10 +65,10 @@ Welcome - Home
       </div>
   </header>
 
-  <section class="md:flex md:-mx-gutter">
+  <section id="article-preview" class="md:flex md:-mx-gutter" aria-label="{{__('Blog posts')}}">
     {% for post in posts %}
     <!-- article-preview -->
-    <article class="article-preview my-gutter pb-gutter md:w-1/3 md:mx-gutter">
+    <article class="article-preview my-gutter pb-gutter md:w-1/3 md:mx-gutter" aria-label="{{ post.title | safe }}">
       <a class="article-preview_image" href="/blog/{{post.slug}}">
         <img class="article-preview_img" alt="{{ post.imageAlt or post.title or post.imageCaption }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
       </a>
@@ -98,16 +98,16 @@ Welcome - Home
   </section>
 
   <!-- Link to all news -->
-  <section class="flex justify-center px-24">
-    <a class="text-center w-48 block px-3 py-2 hover:text-white hover:bg-secondary border border-secondary" href="/blog" aria-label="{{__('View all news')}}">
+  <section class="flex justify-center px-24" aria-label="{{__('Navigate to news')}}">
+    <a class="text-center w-48 block px-3 py-2 hover:text-white hover:bg-secondary border border-secondary" href="/blog" id="news-link" aria-label="{{__('View all news')}}">
       <span class="">{{__('View all news')}}</span>
     </a>
   </section>
   <!-- End of link to all news -->
 
   <!-- if events -->
-  <section class="home_events lg:w-2/3 my-gutter">
-    <div class="overflow-hidden">
+  <section class="home_events lg:w-2/3 my-gutter" aria-label="{{__('Events')}}">
+    <div class="overflow-hidden" id="home-events">
       <ul class="slider">
         {% for event in events %}
         <li>
@@ -130,7 +130,7 @@ Welcome - Home
   </section>
   <!-- end if -->
 
-  <section id="tweets-container" class="md:flex flex-wrap md:-mx-gutter list-none">
+  <section id="tweets-container" class="md:flex flex-wrap md:-mx-gutter list-none" aria-label="Tweets">
   <div class="my-gutter px-3 md:w-1/3 flex">
     <li class="inline-block bg-gray-900 text-white p-10 ">
       <h3 class="font-semibold text-2xl">{{ aboutTitle | safe }}</h3>
