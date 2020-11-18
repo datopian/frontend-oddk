@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+  <div role="navigation" id="skip-to-main" aria-label="{{__('Skip to main content')}}">
+      <a href="#main-content">{{__('Skip to main content')}}</a>
+  </div>
   <head>
     <meta charset="utf-8">
     <title>
@@ -126,7 +129,7 @@
         </header>
         <!-- End of page header -->
 
-        {% block content %}{{content}}{% endblock %}
+        <main id="main-content">{% block content %}{{content}}{% endblock %}</main>
       </div>
 
       <!-- Footer -->

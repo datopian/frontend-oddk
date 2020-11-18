@@ -5,16 +5,12 @@ Welcome - Home
 {% endblock %}
 
 {% block styles %}
-<div id="skip-to-main">
-    <a href="#main-content">{{__('Skip to main content')}}</a>
-</div>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.1/tiny-slider.css">
 {% endblock %}
 
 {% block bodyclass %}home{% endblock %}
 
 {% block content %}
-<main id="main-content">
 <div class="container mx-auto px-gutter">
   <header class="mb-gutter" aria-label="{{__('Featured groups')}}">
     <h1 class="home_h1">{{ home_heading | safe }}</h1>
@@ -148,7 +144,6 @@ Welcome - Home
   </section>
 
 </div>
-</main>
 {% endblock %}
 
 {% block scripts %}
