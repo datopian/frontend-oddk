@@ -83,7 +83,7 @@ li {
 
 #skip-to-main a{
 	position: absolute;
-	right: -10000px;
+	left: -10000px;
 	top: auto;
 	width: 1px;
 	height: 1px;
