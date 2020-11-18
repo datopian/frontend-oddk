@@ -23,7 +23,7 @@ Welcome - Home
                 <span class="featured-groups_icon">
                   <img src="{{ collection.image }}" alt="" class="featured-groups_img" />
                 </span>
-                <span class="featured-groups_name hover:underline">{{ collection.title }}</span>
+                <span class="featured-groups_name">{{ collection.title }}</span>
               </a>
             </li>
           {% endfor %}
@@ -74,7 +74,7 @@ Welcome - Home
       </a>
       <div class="article-preview_text">
         <h1 class="article-preview_heading">
-          <a class="article-preview_heading-link hover:underline" href="/blog/{{post.slug}}">{{ post.title | safe }}</a>
+          <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title | safe }}</a>
         </h1>
         <div class="mb-3">
           <ul>
@@ -116,7 +116,7 @@ Welcome - Home
               <span class="font-semibold text-3xl leading-none">{{ event.day }}</span> <span class="leading-none">{{ event.month }}</span>
             </time>
             <div class="px-6">
-              <h3 class="font-semibold text-2xl text-primary hover:underline">{{ event.title | safe }}</h3>
+              <h3 class="font-semibold text-2xl text-primary">{{ event.title | safe }}</h3>
               <p>
                 {{ event.excerpt | striptags | safe | truncate(120) or event.content | striptags | safe | truncate(120) }}
               </p>
@@ -137,7 +137,7 @@ Welcome - Home
       <p class="leading-relaxed">
         {{ aboutText | safe | truncate(300) }}
       </p>
-      <a class="font-semibold text-white hover:underline" href="/about">{{__('More')}}</a>
+      <a class="font-semibold text-white" href="/about">{{__('More')}}</a>
     </li>
     </div>
     <div id="tweets" class="twitter-feed"></div>

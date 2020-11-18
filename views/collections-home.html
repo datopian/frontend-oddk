@@ -10,7 +10,7 @@
   <nav class="breadcrumb" aria-label="breadcrumb">
     <ol>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link hover:underline" href="/">{{__('Home')}}</a>
+        <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
         <a class="breadcrumb_link" href="/{{ slug }}" aria-current="page">{{ __(title) }}</a>
@@ -42,7 +42,7 @@
           <img class="w-full object-contain" alt="{{ collection.title }}" src="{{ collection.image }}">
         </div>
         <div class="flex flex-col justify-center overflow-hidden">
-          <h2 class="font-semibold text-lg hover:underline">{{ collection.title }}</h2>
+          <h2 class="font-semibold text-lg">{{ collection.title }}</h2>
           <p>{{ collection.summary | safe | truncate(120) }}</p>
         </div>
       </a>

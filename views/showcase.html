@@ -12,10 +12,10 @@
     <nav class="breadcrumb" aria-label="breadcrumb">
       <ol>
         <li class="breadcrumb_item">
-          <a class="breadcrumb_link hover:underline" href="/">{{ __('Home') }}</a>
+          <a class="breadcrumb_link" href="/">{{ __('Home') }}</a>
         </li>
         <li class="breadcrumb_item">
-          <a class="breadcrumb_link hover:underline" href="/{{ owner.name }}">{{ owner.title or owner.name }}</a>
+          <a class="breadcrumb_link" href="/{{ owner.name }}">{{ owner.title or owner.name }}</a>
         </li>
         <li class="breadcrumb_item">
           <a class="breadcrumb_link" href="/{{ owner.name }}/{{ dataset.name }}"
@@ -195,12 +195,12 @@
         <h2 class="bg-gray-200 px-4 py-3 font-bold mb-4">{{ __('Organization') }}</h2>
         <img src="{{ owner.avatar or '/static/img/org.svg' }}" alt="{{ owner.title }}" class="m-4 h-24"/>
 
-        <a class="px-4 text-primary text-xl font-semibold hover:underline" href="/{{ owner.name }}">{{ owner.title }}</a>
+        <a class="px-4 text-primary text-xl font-semibold" href="/{{ owner.name }}">{{ owner.title }}</a>
 
         <p class="px-4 py-2 text-sm">
           {{ owner.description | safe | truncate(200) }}
         </p>
-        <a href="/{{ owner.name }}" class="text-primary font-bold hover:underline">Læs mere</a>
+        <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
 
         <!-- Metadata -->
         <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Metadata') }}</h2>
@@ -278,7 +278,7 @@
         <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Share') }}</h2>
         <ul class="text-sm">
           <li class="border-b-2 border-gray-200">
-            <a class="block px-4 py-3 text-primary text-semibold hover:underline"
+            <a class="block px-4 py-3 text-primary text-semibold"
                aria-label="Tweet {{ dataset.title or dataset.name }}"
                href="https://twitter.com/intent/tweet?url={{ thisPageFullUrl }}&text={{ dataset.title or dataset.name }}"
                target="_blank">Twitter</a>

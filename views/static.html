@@ -9,11 +9,11 @@
   <nav class="breadcrumb" aria-label="breadcrumb">
     <ol>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link text-primary hover:underline" href="/">{{__('Home')}}</a>
+        <a class="breadcrumb_link text-primary" href="/">{{__('Home')}}</a>
       </li>
       {% if parentSlug %}
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link text-primary hover:underline" href="/{{parentSlug}}">{{parentSlug}}</a>
+        <a class="breadcrumb_link text-primary" href="/{{parentSlug}}">{{parentSlug}}</a>
       </li>
       {% endif %}
       <li class="breadcrumb_item">
@@ -42,7 +42,7 @@
     <h2 class="bg-gray-200 px-4 py-3 font-bold mb-1">{{__('Share')}}</h2>
     <ul class="text-sm">
       <li class="border-b-2 border-gray-200">
-        <a class="block px-4 py-3 text-primary font-semibold hover:underline" aria-label="Tweet {{ title }}" href="https://twitter.com/intent/tweet?url={{thisPageFullUrl}}&text={{title}}" target="_blank">Twitter</a>
+        <a class="block px-4 py-3 text-primary font-semibold" aria-label="Tweet {{ title }}" href="https://twitter.com/intent/tweet?url={{thisPageFullUrl}}&text={{title}}" target="_blank">Twitter</a>
       </li>
     </ul>
     <!-- share links end -->
