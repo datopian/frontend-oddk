@@ -22,15 +22,10 @@
 
   <div class="md:w-2/3 md:mr-gutter lg:flex flex-wrap justify-around">
 
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap -mx-6">
       <!-- posts -->
       {% for post in posts %}
-      {% if loop.index0 % 2 == 0 %}
-      {% set cls = "article-preview mb-gutter pb-gutter lg:w-1/2 lg:pr-gutter" %}
-      {% else %}
-      {% set cls = "article-preview mb-gutter pb-gutter lg:w-1/2 lg:pl-gutter" %}
-      {% endif %}
-      <div class="{{cls}}">
+      <div class="article-preview mb-gutter pb-gutter lg:w-1/2 px-6">
         <a class="article-preview_image" href="/blog/{{post.slug}}">
           <img class="article-preview_img" alt="{{ post.imageAlt or post.title or post.imageCaption }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
         </a>
