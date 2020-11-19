@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="container mx-auto p-gutter">
-  <nav class="breadcrumb" aria-label="breadcrumb">
+  <nav class="breadcrumb" aria-label="{{__('Breadcrumb')}}">
     <ol>
       <li class="breadcrumb_item">
         <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
@@ -50,7 +50,7 @@
         <time class="article-preview_date">{{post.published}}</time>
         <div class="article-preview_content">
           {{ post.content | striptags | truncate(200) | safe }}
-          <p><a class="text-secondary" href="/blog/{{post.slug}}">{{ __('Read full article') }}</a>
+          <p><a class="text-secondary" href="/blog/{{post.slug}}" aria-label="{{__('Read ') + post.title | safe}}">{{ __('Read full article') }}</a>
             <p>
         </div>
       </div>
@@ -59,7 +59,7 @@
     {% endfor %}
 
     {% if found > 10 %}
-    <nav aria-label="Datasets" class="mt-gutter pt-gutter text-sm">
+    <nav aria-label="{{__('Datasets')}}" class="mt-gutter pt-gutter text-sm">
       <ul class="inline-flex border border-gray-200">
         {% set regExp = r/\?/ %}
         <li class="border border-gray-200">
