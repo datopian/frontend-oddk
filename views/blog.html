@@ -31,7 +31,7 @@
         </a>
         <div class="article-preview_text">
           <h1 class="article-preview_heading">
-            <a class="article-preview_heading-link hover:underline" href="/blog/{{post.slug}}">{{post.title | safe}}</a>
+            <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{post.title | safe}}</a>
           </h1>
           <div class="mb-3">
             <ul>
@@ -47,7 +47,7 @@
           <time class="article-preview_date">{{post.published}}</time>
           <div class="article-preview_content">
             {{ post.content | striptags | truncate(200) | safe }}
-            <p><a class="text-secondary hover:underline" href="/blog/{{post.slug}}">{{ __('Read full article') }}</a>
+            <p><a class="text-secondary" href="/blog/{{post.slug}}" aria-label="{{__('Read ') + post.title | safe}}">{{ __('Read full article') }}</a>
               <p>
           </div>
         </div>
