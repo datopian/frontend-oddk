@@ -35,7 +35,7 @@
         {% endif %}
         <!-- Page header -->
         <header>
-          <div role="navigation" aria-label="{{__('Website navigation')}}" class="container mx-auto lg:flex justify-between p-gutter items-center relative">
+          <div class="container mx-auto lg:flex justify-between p-gutter items-center relative">
             <a href="/" class="flex content-center h-8 mr-16">
               <img src="/static/img/logo.svg" alt="Open Data DK" class="lg:h-6 max-w-full" />
             </a>
@@ -46,7 +46,7 @@
               </svg>
             </button>
 
-            <nav class="main-nav mt-4 py-2 lg:my-2 bg-white right-0 z-10 lg:relative">
+            <nav class="main-nav mt-4 py-2 lg:my-2 bg-white right-0 z-10 lg:relative" aria-label="{{__('Website navigation')}}">
               <ul class="lg:flex md:text-xl lg:text-2xl">
                 <li class="mt-1 mr-6">
                   <a class="text-white bg-secondary px-6 py-2 whitespace-no-wrap" target="_blank" href="https://www.survey-xact.dk/LinkCollector?key=X3LGR2APJJ15">{{__('Request data')}}</a>

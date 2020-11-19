@@ -119,7 +119,7 @@
     <ul>
       {% for post in featuredPosts %}
       <li class="border-b-2 border-gray-200">
-        <article class="px-4 py-3">
+        <article class="px-4 py-3" aria-label="{{post.title | safe}}">
           <h1><a href="/blog/{{post.slug}}" class="text-primary font-semibold">{{post.title | safe}}</a>
           </h1>
           <time class="text-sm">{{post.published}}</time>
