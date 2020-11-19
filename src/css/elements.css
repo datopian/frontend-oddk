@@ -20,9 +20,14 @@ svg {
 
 a {
   @apply text-secondary;
+  @apply font-bold;
 }
 
 a:hover {
+  @apply underline;
+}
+
+a:focus {
   @apply underline;
 }
 
