@@ -82,7 +82,7 @@
               <p class="mt-2">
                 {{ resource.descriptionHtml | safe }}
               </p>
-              <nav>
+              <nav aria-label="{{__('Download')}} {{__('or')}} {{__('Preview')}} {{resource.name}}">
                 <a class="data-file-type mr-1" href="{{ resource.path }}" aria-label="{{__('Download')}} {{ resource.name }}.{{ resource.format }}">
                   <dl class="data-file-type_inner">
                     <dt class="data-file-type_term">
@@ -92,7 +92,7 @@
                 </a>
                 {% for alt in resource.otherFormats %}
                   <a class="data-file-type mr-1"
-                     href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
+                     href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}" aria-label="{{__('Download')}} {{ resource.name }}.{{ resource.format }}">
                     <dl class="data-file-type_inner">
                       <dt class="data-file-type_term">
                         {{ alt.format }}
@@ -201,7 +201,7 @@
           <p class="px-4 py-2 text-sm">
             {{ owner.description | safe | truncate(200) }}
           </p>
-          <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
+          <a href="/{{ owner.name }}" class="text-primary font-bold" aria-label="{{__('More')}} {{__('About')}} {{ owner.name }}">{{__('More')}}</a>
 
           <!-- Metadata -->
           <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Metadata') }}</h2>
@@ -300,7 +300,7 @@
 
     {% if displayResource.dataExplorers|length %}
 
-      <div class="resource">
+      <div class="resource" role="application" aria-label="{{__('Application for')}} {{displayResource.resource.name}}">
         <div class="container mx-auto p-gutter pb-16">
 
           <!-- Heading for each view -->

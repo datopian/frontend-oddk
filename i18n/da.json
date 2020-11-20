@@ -96,7 +96,7 @@
 	"Submenu": "Undermenu",
 	"Search content": "Søg i indhold",
 	"Breadcrumb": "Brødkrumme",
-	"Read ": "Læs ",
+	"Read": "Læs",
 	"Search results": "Søgeresultater",
 	"Main content": "Hovedindhold",
 	"Uddannelse, kultur og sport": "Uddannelse, kultur og sport",
@@ -109,5 +109,9 @@
 	"View": "Udsigt",
 	"Author": "Forfatter",
 	"E-mail": "E-mail",
-	"Maintainer": "Vedligeholdelse"
+	"Maintainer": "Vedligeholdelse",
+	"Resources": "Ressourcer",
+	"or": "eller",
+	"Visualisation": "Visualisation",
+	"Application for": "Ansøgning til"
 }
