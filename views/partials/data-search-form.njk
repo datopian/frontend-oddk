@@ -1,8 +1,8 @@
 <!-- Form -->
-<form action="/search" method="GET">
+<form id="search-field" role="search" action="/search" method="GET">
   <div class="relative mb-5">
     <input id="search-input" aria-label="{{__('Search datasets')}}" type="text" class="border-2 border-solid border-gray-200 py-4 pl-4 pr-20 text-xl outline-none focus:border-secondary w-full" placeholder="{{__('Search datasets')}}" name="q" value="" autofocus>
-      <button id="search-button" class="absolute inset-y-0 right-0 w-16 px-4 text-secondary fill-current" type="button" aria-label="Submit">      
+      <button id="search-button" class="absolute inset-y-0 right-0 w-16 px-4 text-secondary fill-current" type="submit" aria-label="Submit">
         <svg class="w-full h-full"><use xlink:href="#search" /></svg>
       </button>
     </input>
