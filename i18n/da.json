@@ -107,5 +107,8 @@
 	"groups": "grupper",
 	"res_format": "formater",
 	"license_id": "licenser",
-	"Download ": "Hent "
+	"View": "Udsigt",
+	"Author": "Forfatter",
+	"E-mail": "E-mail",
+	"Maintainer": "Vedligeholdelse"
 }
