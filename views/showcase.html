@@ -25,272 +25,274 @@
     </nav>
   </div>
 
-  <div class="container mx-auto lg:flex p-gutter">
-    <!-- info -->
-    <div class="lg:w-2/3">
+  <main id="main-content" tabindex="-1" aria-label="{{__('Main content')}}">
+    <div class="container mx-auto lg:flex p-gutter">
+      <!-- info -->
+      <div class="lg:w-2/3">
 
-      <h1 class="text-4xl font-semibold mb-3">
-        {{ dataset.title or dataset.name }}
-      </h1>
+        <h1 class="text-4xl font-semibold mb-3">
+          {{ dataset.title or dataset.name }}
+        </h1>
 
-      <!-- full readme -->
-      {% if dataset.readmeHtml %}
-        <div class="leading-relaxed">{{ dataset.readmeHtml | safe }}</div>
-        {% elif dataset.description %}
-        <div class="leading-relaxed whitespace-pre-wrap">{{ dataset.description | processMarkdown | safe }}</div>
-      {% endif %}
-      <!-- end of full readme -->
+        <!-- full readme -->
+        {% if dataset.readmeHtml %}
+          <div class="leading-relaxed">{{ dataset.readmeHtml | safe }}</div>
+          {% elif dataset.description %}
+          <div class="leading-relaxed whitespace-pre-wrap">{{ dataset.description | processMarkdown | safe }}</div>
+        {% endif %}
+        <!-- end of full readme -->
 
-      <h2 class="text-2xl font-semibold mt-gutter mb-4">{{ dataset.resources | length }} {% if dataset.resources | length > 1 %}{{ __('data files') }}{% else %}{{ __('data file') }}{% endif %}</h2>
+        <h2 class="text-2xl font-semibold mt-gutter mb-4">{{ dataset.resources | length }} {% if dataset.resources | length > 1 %}{{ __('data files') }}{% else %}{{ __('data file') }}{% endif %}</h2>
 
-      <!-- data files (downloads) -->
-      <ul>
-        {% set formats = [] %}
-        {% set colors = {
-          CSV: '#ffca00',
-          XLSX:'#3CBC8D',
-          XLS:'#3CBC8D',
-          JSON:'blue',
-          GEOJSON:'#2CAAF9',
-          LINK:'#f6ad55',
-          SHAPE:'#68d391',
-          WFS:'#08389c',
-          PDF:'#ff1010',
-          SHP:'violet',
-          HTML:'#333',
-          KML:'gray',
-          ODS:'gray'
-        } %}
-        {% for displayResource in dataset.displayResources %}
-          {% set resource = displayResource.resource %}
-          <!-- data file -->
-          <li class="mb-6">
-            <h3 class="text-xl font-semibold">
-              <a href="{{ resource.path }}" class="text-secondary">{{ resource.title or resource.name }}</a>
-            </h3>
-            <div class="mt-2">
-              {% if resource.format %}
-                <span title="file format" class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1"
-                      style="background:{{ colors[resource.format|upper] }};">{{ resource.format }}</span>
-              {% endif %}
-              {% if resource.size %}
-                <span title="file size"
-                      class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1">{{ resource.size }}</span>
-              {% endif %}
-            </div>
-            <p class="mt-2">
-              {{ resource.descriptionHtml | safe }}
-            </p>
-            <nav>
-              <a class="data-file-type mr-1" href="{{ resource.path }}">
-                <dl class="data-file-type_inner">
-                  <dt class="data-file-type_term">
-                    {{ __('Download') }}
-                  </dt>
-                </dl>
-              </a>
-              {% for alt in resource.otherFormats %}
-                <a class="data-file-type mr-1"
-                   href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
+        <!-- data files (downloads) -->
+        <ul>
+          {% set formats = [] %}
+          {% set colors = {
+            CSV: '#ffca00',
+            XLSX:'#3CBC8D',
+            XLS:'#3CBC8D',
+            JSON:'blue',
+            GEOJSON:'#2CAAF9',
+            LINK:'#f6ad55',
+            SHAPE:'#68d391',
+            WFS:'#08389c',
+            PDF:'#ff1010',
+            SHP:'violet',
+            HTML:'#333',
+            KML:'gray',
+            ODS:'gray'
+          } %}
+          {% for displayResource in dataset.displayResources %}
+            {% set resource = displayResource.resource %}
+            <!-- data file -->
+            <li class="mb-6">
+              <h3 class="text-xl font-semibold">
+                <a href="{{ resource.path }}" class="text-secondary">{{ resource.title or resource.name }}</a>
+              </h3>
+              <div class="mt-2">
+                {% if resource.format %}
+                  <span title="file format" class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1"
+                        style="background:{{ colors[resource.format|upper] }};">{{ resource.format }}</span>
+                {% endif %}
+                {% if resource.size %}
+                  <span title="file size"
+                        class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1">{{ resource.size }}</span>
+                {% endif %}
+              </div>
+              <p class="mt-2">
+                {{ resource.descriptionHtml | safe }}
+              </p>
+              <nav>
+                <a class="data-file-type mr-1" href="{{ resource.path }}">
                   <dl class="data-file-type_inner">
                     <dt class="data-file-type_term">
-                      {{ alt.format }}
-                    </dt>
-                    <dd class="data-file-type_size">
-                      {{ alt.prettyBytes }}
-                    </dd>
-                  </dl>
-                </a>
-              {% endfor %}
-              <!-- Preview button -->
-              {% if displayResource.dataExplorers|length %}
-                <a class="data-file-type mr-1" href="#resource-{{ resource.name }}">
-                  <dl class="data-file-type_inner">
-                    <dt class="data-file-type_term">
-                      {{ __('Preview') }}
+                      {{ __('Download') }}
                     </dt>
                   </dl>
                 </a>
-              {% endif %}
-              <!-- End of preview button -->
-              {% if resource.datastore_active %}
-                <!-- Data API -->
-                <a class="data-file-type mr-1 bg-gray-500 text-white modal-open"
-                   href="#data-api-info-{{ resource.id }}">
-                  <dl class="data-file-type_inner">
-                    <dt class="data-file-type_term">
-                      Data API
-                    </dt>
-                  </dl>
-                </a>
-                <!-- Data API modal -->
-                <div
-                    class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center"
-                    id="data-api-info-{{ resource.id }}">
-                  <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+                {% for alt in resource.otherFormats %}
+                  <a class="data-file-type mr-1"
+                     href="/{{ owner.name }}/{{ dataset.name }}/r/{{ resource.name }}.{{ alt.format }}{{ '?v='+revisionId if revisionId }}">
+                    <dl class="data-file-type_inner">
+                      <dt class="data-file-type_term">
+                        {{ alt.format }}
+                      </dt>
+                      <dd class="data-file-type_size">
+                        {{ alt.prettyBytes }}
+                      </dd>
+                    </dl>
+                  </a>
+                {% endfor %}
+                <!-- Preview button -->
+                {% if displayResource.dataExplorers|length %}
+                  <a class="data-file-type mr-1" href="#resource-{{ resource.name }}">
+                    <dl class="data-file-type_inner">
+                      <dt class="data-file-type_term">
+                        {{ __('Preview') }}
+                      </dt>
+                    </dl>
+                  </a>
+                {% endif %}
+                <!-- End of preview button -->
+                {% if resource.datastore_active %}
+                  <!-- Data API -->
+                  <a class="data-file-type mr-1 bg-gray-500 text-white modal-open"
+                     href="#data-api-info-{{ resource.id }}">
+                    <dl class="data-file-type_inner">
+                      <dt class="data-file-type_term">
+                        Data API
+                      </dt>
+                    </dl>
+                  </a>
+                  <!-- Data API modal -->
+                  <div
+                      class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center"
+                      id="data-api-info-{{ resource.id }}">
+                    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
 
-                  <div class="modal-container bg-white w-8/12 mx-auto rounded shadow-lg z-50 overflow-y-auto">
+                    <div class="modal-container bg-white w-8/12 mx-auto rounded shadow-lg z-50 overflow-y-auto">
 
-                    <!-- Add margin if you want to see some of the overlay behind the modal-->
-                    <div class="modal-content py-4 text-left px-6">
-                      <!--Title-->
-                      <div class="flex justify-between items-center pb-3">
-                        <p class="text-2xl font-bold">CKAN Data API</p>
-                        <div class="modal-close cursor-pointer z-50">
-                          <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18"
-                               height="18" viewBox="0 0 18 18">
-                            <path
-                                d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-                          </svg>
+                      <!-- Add margin if you want to see some of the overlay behind the modal-->
+                      <div class="modal-content py-4 text-left px-6">
+                        <!--Title-->
+                        <div class="flex justify-between items-center pb-3">
+                          <p class="text-2xl font-bold">CKAN Data API</p>
+                          <div class="modal-close cursor-pointer z-50">
+                            <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18"
+                                 height="18" viewBox="0 0 18 18">
+                              <path
+                                  d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                            </svg>
+                          </div>
                         </div>
+
+                        <!--Body-->
+                        <p>
+                          <strong>{{ __('Access resource data via a web API with powerful query support.') }}</strong>
+                          {{ __('Further information in the <a href="http://docs.ckan.org/en/latest/maintaining/datastore.html" target="_blank">main CKAN Data API and DataStore documentation.</a>') | safe }}
+                        </p>
+
+                        <hr/>
+
+                        <p class="text-lg font-bold my-2">{{ __('Querying') }}</p>
+                        <p class="font-semibold">
+                          {{ __('Query example (first 5 results)') }}:
+                        </p>
+                        <p class="bg-gray-200 py-2">
+                          https://admin.opendata.dk/api/3/action/datastore_search?resource_id={{ resource.id }}
+                          &limit=5
+                        </p>
+                        <p class="font-semibold">
+                          {{ __('Query example (results containing "jones")') }}:
+                        </p>
+                        <p class="bg-gray-200 py-2">
+                          https://admin.opendata.dk/api/3/action/datastore_search?q=jones&resource_id={{ resource.id }}
+                        </p>
+                        <p class="font-semibold">
+                          {{ __('Query example (via SQL statement)') }}:
+                        </p>
+                        <p class="bg-gray-200 py-2">
+                          https://admin.opendata.dk/api/3/action/datastore_search_sql?sql=SELECT * from
+                          "{{ resource.id }}" WHERE title LIKE 'jones'
+                        </p>
+
                       </div>
-
-                      <!--Body-->
-                      <p>
-                        <strong>{{ __('Access resource data via a web API with powerful query support.') }}</strong>
-                        {{ __('Further information in the <a href="http://docs.ckan.org/en/latest/maintaining/datastore.html" target="_blank">main CKAN Data API and DataStore documentation.</a>') | safe }}
-                      </p>
-
-                      <hr/>
-
-                      <p class="text-lg font-bold my-2">{{ __('Querying') }}</p>
-                      <p class="font-semibold">
-                        {{ __('Query example (first 5 results)') }}:
-                      </p>
-                      <p class="bg-gray-200 py-2">
-                        https://admin.opendata.dk/api/3/action/datastore_search?resource_id={{ resource.id }}
-                        &limit=5
-                      </p>
-                      <p class="font-semibold">
-                        {{ __('Query example (results containing "jones")') }}:
-                      </p>
-                      <p class="bg-gray-200 py-2">
-                        https://admin.opendata.dk/api/3/action/datastore_search?q=jones&resource_id={{ resource.id }}
-                      </p>
-                      <p class="font-semibold">
-                        {{ __('Query example (via SQL statement)') }}:
-                      </p>
-                      <p class="bg-gray-200 py-2">
-                        https://admin.opendata.dk/api/3/action/datastore_search_sql?sql=SELECT * from
-                        "{{ resource.id }}" WHERE title LIKE 'jones'
-                      </p>
-
                     </div>
                   </div>
-                </div>
-                <!-- End of Data API modal -->
-                <!-- End of Data API -->
-              {% endif %}
-            </nav>
-          </li>
-          <!-- data file end -->
-        {% endfor %}
-      </ul>
-    </div>
-    <!-- info end -->
-
-    <!-- meta -->
-    <div class="lg:w-1/3 lg:ml-gutter lg:pl-10">
-      <div class="">
-        <h2 class="bg-gray-200 px-4 py-3 font-bold mb-4">{{ __('Organization') }}</h2>
-        <img src="{{ owner.avatar or '/static/img/org.svg' }}" alt="{{ owner.title }}" class="m-4 h-24"/>
-
-        <a class="px-4 text-primary text-xl font-semibold" href="/{{ owner.name }}">{{ owner.title }}</a>
-
-        <p class="px-4 py-2 text-sm">
-          {{ owner.description | safe | truncate(200) }}
-        </p>
-        <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
-
-        <!-- Metadata -->
-        <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Metadata') }}</h2>
-        <div class="px-4 py-2 text-sm">
-          <dl class="info-list">
-            {% if dataset.sources %}
-              <dt class="info-list_title">Forfatter</dt>
-              <dd class="info-list_description">
-                {{ snippets.listify(dataset.sources) }}
-              </dd>
-            {% endif %}
-            {% if dataset.author %}
-              <dt class="info-list_title">Vedligeholdes af</dt>
-              <dd class="info-list_description">
-                {{ snippets.listify([dataset.author]) }}
-              </dd>
-            {% endif %}
-            <!-- Show extras -->
-            {% for item in dataset.extras %}
-              {% if item.key === 'data_quality' %}
-                {% set fieldName = 'Datakvalitet' %}
-                {% elif item.key === 'office' %}
-                {% set fieldName = 'Kontor' %}
-                {% elif item.key === 'office_email' %}
-                {% set fieldName = 'Kontor email' %}
-                {% elif item.key === 'quality_note' %}
-                {% set fieldName = 'Kvalitetsnote' %}
-                {% elif item.key === 'update_frequency' %}
-                {% set fieldName = 'Opdater frekvens' %}
-              {% endif %}
-              <dt class="info-list_title">{{ fieldName or item.key }}</dt>
-              <dd class="info-list_description truncate" title="{{ item.value }}">
-                {{ item.value }}
-              </dd>
-            {% endfor %}
-            <!-- End of extras -->
-            {% if dataset.license %}
-              <dt class="info-list_title">Licens</dt>
-              <dd class="info-list_description">
-                {{ snippets.listify([dataset.license]) }}
-              </dd>
-            {% endif %}
-            {% if dataset.groups %}
-              <dt class="info-list_title">Grupper</dt>
-              <dd class="info-list_description">
-                {% for group in dataset.groups %}
-                  <p>
-                  <span class="colGroup break-words">
-                <a href="/collections/{{ group.name }}" class="text-secondary">{{ group.title }}</a>
-              </span>
-                  </p>
-                {% endfor %}
-              </dd>
-            {% endif %}
-          </dl>
-        </div>
-        <!-- Metadata -->
-
-        <!-- Keywords section -->
-        {% if dataset.keywords and dataset.keywords.length !== 0 %}
-          <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Keywords') }}</h2>
-          <div class="container">
-            <div class="flex flex-wrap ">
-              {% for keyword in dataset.keywords %}
-                <a href="/search?q=tags:{{ keyword }}"
-                   class="px-3 py-1 mr-2 mt-2 text-primary text-xs border rounded-full border-primary hover:bg-secondary">{{ keyword }}</a>
-              {% endfor %}
-            </div>
-          </div>
-        {% endif %}
-        <!-- end Keywords section -->
-
-
-        <!-- share links -->
-        <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Share') }}</h2>
-        <ul class="text-sm">
-          <li class="border-b-2 border-gray-200">
-            <a class="block px-4 py-3 text-primary text-semibold"
-               aria-label="Tweet {{ dataset.title or dataset.name }}"
-               href="https://twitter.com/intent/tweet?url={{ thisPageFullUrl }}&text={{ dataset.title or dataset.name }}"
-               target="_blank">Twitter</a>
-          </li>
+                  <!-- End of Data API modal -->
+                  <!-- End of Data API -->
+                {% endif %}
+              </nav>
+            </li>
+            <!-- data file end -->
+          {% endfor %}
         </ul>
-        <!-- share links end -->
-
       </div>
-    </div>
-    <!-- meta end -->
+      <!-- info end -->
 
-  </div>
+      <!-- meta -->
+      <div class="lg:w-1/3 lg:ml-gutter lg:pl-10">
+        <div class="">
+          <h2 class="bg-gray-200 px-4 py-3 font-bold mb-4">{{ __('Organization') }}</h2>
+          <img src="{{ owner.avatar or '/static/img/org.svg' }}" alt="{{ owner.title }}" class="m-4 h-24"/>
+
+          <a class="px-4 text-primary text-xl font-semibold" href="/{{ owner.name }}">{{ owner.title }}</a>
+
+          <p class="px-4 py-2 text-sm">
+            {{ owner.description | safe | truncate(200) }}
+          </p>
+          <a href="/{{ owner.name }}" class="text-primary font-bold">Læs mere</a>
+
+          <!-- Metadata -->
+          <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Metadata') }}</h2>
+          <div class="px-4 py-2 text-sm">
+            <dl class="info-list">
+              {% if dataset.sources %}
+                <dt class="info-list_title">Forfatter</dt>
+                <dd class="info-list_description">
+                  {{ snippets.listify(dataset.sources) }}
+                </dd>
+              {% endif %}
+              {% if dataset.author %}
+                <dt class="info-list_title">Vedligeholdes af</dt>
+                <dd class="info-list_description">
+                  {{ snippets.listify([dataset.author]) }}
+                </dd>
+              {% endif %}
+              <!-- Show extras -->
+              {% for item in dataset.extras %}
+                {% if item.key === 'data_quality' %}
+                  {% set fieldName = 'Datakvalitet' %}
+                  {% elif item.key === 'office' %}
+                  {% set fieldName = 'Kontor' %}
+                  {% elif item.key === 'office_email' %}
+                  {% set fieldName = 'Kontor email' %}
+                  {% elif item.key === 'quality_note' %}
+                  {% set fieldName = 'Kvalitetsnote' %}
+                  {% elif item.key === 'update_frequency' %}
+                  {% set fieldName = 'Opdater frekvens' %}
+                {% endif %}
+                <dt class="info-list_title">{{ fieldName or item.key }}</dt>
+                <dd class="info-list_description truncate" title="{{ item.value }}">
+                  {{ item.value }}
+                </dd>
+              {% endfor %}
+              <!-- End of extras -->
+              {% if dataset.license %}
+                <dt class="info-list_title">Licens</dt>
+                <dd class="info-list_description">
+                  {{ snippets.listify([dataset.license]) }}
+                </dd>
+              {% endif %}
+              {% if dataset.groups %}
+                <dt class="info-list_title">Grupper</dt>
+                <dd class="info-list_description">
+                  {% for group in dataset.groups %}
+                    <p>
+                    <span class="colGroup break-words">
+                  <a href="/collections/{{ group.name }}" class="text-secondary">{{ group.title }}</a>
+                </span>
+                    </p>
+                  {% endfor %}
+                </dd>
+              {% endif %}
+            </dl>
+          </div>
+          <!-- Metadata -->
+
+          <!-- Keywords section -->
+          {% if dataset.keywords and dataset.keywords.length !== 0 %}
+            <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Keywords') }}</h2>
+            <div class="container">
+              <div class="flex flex-wrap ">
+                {% for keyword in dataset.keywords %}
+                  <a href="/search?q=tags:{{ keyword }}"
+                     class="px-3 py-1 mr-2 mt-2 text-primary text-xs border rounded-full border-primary hover:bg-secondary">{{ keyword }}</a>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+          <!-- end Keywords section -->
+
+
+          <!-- share links -->
+          <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Share') }}</h2>
+          <ul class="text-sm">
+            <li class="border-b-2 border-gray-200">
+              <a class="block px-4 py-3 text-primary text-semibold"
+                 aria-label="Tweet {{ dataset.title or dataset.name }}"
+                 href="https://twitter.com/intent/tweet?url={{ thisPageFullUrl }}&text={{ dataset.title or dataset.name }}"
+                 target="_blank">Twitter</a>
+            </li>
+          </ul>
+          <!-- share links end -->
+
+        </div>
+      </div>
+      <!-- meta end -->
+
+    </div>
+  </main>
 
 
   <!-- Data Explorer -->
