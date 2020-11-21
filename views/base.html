@@ -36,7 +36,7 @@
         <!-- Page header -->
         <header>
           <div class="container mx-auto lg:flex justify-between p-gutter items-center relative">
-            <a href="/" class="flex content-center h-8 mr-16">
+            <a href="/" class="flex content-center h-8 mr-16" aria-label="{{__('Navigate')}} {{__('Home')}}">
               <img src="/static/img/logo.svg" alt="Open Data DK" class="lg:h-6 max-w-full" />
             </a>
 
@@ -73,7 +73,7 @@
                   <ul class="main-nav_subnav" aria-label="{{__('Submenu')}}">
                     {% for item in aboutPages %}
                     <li>
-                      <a class="main-nav_link" href="/{{ item.slug }}">{{ item.title }}</a>
+                      <a class="main-nav_link" href="/{{ item.slug }}" aria-label="{{ item.title }}">{{ item.title }}</a>
                     </li>
                     {% endfor %}
                   </ul>
