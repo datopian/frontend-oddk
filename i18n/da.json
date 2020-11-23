@@ -112,9 +112,11 @@
 	"Maintainer": "Vedligeholdelse",
 	"Resources": "Ressourcer",
 	"or": "eller",
-	"Visualisation": "Visualisation",
+	"Visualisation": "Visualisering",
 	"Application for": "Ansøgning til",
 	"Other": "Andet",
 	"Navigate": "Navigere",
-	"Current page": "Nuværende side"
+	"Current page": "Nuværende side",
+	"Navigate to": "Navigere til",
+	"for": "til"
 }
