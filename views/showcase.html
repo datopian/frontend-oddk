@@ -82,7 +82,7 @@
               <p class="mt-2">
                 {{ resource.descriptionHtml | safe }}
               </p>
-              <nav aria-label="{{__('Download')}} {{__('or')}} {{__('Preview')}} {{resource.name}}">
+              <nav aria-label="{{__('Download')}} {{__('or')}} {{__('Preview')}} {{resource.name}} {{ resource.format }}">
                 <a class="data-file-type mr-1" href="{{ resource.path }}" aria-label="{{__('Download')}} {{ resource.name }}.{{ resource.format }}">
                   <dl class="data-file-type_inner">
                     <dt class="data-file-type_term">
@@ -300,11 +300,11 @@
 
     {% if displayResource.dataExplorers|length %}
 
-      <div class="resource" role="application" aria-label="{{__('Application for')}} {{displayResource.resource.name}}">
+      <div class="resource" role="application" aria-label="{{__('Application for')}} {{displayResource.resource.name}} {{displayResource.resource.format}}">
         <div class="container mx-auto p-gutter pb-16">
 
           <!-- Heading for each view -->
-          <h2 id="resource-{{ displayResource.resource.name }}" class="text-2xl text-secondary font-semibold mb-6">
+          <h2 id="resource-{{ displayResource.resource.name }}.{{ displayResource.resource.format }}" class="text-2xl text-secondary font-semibold mb-6">
             {{ displayResource.resource.title or displayResource.resource.name }}
           </h2>
 
