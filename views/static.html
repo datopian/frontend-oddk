@@ -6,18 +6,18 @@
 
 {% block content %}
 <div class="container mx-auto p-gutter">
-  <nav class="breadcrumb" aria-label="breadcrumb">
+  <nav class="breadcrumb" aria-label="{{__('Breadcrumb')}}">
     <ol>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link text-primary hover:underline" href="/">{{__('Home')}}</a>
+        <a class="breadcrumb_link text-primary" href="/">{{__('Home')}}</a>
       </li>
       {% if parentSlug %}
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link text-primary hover:underline" href="/{{parentSlug}}">{{parentSlug}}</a>
+        <a class="breadcrumb_link text-primary" href="/{{parentSlug}}">{{parentSlug}}</a>
       </li>
       {% endif %}
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="#" aria-current="page">{{ title  | safe }}</a>
+        <a class="breadcrumb_link" href="#" aria-label="{{__('Current page')}}" aria-current="page">{{ title  | safe }}</a>
       </li>
     </ol>
   </nav>
@@ -25,7 +25,7 @@
 
 <div class="container mx-auto lg:flex p-gutter">
 
-  <main class="mb-gutter lg:mb-0 lg:w-2/3 lg:mr-gutter">
+  <main class="mb-gutter lg:mb-0 lg:w-2/3 lg:mr-gutter" id="main-content" tabindex="-1" aria-label="{{__('Main content')}}">
     <!-- featured image -->
     {% if image %}
     <img class="w-full" src="{{ image }}" />
@@ -37,12 +37,12 @@
     </div>
   </main>
 
-  <div class="lg:w-1/3 lg:pl-gutter">
+  <div class="lg:w-1/3 lg:pl-gutter" role="region" aria-label="{{__('Share')}}">
     <!-- share links -->
     <h2 class="bg-gray-200 px-4 py-3 font-bold mb-1">{{__('Share')}}</h2>
     <ul class="text-sm">
       <li class="border-b-2 border-gray-200">
-        <a class="block px-4 py-3 text-primary font-semibold hover:underline" aria-label="Tweet {{ title }}" href="https://twitter.com/intent/tweet?url={{thisPageFullUrl}}&text={{title}}" target="_blank">Twitter</a>
+        <a class="block px-4 py-3 text-primary font-semibold" aria-label="Tweet {{ title }}" href="https://twitter.com/intent/tweet?url={{thisPageFullUrl}}&text={{title}}" target="_blank">Twitter</a>
       </li>
     </ul>
     <!-- share links end -->

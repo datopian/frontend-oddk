@@ -3,7 +3,7 @@
   <li class="mt-10">
     <div>
       <h3 class="text-2xl font-semibold">
-        <a class="text-primary hover:underline" href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">{{ package.title or package.name }}</a>
+        <a class="text-primary" href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">{{ package.title or package.name }}</a>
       </h3>
       <a href="/{{ package.organization.name or 'dataset' }}" class="text-gray-500 block mt-1">
         {{ package.organization.title or package.organization.name or 'dataset' }}
@@ -52,7 +52,7 @@
       {% for format in formats %}
       {%if format %}
       <li class="inline">
-        <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}" data-format="{{ format }}" class="bg-gray-600 text-sm text-gray-100 px-2 py-1" style="background:{{colors[format]}};" >{{ format }}</a>
+        <a href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}" data-format="{{ format }}" class="bg-gray-600 text-sm text-gray-100 px-2 py-1" style="background:{{colors[format]}};" aria-label="{{__('Download')}} {{package.name}}.{{format}}">{{ format }}</a>
       </li>
       {% endif %} 
       {% endfor %}
