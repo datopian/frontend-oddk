@@ -104,3 +104,7 @@ li {
 	width: auto;
 	height: auto;
 }
+
+img {
+  font-size: 0;
+}

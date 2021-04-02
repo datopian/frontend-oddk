@@ -3,7 +3,8 @@
   groups: 'Grupper',
   tags: 'Tags',
   res_format: 'Format',
-  license_id: 'Licens'
+  license_id: 'Licens',
+  update_frequency: 'Opdatering'
 } %}
 
 {% set regExp = r/\s/g %}
@@ -22,23 +23,23 @@
     {% set regExpToSplitQuery = r/(?:[^\s"]+|"[^"]*")+/g %}
     {% if facetId + ':' + item.name in query.q|split(regExpToSplitQuery) %}
     <li class="border-t border-gray-200">
-      <a href="/search?q={{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ facetNames[facetId] }}: {{ item.display_name }} ({{ item.count }} results)">
-        {{ item.display_name }}
+      <a href="/search?q={{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ facetNames[facetId] }}: {{ __(item.display_name) }} ({{ item.count }} results)">
+        {{ __(item.display_name) }}
         <span class="filter-button_count">{{ item.count }}</span>
       </a>
     </li>
     {% else %}
     <li class="border-t border-gray-200">
-      <a href="/search?q={{ facetId }}:{{ itemName }} {{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ facetNames[facetId] }}: {{ item.display_name }} ({{ item.count }} results)">
-        {{ item.display_name }}
+      <a href="/search?q={{ facetId }}:{{ itemName }} {{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ facetNames[facetId] }}: {{ __(item.display_name) }} ({{ item.count }} results)">
+        {{ __(item.display_name) }}
         <span class="filter-button_count">{{ item.count }}</span>
       </a>
     </li>
     {% endif %}
     {% else %}
     <li class="border-t border-gray-200">
-      <a href="/search?q={{ facetId }}:{{ itemName }} {{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ facetNames[facetId] }}: {{ item.display_name }} ({{ item.count }} results)">
-        {{ item.display_name }}
+      <a href="/search?q={{ facetId }}:{{ itemName }} {{ query.q }}" class="filter-button hover:text-secondary" aria-label="{{ facetNames[facetId] }}: {{ __(item.display_name) }} ({{ item.count }} results)">
+        {{ __(item.display_name) }}
         <span class="filter-button_count">{{ item.count }}</span>
       </a>
     </li>

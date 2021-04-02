@@ -13,7 +13,8 @@
     groups: 'Grupper',
     tags: 'Tag',
     res_format: 'Format',
-    license_id: 'Licens'
+    license_id: 'Licens',
+    update_frequency: 'Opdatering'
   } %}
 
   {# Facets #}
@@ -32,7 +33,7 @@
             {% endif %}
           {% endfor %}
         {% endif %}
-        {{ displayName }}
+        {{ __(displayName) }}
         <a class="pl-2 bold text-primary" href="/search?q={{ query.q | replace(qry, '') | trim }}">
           <svg class="w-3 h-3 inline fill-current"><use xlink:href="#cross" /></svg>
         </a>
