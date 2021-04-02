@@ -1,5 +1,7 @@
 # Open Data DK theme
 
+*Note*: ODDK now has a custom search facet, `update_frequency`. To display this properly in the UI, a small change was needed in frontend-v2. Instead of hardcoding the custom facet in the master branch, the change is in its own branch, [oddk/custom-facet](https://github.com/datopian/frontend-v2/tree/oddk/custom-facet). When there's a better way to handle or override this somewhere else (e.g. in this theme or in [ckanext-portalopendatadk](https://github.com/datopian/ckanext-portalopendatadk)), we can switch back to using the master branch of frontend-v2. Until then, you should use the `oddk/custom-facet` branch of frontend-v2 for development and deployments.
+
 To watch files:
 
 ```bash
