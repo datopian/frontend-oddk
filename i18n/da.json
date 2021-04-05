@@ -121,10 +121,12 @@
 	"for": "til",
 	"Organisation datasets": "Organisationer datasæt",
 	"Befolkning og samfund": "Befolkning og samfund",
-  "Socioøkonomi, demografi, befolkningsprognose, til- og fraflytninger, beskæftigelse, herkomst, m.m.": "Socioøkonomi, demografi, befolkningsprognose, til- og fraflytninger, beskæftigelse, herkomst, m.m.",
+	"Socioøkonomi, demografi, befolkningsprognose, til- og fraflytninger, beskæftigelse, herkomst, m.m.": "Socioøkonomi, demografi, befolkningsprognose, til- og fraflytninger, beskæftigelse, herkomst, m.m.",
 	"Andres data": "Andres data",
 	"Monthly": "Månedligt",
 	"Historical": "Historisk",
 	"Frequent": "Løbende",
-	"Yearly": "Årligt"
+	"Yearly": "Årligt",
+	"Update frequency": "Opdatering",
+	"Update comments": "Opdatering kommentarer"
 }
