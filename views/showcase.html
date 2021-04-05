@@ -256,6 +256,18 @@
                   {% endfor %}
                 </dd>
               {% endif %}
+              {% if dataset.update_frequency %}
+                <dt class="info-list_title">{{__('Update frequency')}}</dt>
+                <dd class="info-list_description">
+                  {{ __(dataset.update_frequency) }}
+                </dd>
+              {% endif %}
+              {% if dataset.update_frequency_notes %}
+                <dt class="info-list_title">{{__('Update comments')}}</dt>
+                <dd class="info-list_description">
+                  {{ dataset.update_frequency_notes }}
+                </dd>
+              {% endif %}
             </dl>
           </div>
           <!-- Metadata -->
