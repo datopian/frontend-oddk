@@ -208,17 +208,17 @@
           <div class="px-4 py-2 text-sm">
             <dl class="info-list">
               {% if dataset.sources %}
-                <dt class="info-list_title">Forfatter</dt>
+                <dt class="info-list_title">Dataejer</dt>
                 <dd class="info-list_description">
                   {{ snippets.listify(dataset.sources) }}
                 </dd>
               {% endif %}
-              {% if dataset.author %}
-                <dt class="info-list_title">Vedligeholdes af</dt>
+              {# {% if dataset.author %}
+                <dt class="info-list_title">Dataejer</dt>
                 <dd class="info-list_description">
                   {{ snippets.listify([dataset.author]) }}
                 </dd>
-              {% endif %}
+              {% endif %}#}
               <!-- Show extras -->
               {% for item in dataset.extras %}
                 {% if item.key === 'data_quality' %}
@@ -244,7 +244,7 @@
                   {{ snippets.listify([dataset.license]) }}
                 </dd>
               {% endif %}
-              {% if dataset.groups %}
+              {# {% if dataset.groups %}
                 <dt class="info-list_title">Grupper</dt>
                 <dd class="info-list_description">
                   {% for group in dataset.groups %}
@@ -255,7 +255,7 @@
                     </p>
                   {% endfor %}
                 </dd>
-              {% endif %}
+              {% endif %} #}
               {% if dataset.update_frequency %}
                 <dt class="info-list_title">{{__('Update frequency')}}</dt>
                 <dd class="info-list_description">
