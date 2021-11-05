@@ -206,7 +206,7 @@ module.exports = function (app) {
         totalPages,
         pages,
         currentPage,
-        locale: req.locale
+        locale: req.locale || 'da'
       })
     } catch (e) {
       next(e)
