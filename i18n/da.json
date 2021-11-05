@@ -16,7 +16,7 @@
 	"Follow us": "Følg os",
 	"Recently Added or updated datasets": "For nylig tilføjede eller opdaterede datasæt",
 	"Mise en garde": "Mise en garde",
-	"License": "Licenser",
+	"License": "Licens",
 	"Dataset": "Datasæt",
 	"data file": "datasæt",
 	"Download": "Download",
@@ -130,6 +130,8 @@
 	"Update frequency": "Opdatering frekvens",
 	"Update comments": "Opdatering kommentarer",
 	"Formats": "Formats",
-	"Licenses": "Licences",
-	"Update frequencies": "Opdatering frekvens"
+	"Licenses": "Licens",
+	"Update frequencies": "Opdatering frekvens",
+	"Author Email": "Dataejer",
+	"Group": "Grupper"
 }
