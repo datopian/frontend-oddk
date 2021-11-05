@@ -3,7 +3,7 @@
 {% import '_instructions.html' as instructions %}
 
 {% block title %}
-  {{ dataset.title or dataset.name }} - {{ __('Dataset') }}
+  {{ dataset.title_translated[locale] or dataset.title or dataset.name }} - {{ __('Dataset') }}
 {% endblock %}
 
 {% block content %}
@@ -19,7 +19,7 @@
         </li>
         <li class="breadcrumb_item">
           <a class="breadcrumb_link" href="/{{ owner.name }}/{{ dataset.name }}"
-             aria-current="page">{{ dataset.title or dataset.name }}</a>
+             aria-current="page">{{ dataset.title_translated[locale] or dataset.title or dataset.name }}</a>
         </li>
       </ol>
     </nav>
@@ -31,14 +31,14 @@
       <div class="lg:w-2/3">
 
         <h1 class="text-4xl font-semibold mb-3">
-          {{ dataset.title or dataset.name }}
+          {{ dataset.title_translated[locale] or dataset.title or dataset.name }}
         </h1>
 
         <!-- full readme -->
         {% if dataset.readmeHtml %}
           <div class="leading-relaxed">{{ dataset.readmeHtml | safe }}</div>
           {% elif dataset.description %}
-          <div class="leading-relaxed whitespace-pre-wrap">{{ dataset.description | processMarkdown | safe }}</div>
+          <div class="leading-relaxed whitespace-pre-wrap">{{ dataset.notes_translated[locale] or dataset.description | processMarkdown | safe }}</div>
         {% endif %}
         <!-- end of full readme -->
 
@@ -208,13 +208,13 @@
           <div class="px-4 py-2 text-sm">
             <dl class="info-list">
               {% if dataset.sources %}
-                <dt class="info-list_title">Dataejer</dt>
+                <dt class="info-list_title">{{__('Author Email')}}</dt>
                 <dd class="info-list_description">
                   {{ snippets.listify(dataset.sources) }}
                 </dd>
               {% endif %}
               {# {% if dataset.author %}
-                <dt class="info-list_title">Dataejer</dt>
+                <dt class="info-list_title">{{__('Author Email')}}</dt>
                 <dd class="info-list_description">
                   {{ snippets.listify([dataset.author]) }}
                 </dd>
@@ -222,15 +222,15 @@
               <!-- Show extras -->
               {% for item in dataset.extras %}
                 {% if item.key === 'data_quality' %}
-                  {% set fieldName = 'Datakvalitet' %}
+                  {% set fieldName = __('Datakvalitet') %}
                   {% elif item.key === 'office' %}
-                  {% set fieldName = 'Kontor' %}
+                  {% set fieldName = __('Kontor') %}
                   {% elif item.key === 'office_email' %}
-                  {% set fieldName = 'Kontor email' %}
+                  {% set fieldName = __('Kontor email') %}
                   {% elif item.key === 'quality_note' %}
-                  {% set fieldName = 'Kvalitetsnote' %}
+                  {% set fieldName = __('Kvalitetsnote') %}
                   {% elif item.key === 'update_frequency' %}
-                  {% set fieldName = 'Opdater frekvens' %}
+                  {% set fieldName = __('Update frequency') %}
                 {% endif %}
                 <dt class="info-list_title">{{ fieldName or item.key }}</dt>
                 <dd class="info-list_description truncate" title="{{ item.value }}">
@@ -239,13 +239,13 @@
               {% endfor %}
               <!-- End of extras -->
               {% if dataset.license %}
-                <dt class="info-list_title">Licens</dt>
+                <dt class="info-list_title">{{__('License')}}</dt>
                 <dd class="info-list_description">
                   {{ snippets.listify([dataset.license]) }}
                 </dd>
               {% endif %}
               {% if dataset.groups %}
-                <dt class="info-list_title">Grupper</dt>
+                <dt class="info-list_title">{{__('Group')}}</dt>
                 <dd class="info-list_description">
                   {% for group in dataset.groups %}
                     <p>
