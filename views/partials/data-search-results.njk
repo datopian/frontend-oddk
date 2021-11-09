@@ -3,7 +3,7 @@
   <li class="mt-10">
     <div>
       <h3 class="text-2xl font-semibold">
-        <a class="text-primary" href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">{{ package.title or package.name }}</a>
+        <a class="text-primary" href="/{{ package.organization.name or 'dataset' }}/{{ package.name }}">{{ package.title_translated[locale] or package.title or package.name }}</a>
       </h3>
       <a href="/{{ package.organization.name or 'dataset' }}" class="text-gray-500 block mt-1">
         {{ package.organization.title or package.organization.name or 'dataset' }}
@@ -20,9 +20,9 @@
         {% elif package.description %}
         <p>
           {% if package.description|length > 200 %}
-            {{ package.description|truncate(200) }}
+            {{ package.notes_translated[locale]|truncate(200) or package.description|truncate(200) }}
           {% else %}
-            {{ package.description }}
+            {{ package.notes_translated[locale] or package.description }}
           {% endif %}
         </p>
         {% endif %}

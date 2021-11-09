@@ -1,9 +1,5 @@
 const moment = require('moment')
 
-// makes date formats Danish only
-// fix this if adding other languages
-moment.locale('da')
-
 module.exports = function (app) {
   const utils = app.get('utils')
   const dms = app.get('dms')
@@ -18,7 +14,9 @@ module.exports = function (app) {
       res.locals.PROMO_BANNER = process.env.PROMO_BANNER
     }
 
-    req.setLocale('da')
+    moment.locale(req.locale || 'da')
+
+    req.setLocale(req.locale || 'da')
     next()
   })
 
@@ -207,7 +205,8 @@ module.exports = function (app) {
         query: req.query,
         totalPages,
         pages,
-        currentPage
+        currentPage,
+        locale: req.locale || 'da'
       })
     } catch (e) {
       next(e)
