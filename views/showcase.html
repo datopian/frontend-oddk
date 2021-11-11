@@ -222,13 +222,13 @@
               <!-- Show extras -->
               {% for item in dataset.extras %}
                 {% if item.key === 'data_quality' %}
-                  {% set fieldName = __('Datakvalitet') %}
+                  {% set fieldName = __('Data quality') %}
                   {% elif item.key === 'office' %}
-                  {% set fieldName = __('Kontor') %}
+                  {% set fieldName = __('Office') %}
                   {% elif item.key === 'office_email' %}
-                  {% set fieldName = __('Kontor email') %}
+                  {% set fieldName = __('Office email') %}
                   {% elif item.key === 'quality_note' %}
-                  {% set fieldName = __('Kvalitetsnote') %}
+                  {% set fieldName = __('Quality note') %}
                   {% elif item.key === 'update_frequency' %}
                   {% set fieldName = __('Update frequency') %}
                 {% endif %}

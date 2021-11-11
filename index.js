@@ -1,5 +1,23 @@
 const moment = require('moment')
 
+function getCurrentLocale(req) {
+  var currentLocale = req.locale || 'da'
+  var reqHeaders = req['headers']
+
+  if (reqHeaders !== undefined && 'accept-language' in reqHeaders){
+    currentLocale = reqHeaders['accept-language'].split(',')[0]
+
+    if (currentLocale.includes('-')){
+      currentLocale = currentLocale.split('-')[0]
+    }
+  }
+
+  if (!['da', 'en', 'fr'].includes(currentLocale)){
+    currentLocale = 'da'
+  }
+  return currentLocale
+}
+
 module.exports = function (app) {
   const utils = app.get('utils')
   const dms = app.get('dms')
@@ -14,9 +32,11 @@ module.exports = function (app) {
       res.locals.PROMO_BANNER = process.env.PROMO_BANNER
     }
 
-    moment.locale(req.locale || 'da')
+    var currentLocale = getCurrentLocale(req)
 
-    req.setLocale(req.locale || 'da')
+    moment.locale(currentLocale)
+
+    req.setLocale(currentLocale)
     next()
   })
 
@@ -199,6 +219,9 @@ module.exports = function (app) {
       const pages = utils.pagination(currentPage, totalPages)
 
       req.query.qArray = req.query.q ? req.query.q.match(/(?:[^\s"]+|"[^"]*")+/g) : []
+
+      var currentLocale = getCurrentLocale(req)
+
       res.render('search.html', {
         title: 'Search',
         result,
@@ -206,7 +229,7 @@ module.exports = function (app) {
         totalPages,
         pages,
         currentPage,
-        locale: req.locale || 'da'
+        locale: currentLocale
       })
     } catch (e) {
       next(e)

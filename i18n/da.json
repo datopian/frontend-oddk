@@ -133,5 +133,12 @@
 	"Licenses": "Licens",
 	"Update frequencies": "Opdatering frekvens",
 	"Author Email": "Dataejer",
-	"Group": "Grupper"
+	"Group": "Grupper",
+	"Datakvalitet": "Datakvalitet",
+	"Data quality": "Datakvalitet",
+	"Kontor": "Kontor",
+	"Office": "Kontor",
+	"Kontor email": "Kontor email",
+	"Kvalitetsnote": "Kvalitetsnote",
+	"Quality note": "Kvalitetsnote"
 }

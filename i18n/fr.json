@@ -134,5 +134,13 @@
 	"Licenses": "Licences",
 	"Update frequencies": "Fréquences de mise à jour",
 	"Author Email": "Courriel de l'auteur",
-	"Group": "Grouper"
+	"Group": "Grouper",
+	"Datakvalitet": "Qualité des données",
+	"Data quality": "Qualité des données",
+	"Kontor": "Bureau",
+	"Office": "Bureau",
+	"Kontor email": "Email du bureau",
+	"Office email": "Email du bureau",
+	"Kvalitetsnote": "Note de qualité",
+	"Quality note": "Note de qualité"
 }
