@@ -1,0 +1,41 @@
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: SeznamBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: Pingdom
+Disallow: /
+
+User-agent: +centuryb.o.t9[at]gmail.com
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: UptimeRobot
+Disallow: /
+
+User-agent: Barkrowler/0.9
+Disallow: /
+
+User-agent: dotbot
+Disallow: /
+
+User-Agent: trendictionbot
+Disallow: /
+
+User-agent: Buck/2.2
+Disallow:/

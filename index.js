@@ -25,6 +25,8 @@ module.exports = function (app) {
   const config = app.get('config')
   const DmsModel = new dms.DmsModel(config)
   const CmsModel = new cms.CmsModel()
+  const path = require('path')
+  const fs = require('fs')
 
   app.use((req, res, next) => {
     // toggle promo banner on all not-in-cms pages
@@ -272,4 +274,15 @@ module.exports = function (app) {
       next(e)
     }
   })
+
+  app.get('/robots.txt', async (req, res) => {
+    robotsPath = path.join(__dirname, '/public/robots.txt')
+    if (fs.existsSync(robotsPath)) {
+      res.sendFile(robotsPath)
+    } else {
+      res.type('text/plain')
+      res.send("User-agent: *\nAllow: /")
+    }
+  })
+
 }
