@@ -25,9 +25,6 @@ Disallow: /
 User-agent: CCBot
 Disallow: /
 
-User-agent: UptimeRobot
-Disallow: /
-
 User-agent: Barkrowler/0.9
 Disallow: /
 
