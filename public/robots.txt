@@ -13,7 +13,13 @@ Disallow: /
 User-agent: MJ12bot
 Disallow: /
 
-User-agent: Bingbot
+User-agent: MJ12bot/v1.4.8   
+Disallow: /
+
+User-agent: serpstatbot/2.1       
+Disallow: /
+
+User-agent: PetalBot  
 Disallow: /
 
 User-agent: Pingdom
@@ -29,6 +35,9 @@ User-agent: Barkrowler/0.9
 Disallow: /
 
 User-agent: dotbot
+Disallow: /
+
+User-agent: DotBot/1.2
 Disallow: /
 
 User-Agent: trendictionbot
