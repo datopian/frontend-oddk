@@ -18,13 +18,15 @@
           {{ package.readmeHtml|safe }}
         </p>
         {% elif package.description %}
-        <p>
-          {% if package.description|length > 200 %}
-            {{ package.notes_translated[locale]|truncate(200) or package.description|truncate(200) }}
-          {% else %}
-            {{ package.notes_translated[locale] or package.description }}
-          {% endif %}
-        </p>
+          <div class="markdown-content leading-relaxed">
+            <p class="block">
+              {% if package.description|length > 200 %}
+                {{ package.notes_translated[locale]|truncate(200) | processMarkdown | safe or package.description|truncate(200) | processMarkdown | safe}}
+              {% else %}
+                {{ package.notes_translated[locale] | processMarkdown | safe or package.description | processMarkdown | safe }}
+              {% endif %}
+            </p>
+        </div>
         {% endif %}
       </div>
     </div>

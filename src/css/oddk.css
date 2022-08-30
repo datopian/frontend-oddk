@@ -1,0 +1,38 @@
+.markdown-content{
+  & h1 {
+  @apply text-3xl font-semibold text-gray-900;
+  }
+  & h2 {
+      @apply text-2xl font-semibold text-gray-900;
+  }
+
+  & h3 {
+      @apply text-xl font-semibold text-gray-900;
+  }
+
+  & h4 {
+      @apply text-lg font-semibold text-gray-900;
+  }
+  & p {
+    @apply text-lg mb-2;
+  }
+  & strong {
+    font-weight: 600;
+  }
+  & ol {
+    @apply mt-1 ml-5 list-decimal;
+  }
+  & ul{
+    @apply mt-1 ml-5 list-disc;
+  }
+  & code{
+      font-family: "Nunito Sans",sans-serif;
+      @apply font-semibold text-gray-900 text-base;
+  }
+  & a{
+      @apply underline text-gray-900;
+  }
+  & em{
+      font-style: italic;
+  }
+}
