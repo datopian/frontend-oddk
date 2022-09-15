@@ -38,7 +38,8 @@
         {% if dataset.readmeHtml %}
           <div class="leading-relaxed">{{ dataset.readmeHtml | safe }}</div>
           {% elif dataset.description %}
-          <div class="markdown-content leading-relaxed">{{ dataset.notes_translated[locale] | processMarkdown | safe or dataset.description | processMarkdown | safe }}</div>
+          {% set description = dataset.notes_translated[locale] or dataset.description %}
+          <div class="markdown-content leading-relaxed">{{ description | processMarkdown | safe }}</div>
         {% endif %}
         <!-- end of full readme -->
 

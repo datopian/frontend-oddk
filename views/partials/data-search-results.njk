@@ -20,10 +20,11 @@
         {% elif package.description %}
           <div class="markdown-content leading-relaxed">
             <p class="block">
+              {% set description = package.notes_translated[locale] or package.description %}
               {% if package.description|length > 200 %}
-                {{ package.notes_translated[locale]|truncate(200) | processMarkdown | safe or package.description|truncate(200) | processMarkdown | safe}}
+                {{ description|truncate(200) | processMarkdown | safe }}
               {% else %}
-                {{ package.notes_translated[locale] | processMarkdown | safe or package.description | processMarkdown | safe }}
+                {{ description | processMarkdown | safe }}
               {% endif %}
             </p>
         </div>
