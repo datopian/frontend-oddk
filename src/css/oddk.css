@@ -36,3 +36,13 @@
       font-style: italic;
   }
 }
+
+body, html { 
+  font-size: 85%;
+}
+
+.container {
+  margin-left: 5%;
+  margin-right: 5%;
+  max-width: 90%;
+}

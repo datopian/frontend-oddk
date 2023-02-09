@@ -92,20 +92,8 @@ module.exports = function (app) {
       include_extras: true,
       include_dataset_count: false
     })
-    // Filter collections as we want to show only featured items
-    const featured = collections.filter(collection => {
-      return collection.extras.find(extra => extra.key === 'featured' && extra.value)
-    })
-    // Shuffle array
-    let shuffled
-    if (featured.length >= 4) {
-      shuffled = featured.sort(() => 0.5 - Math.random())
-    } else {
-      shuffled = collections.sort(() => 0.5 - Math.random())
-    }
-    // Get sub-array of first n elements after shuffled
-    const randomFour = shuffled.slice(0, 4)
-    res.locals.collections = randomFour
+
+    res.locals.collections = collections
 
     // Get events
     res.locals.events = (await CmsModel.getListOfPosts(

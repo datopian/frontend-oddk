@@ -8,7 +8,7 @@
 }
 
 .home_h1 {
-  @apply font-semibold text-4xl leading-tight;
+  @apply font-semibold leading-tight;
 }
 @screen md {
   .home_h1 {
@@ -18,14 +18,13 @@
 }
 @screen lg {
   .home_h1 {
-    font-size: 80px;
-    @apply w-2/3;
+    font-size: 20px;
   }
 }
 
 @screen xl {
   .home_h1 {
-    font-size: 94px;
+    font-size: 30px;
   }
 }
 
@@ -123,4 +122,109 @@
   .home_feed {
     columns: 3;
   }
+}
+
+@media (max-width: 767px) {
+  #searchInputHome {
+    width: 100%;
+  }
+  .home_h1 {
+    padding-bottom: 10px;
+  }
+  .search-magnifying-glass {
+    position: absolute !important;
+    vertical-align: middle !important;
+    padding-top: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  #searchInputHome {
+    width: 600px;
+  }
+}
+
+#home-search-bar {
+  width: 100%;
+}
+
+#datavejviser-logo {
+  color: #4e4e4f !important;
+}
+
+#datavejviser-logo:hover {
+  color: #4e4e4f !important;
+}
+
+#datavejviser-button:hover {
+  padding: 0px 4px 0px 4px;
+  box-shadow: 1px 1px 1px 1px #ef4123;
+}
+
+#datavejviser-button {
+  padding: 0px 4px 0px 4px;
+  width: 300px !important;
+}
+
+#datavejviser-container {
+  display: flex !important;
+}
+
+#datavejviser-button-1 {
+  height: 46px !important;
+  width: 200px !important;
+  min-width: 100px !important;
+  margin-right: 10px;
+  border: 1px solid #ef4123;
+  color: #4e4e4f !important;
+}
+
+#datavejviser-button-1:hover, #datavejviser-button-2:hover {
+  background-color: #ef4123;
+  color: white !important;
+}
+
+#datavejviser-button-2 {
+  height: 46px !important;
+  width: 200px !important;
+  min-width: 100px !important;
+  margin-right: 10px;
+  border: 1px solid #ef4123;
+  color: #4e4e4f !important;
+}
+
+#datavejviser-text {
+  color: #4e4e4f !important;
+}
+
+#datavejviser-group-text, #datavejviser-org-text {
+  display: flex;
+  height: 46px !important;
+  text-align: center;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-magnifying-glass {
+  margin-left: -40px;
+  vertical-align: middle;
+}
+
+.home-about, .home-about-links {
+  color: hsla(0,0%,100%,.75);
+  text-decoration: underline;
+}
+
+.home-about:hover, .home-about-links:hover {
+  color: white;
+}
+
+.home-about-text {
+  font-weight: bold;
+  font-size: large;
+}
+
+#news-link {
+  float: left !important;
 }
