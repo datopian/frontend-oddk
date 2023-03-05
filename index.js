@@ -316,7 +316,6 @@ module.exports = function (app) {
       const organizationsArray = Array.from(organizations)
 
       for (let organization of organizationsArray) {
-        console.log(organization)
         smStream.write({
           url: `/organization/${organization.name}`,
           img: organization.image
