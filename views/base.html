@@ -62,9 +62,6 @@
                                     <li>
                                         <a class="main-nav_link" href="/collections">{{__('Groups')}}</a>
                                     </li>
-                                    <li>
-                                        <a class="main-nav_link" href="/andres-data">{{__('Andres data')}}</a>
-                                    </li>
                                 </ul>
                             </li>
                             <li class="main-nav_item lg:ml-3">
@@ -139,12 +136,37 @@
             <div class="container mx-auto md:flex md:justify-between">
                 <div class="px-gutter pb-6 md:p-gutter md:w-1/3 md:flex flex-col justify-between">
                     <a class="block w-24 mb-10 h-10 text-white-75 hover:text-white" href="https://ckan.org/">
-                        <span>Powered by</span> {% include "./partials/ckan-logo.svg" %}
+                        <span>{{ __('Powered by') }}</span> {% include "./partials/ckan-logo.svg" %}
                     </a>
 
                     <p>
                         Copyright 2015 Opendata.dk
                     </p>
+                </div>
+
+                <div class="px-gutter md:p-gutter md:w-1/3">
+                  <div>
+                    <p>
+                      <span class="home-about-text">{{ __('About us') }}</span></br>
+                      <a href="/hvad-er-open-data-dk" class="home-about-links">{{ __('What is Open Data DK?') }}</a></br>
+                      <a href="/foreningen" class="home-about-links">{{ __('Association') }}</a></br>
+                      <a href="/medlemmer" class="home-about-links">{{ __('Members') }}</a></br>
+                      <a href="/vejledninger-og-analyser" class="home-about-links">{{ __('Guides and analyses') }}</a></br>
+                        <a href="/faq" class="home-about-links">{{ __('FAQ') }}</a>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="px-gutter md:p-gutter md:w-1/3">
+                  <div>
+                    <p>
+                      <span class="home-about-text">{{ __('Cooperation partners') }}</span></br>
+                      <a href="https://datavejviser.dk" class="home-about-links">{{ __('Datavejviser') }}</a></br>
+                      <a href="https://digst.dk" class="home-about-links">{{ __('Digitaliseringsstyrelsen') }}</a></br>
+                      <a href="https://erhvervsstyrelsen.dk" class="home-about-links">{{ __('Erhvervsstyrelsen') }}</a></br>
+                      <a href="https://www.kl.dk" class="home-about-links">{{ __('KL') }}</a>
+                    </p>
+                  </div>
                 </div>
 
                 <div class="px-gutter md:p-gutter md:w-1/3">
