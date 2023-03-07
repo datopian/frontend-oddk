@@ -267,7 +267,20 @@ module.exports = function (app) {
 
   app.get('/robots.txt', async (req, res) => {
     robotsPath = path.join(__dirname, '/public/robots.txt')
+
     if (fs.existsSync(robotsPath)) {
+      const robotsTxt = fs.readFileSync(robotsPath, 'utf8')
+
+      if (!robotsTxt.includes('Sitemap:')) {
+        const hostname = req.protocol + '://' + req.get('host')
+        const sitemapUrl = hostname + '/sitemap.xml'
+        const wwwHostname = hostname.replace('://', '://www.')
+        const wwwSitemapUrl = wwwHostname + '/sitemap.xml'
+        const robotsTxtWithSitemap = robotsTxt + '\nUser-agent: *\nSitemap: ' + sitemapUrl + '\nSitemap: ' + wwwSitemapUrl
+
+        fs.writeFileSync(robotsPath, robotsTxtWithSitemap)
+      }
+
       res.sendFile(robotsPath)
     } else {
       res.type('text/plain')
