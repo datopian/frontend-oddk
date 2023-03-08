@@ -6,7 +6,7 @@
   "author": "Datopian",
   "license": "MIT",
   "dependencies": {
-    "sitemap": "7.1.1"
+    "sitemap": "7.1.1",
     "zlib": "1.0.5"
   },
   "devDependencies": {
