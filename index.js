@@ -286,9 +286,7 @@ module.exports = function (app) {
       if (!robotsTxt.includes('Sitemap:')) {
         const hostname = config.get('SITE_URL')
         const sitemapUrl = hostname + '/sitemap.xml'
-        const wwwHostname = hostname.replace('://', '://www.')
-        const wwwSitemapUrl = wwwHostname + '/sitemap.xml'
-        const robotsTxtWithSitemap = robotsTxt + '\nUser-agent: *\nSitemap: ' + sitemapUrl + '\nSitemap: ' + wwwSitemapUrl
+        const robotsTxtWithSitemap = robotsTxt + '\nUser-agent: *\nSitemap: ' + sitemapUrl
 
         fs.writeFileSync(robotsPath, robotsTxtWithSitemap)
       }
