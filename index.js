@@ -284,7 +284,7 @@ module.exports = function (app) {
       const robotsTxt = fs.readFileSync(robotsPath, 'utf8')
 
       if (!robotsTxt.includes('Sitemap:')) {
-        const hostname = 'https://' + req.get('host')
+        const hostname = config.get('SITE_URL')
         const sitemapUrl = hostname + '/sitemap.xml'
         const wwwHostname = hostname.replace('://', '://www.')
         const wwwSitemapUrl = wwwHostname + '/sitemap.xml'
@@ -304,7 +304,7 @@ module.exports = function (app) {
     res.header('Content-Type', 'application/xml');
     res.header('Content-Encoding', 'gzip');
 
-    const hostname = 'https://' + req.get('host')
+    const hostname = config.get('SITE_URL')
 
     try {
       const smStream = new SitemapStream({ hostname: hostname })
