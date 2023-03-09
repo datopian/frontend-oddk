@@ -317,7 +317,7 @@ module.exports = function (app) {
 
       for (let collection of collectionsArray) {
         smStream.write({
-          url: `/collection/${collection.name}`,
+          url: `/collections/${collection.name}`,
           img: collection.image
         })
       }
@@ -328,7 +328,7 @@ module.exports = function (app) {
 
       for (let organization of organizationsArray) {
         smStream.write({
-          url: `/organization/${organization.name}`,
+          url: `/${organization.name}`,
           img: organization.image
         })
       }
