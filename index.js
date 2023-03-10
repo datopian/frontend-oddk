@@ -284,11 +284,9 @@ module.exports = function (app) {
       const robotsTxt = fs.readFileSync(robotsPath, 'utf8')
 
       if (!robotsTxt.includes('Sitemap:')) {
-        const hostname = 'https://' + req.get('host')
+        const hostname = config.get('SITE_URL')
         const sitemapUrl = hostname + '/sitemap.xml'
-        const wwwHostname = hostname.replace('://', '://www.')
-        const wwwSitemapUrl = wwwHostname + '/sitemap.xml'
-        const robotsTxtWithSitemap = robotsTxt + '\nUser-agent: *\nSitemap: ' + sitemapUrl + '\nSitemap: ' + wwwSitemapUrl
+        const robotsTxtWithSitemap = robotsTxt + '\nUser-agent: *\nSitemap: ' + sitemapUrl
 
         fs.writeFileSync(robotsPath, robotsTxtWithSitemap)
       }
@@ -304,7 +302,7 @@ module.exports = function (app) {
     res.header('Content-Type', 'application/xml');
     res.header('Content-Encoding', 'gzip');
 
-    const hostname = 'https://' + req.get('host')
+    const hostname = config.get('SITE_URL')
 
     try {
       const smStream = new SitemapStream({ hostname: hostname })
@@ -319,7 +317,7 @@ module.exports = function (app) {
 
       for (let collection of collectionsArray) {
         smStream.write({
-          url: `/collection/${collection.name}`,
+          url: `/collections/${collection.name}`,
           img: collection.image
         })
       }
@@ -330,7 +328,7 @@ module.exports = function (app) {
 
       for (let organization of organizationsArray) {
         smStream.write({
-          url: `/organization/${organization.name}`,
+          url: `/${organization.name}`,
           img: organization.image
         })
       }
