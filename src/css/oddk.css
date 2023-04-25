@@ -46,3 +46,19 @@ body, html {
   margin-right: 5%;
   max-width: 90%;
 }
+
+.search-card:hover {
+  background-color: #f5f5f5;
+}
+
+#searchSelectHome {
+  z-index: 1;
+  position: relative;
+  display: none;
+}
+
+@media (max-width: 767px) {
+  #searchSelectHome {
+    display: block;
+  }
+}

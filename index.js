@@ -1,4 +1,5 @@
 const moment = require('moment')
+const { DmsModel } = require('../../lib/dms')
 
 function getCurrentLocale(req) {
   var currentLocale = req.locale || 'da'
@@ -90,10 +91,16 @@ module.exports = function (app) {
     const collections = await DmsModel.getCollections({
       all_fields: true,
       include_extras: true,
-      include_dataset_count: false
+      include_dataset_count: true
+    })
+    const organizations = await DmsModel.getOrganizations(params={
+      all_fields: true,
+      include_extras: true,
+      include_dataset_count: true
     })
 
     res.locals.collections = collections
+    res.locals.organizations = organizations
 
     // Get events
     res.locals.events = (await CmsModel.getListOfPosts(
@@ -270,6 +277,16 @@ module.exports = function (app) {
     } else {
       res.type('text/plain')
       res.send("User-agent: *\nAllow: /")
+    }
+  })
+
+  // Add an API endpoint for all packages
+  app.get('/api/packages', async (req, res, next) => {
+    try {
+      const packages = await DmsModel.getAllPackages()
+      res.json(packages)
+    } catch (e) {
+      next(e)
     }
   })
 

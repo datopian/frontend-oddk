@@ -1,5 +1,5 @@
 .main-nav_link {
-  @apply block py-2 px-gutter font-semibold text-primary border-white;
+  @apply block py-2 px-gutter font-semibold text-primary;
   transition: 0.3s;
   &:hover{
     @apply text-secondary;
@@ -17,7 +17,7 @@
 
 @screen lg {
   .main-nav_link {
-    @apply border-b-4 py-1 px-0 flex items-center;
+    @apply py-1 px-0 flex items-center;
   }
 }
 
@@ -86,4 +86,13 @@
       display: block;
     }
   }
+}
+
+.main-nav {
+  background-color: #f5f5f5 !important;
+}
+
+.main-nav_link {
+  border: none !important;
+  border-bottom-width: 0px !important;
 }

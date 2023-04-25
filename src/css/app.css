@@ -23,6 +23,8 @@
 @import "components/resource-preview";
 @import "components/tabs";
 @import "components/secondary-nav";
+@import "components/home-organizations";
+@import "components/search-pages";
 
 @import "tailwindcss/utilities";
 

@@ -9,10 +9,27 @@
         <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/search/content" aria-current="page">{{__('Search')}}</a>
+        <a class="breadcrumb_link" href="/search/content" aria-current="page">{{__('Search Content')}}</a>
       </li>
     </ol>
   </nav>
+</div>
+
+<link rel="stylesheet" type="text/css" href="/static/stylesheets/search-pages.css">
+
+<div class="home-group-orgs-container container mx-auto p-gutter search-buttons-container">
+  <div class="mt-gutter" id="datavejviser-container" style="margin-top: 0px !important;">
+    <a href="/search">
+      <button id="search-datasets-button" class="search-datasets-button">
+        <p id="search-datasets-text-content">{{ __('Search datasets') }}</p>
+      </button>
+    </a>
+    <a href="/search/content">
+      <button id="search-content-button" class="search-content-button">
+        <p id="search-content-text-content">{{ __('Search news') }}</p>
+      </button>
+    </a>
+  </div>
 </div>
 
 <div class="container mx-auto md:flex p-gutter">

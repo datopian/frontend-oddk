@@ -6,6 +6,7 @@ Open Data DK
 
 {% block styles %}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.1/tiny-slider.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% block bodyclass %}home{% endblock %}
@@ -14,115 +15,144 @@ Open Data DK
 <main id="main-content" tabindex="-1" aria-label="{{__('Main content')}}">
   <div class="container mx-auto px-gutter">
     <header class="mb-gutter" aria-label="{{__('Groups')}}">
-      <h1 class="home_h1">{{ __('Open Data DK - First exhibition site for open data') }}</h1>
+      <div class="home-text-info">
+        <h1 class="home_h1 home-prefix">{{ __('Open data for') }} </h1>
+        <h1 class="home_h1 home-tail">{{ __('research') }}</h1>
+        <p class="home-description">{{ __('Exhibition site for open public data that you can freely experiment with.') }}</p>
+      </div>
+
+      <script type="module" src="/static/js/home_page.js"></script>
 
         <!-- searchbox -->
-        <div class="dropdown">
+        <div class="dropdown searchbox-homepage">
           <div class="relative" id="home-search-bar">
-            <input id="searchInputHome" aria-label="{{__('Search')}}" autocomplete="off" type="text" class="searchInput bg-secondary pl-4 pr-12 py-3 text-lg text-white outline-none" placeholder="{{__('Search datasets ...')}}" name="q" required />
-            <button class="search-magnifying-glass" type="submit">
-              <svg class="w-6 h-6 fill-white" aria-label="{{__('Search datasets')}}"><use xlink:href="#search" /></svg>
+            <span class="home-search-h-text">{{ __('Search datasets') }}</span>
+            <div class="search-input-container">
+              <input id="searchInputHome" aria-label="{{__('Search')}}" autocomplete="off" type="text" class="searchInput bg-white py-3 text-lg text-black outline-none" placeholder="{{__('Search datasets ...')}}" name="q" required />
+              <a href="/search" class="search-all-button" id="search-all-button">
+                <p class="search-button-text">{{ __('Search') }}</p>
+              </a>
+            </div>
+            <div id="searchSelectHome" class="searchSelect"></div>
+          </div>
+        </div>
+
+        <div id="datavejviser-text-container" style="margin-left: auto; margin-right: 0; width: 100% !important; display: block;">
+          <p id="datavejviser-text">{{ __('Find more data at') }} 
+            <a href="https://datavejviser.dk/" class="datavejviser-text-link">datavejviser.dk</a>
+          </p>
+        </div>
+
+        <div class="home-group-orgs-container" style="display: block; position: relative;">
+          <h2 class="home_h1" style="display: inline; line-height: 36px; font-size: 24px;">{{ __('Find a dataset') }} </h1>
+          <div class="mt-gutter" id="datavejviser-container">
+            <button id="home-group-button" class="home-group-button">
+              <p id="datavejviser-group-text">{{ __('Groups') }}</p>
+            </button>
+            <button id="home-org-button" class="home-org-button">
+              <p id="datavejviser-org-text">{{ __('Organizations') }}</p>
             </button>
           </div>
-          <div id="searchSelectHome" class="searchSelect">
-            <div id="searchSelect1DivHome" class="searchSelect1Div relative border-t-2 border-b-2">
-              <input id="searchSelect1Home" aria-label="{{__('Search datasets')}}" readonly type="text" class="searchSelect1 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg text-white w-full outline-none" />
-              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
-                <svg class="w-6 h-6 fill-white" aria-label="{{__('Search Datasets')}}"><use xlink:href="#search" /></svg>
-              </div>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
-                  {{__('Search datasets')}}
-                </button>
-              </div>
-            </div>
 
-            <div id="searchSelect2DivHome" class="searchSelect2Div relative">
-              <input id="searchSelect2Home" aria-label="{{__('Search website')}}" readonly type="text" class="searchSelect2 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg text-white w-full outline-none" />
-              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
-                <svg class="w-6 h-6 fill-white" aria-label="Search content"><use xlink:href="#search" /></svg>
-              </div>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <button class="flex-shrink-0 text-sm border-4 text-white py-1 px-2 rounded" type="button">
-                  {{__('Search website')}}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- datavejviser -->
-        <!-- add 2 buttons WITHOUT images that will redirect to new websites. No images in these buttons DO NOT USE IMG. DO NOT USE IMAGES -->
-        <div class="mt-gutter" id="datavejviser-container">
-          <a href="/group" id="datavejviser-button-1">
-            <p id="datavejviser-group-text">{{ __('Groups') }}</p>
-          </a>
-
-          <a href="/organization" id="datavejviser-button-2">
-            <p id="datavejviser-org-text">{{ __('Organizations') }}</p>
-          </a>
-
-          <a href="https://datavejviser.dk/" id="datavejviser-button">
-            <span >
-              <p id="datavejviser-text">{{ __('Find more data at') }}</p>
-              <img src="/static/img/datavejviser-logo.svg" alt="Datavejviser DK" id="datavejviser-logo"/>
-            </span>
-          </a>
-        </div>
-
-        <div class="mt-gutter">
-          <ul class="home-groups">
-            {% for collection in collections %}
-              <li class="home-groups_item">
-                <a href="/collections/{{ collection.name }}" class="home-groups_link">
-                  <span class="home-groups_icon">
-                    <img src="{{ collection.image }}" alt="{{ collection.name }}" class="home-groups_img" />
-                  </span>
-                  <span class="home-groups_name">{{ collection.title | truncate(25) }}</span>
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-    </header>
-
-    <section id="article-preview" class="md:flex md:-mx-gutter" aria-label="{{__('Blog posts')}}">
-      {% for post in posts %}
-      <!-- article-preview -->
-      <article class="article-preview my-gutter pb-gutter md:w-1/3 md:mx-gutter" aria-label="{{ post.title | safe }}">
-        <a class="article-preview_image" href="/blog/{{post.slug}}">
-          <img class="article-preview_img" alt="{{ post.imageAlt or post.title or post.imageCaption }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
-        </a>
-        <div class="article-preview_text">
-          <h1 class="article-preview_heading">
-            <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title | safe }}</a>
-          </h1>
-          <div class="mb-3">
-            <ul>
-              {% for category in post.categories %}
-                <li>
-                  <a href="/blog?category={{category}}" class="inline px-3 py-1 text-xs text-white rounded mr-3 mb-3 bg-secondary" title="category">
-                    {{ category }}
+          <div class="mt-gutter home-groups-container">
+            <ul class="home-groups">
+              {% for collection in collections %}
+                <li class="home-groups_item">
+                  <a href="/collections/{{ collection.name }}" class="home-groups_link" aria-label="{{ collection.title }}">
+                    <span class="home-groups_icon">
+                      <img src="{{ collection.image }}" alt="{{ collection.name }}" class="home-groups_img" onerror="retryLoadOrgImg(this)" />
+                      <div class="home-groups_count">{{ collection.count }}</div>
+                    </span>
+                    <span class="home-groups_name">{{ collection.title | truncate(25) }}</span>
                   </a>
                 </li>
               {% endfor %}
             </ul>
           </div>
-          <time class="article-preview_date">{{ post.published }}</time>
+
+          <div class="mt-gutter home-orgs-container">
+            <ul class="home-orgs">
+              {% for organization in organizations %}
+                <li class="home-orgs_item">
+                  <a href="/organization/{{ organization.name }}" class="home-orgs_link" aria-label="{{ organization.title }}">
+                    <span class="home-orgs_icon">
+                      <img src="{{ organization.image }}" alt="{{ organization.name }}" class="home-orgs_img" onerror="retryLoadOrgImg(this)" />
+                      <div class="home-orgs_count">{{ organization.count }}</div>
+                    </span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <script>
+            // Retry loading org image if it fails
+            function retryLoadOrgImg(img) {
+              if (img.getAttribute('data-retries') < 5) { 
+                img.setAttribute('data-retries', parseInt(img.getAttribute('data-retries')) + 1);
+                img.src = img.src;
+              } else {
+                console.error('Failed to load image:', img.src);
+
+                return false;
+              }
+
+              return true;
+            }
+          </script>
+
+        </div>
+    </header>
+
+    <h2 class="home_h1" id="blog-h1">{{ __('Blogs') }}</h2>
+    <section id="article-preview" class="md:flex md:-mx-gutter" aria-label="{{__('Blog posts')}}">
+      <div class="blog-posts-container">
+      {% for post in posts %}
+      <!-- article-preview -->
+      <article class="article-preview" id="article-grid" aria-label="{{ post.title | safe }}">
+        <a class="article-preview_image" href="/blog/{{post.slug}}">
+          <img class="article-preview_img" alt="{{ post.imageAlt or post.title or post.imageCaption }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
+        </a>
+        <div class="mt-2" id="category-tags">
+          <ul>
+            {% for category in post.categories %}
+              <li>
+                <a href="/blog?category={{category}}" class="inline px-3 py-1 text-xs text-white mr-3 category-tag" title="category">
+                  {{ category }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="article-preview_text">
+          <h1 class="article-preview_heading">
+            <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title | safe | truncate(50) }}</a>
+          </h1>
+        </div>
+        <div class="article-preview_text">
           <p class="article-preview_content">
-            {{post.content | striptags | safe | truncate(80)}}
+            {{post.content | striptags | safe | truncate(110)}}
           </p>
         </div>
+        <a class="article-preview_link" href="/blog/{{post.slug}}">
+        <div class="article-preview_date_div">
+          <p class="article-preview_date">{{ post.published }}</p>
+          <i class="fa fa-arrow-right" id="blog-footer-arrow"></i>
+        </div>
+        </a>
       </article>
       <!-- article-preview end -->
       {% endfor %}
+      </div>
     </section>
 
     <!-- Link to all news -->
-    <section class="flex" aria-label="{{__('Navigate to news')}}">
-      <a class="text-center w-48 block px-3 py-2 hover:text-white hover:bg-secondary border border-secondary" href="/blog" id="news-link" aria-label="{{__('View all news')}}">
-        <span class="">{{__('View all news')}}</span>
+    <section aria-label="{{__('Navigate to news')}}">
+      <div class="news-link-section">
+      <a href="/blog" id="news-link" aria-label="{{__('View all news')}}">
+        <span>{{__('View all news')}}</span>
       </a>
+      </div>
     </section>
     <!-- End of link to all news -->
 

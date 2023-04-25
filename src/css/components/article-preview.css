@@ -8,17 +8,54 @@
 }
 
 .article-preview_heading {
-  @apply font-semibold text-2xl leading-snug mt-gutter mb-3;
+  @apply font-semibold text-2xl leading-snug mt-2 mb-3;
 }
 
 .article-preview_heading-link {
   color: inherit;
 }
 
-.article-preview_date {
-  @apply text-gray-500 block mb-2;
-}
-
 .article-preview_content {
   @apply leading-relaxed;
+}
+
+#article-grid {
+  display: grid;
+  grid-template-rows: 0.75fr 0.1fr 0.1fr 0.5fr auto;
+}
+
+.article-preview_date_div {
+  height: 50px;
+  border-bottom: 2px solid #e3e3e3;
+  width: 100%;
+  color: #4E4E4F;
+  display: flex;
+  align-items: end;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.article-preview_text {
+  font-size: 16px;
+}
+
+#blog-footer-arrow {
+  float: right;
+  margin-left: auto;
+  margin-right: 0px;
+  padding: 15px 15px 15px 15px;
+  font-size: 14px;
+  background-color: #e3e3e3;
+}
+
+.article-preview_date {
+  padding-bottom: 10px;
+}
+
+.article-preview_link {
+  text-decoration: none;
+}
+
+.article-preview_link:hover {
+  text-decoration: none;
 }
