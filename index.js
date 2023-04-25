@@ -1,5 +1,7 @@
 const moment = require('moment')
 const { DmsModel } = require('../../lib/dms')
+const { SitemapStream, streamToPromise } = require('sitemap')
+const { createGzip } = require('zlib')
 
 function getCurrentLocale(req) {
   var currentLocale = req.locale || 'da'
@@ -272,7 +274,18 @@ module.exports = function (app) {
 
   app.get('/robots.txt', async (req, res) => {
     robotsPath = path.join(__dirname, '/public/robots.txt')
+
     if (fs.existsSync(robotsPath)) {
+      const robotsTxt = fs.readFileSync(robotsPath, 'utf8')
+
+      if (!robotsTxt.includes('Sitemap:')) {
+        const hostname = config.get('SITE_URL')
+        const sitemapUrl = hostname + '/sitemap.xml'
+        const robotsTxtWithSitemap = robotsTxt + '\nUser-agent: *\nSitemap: ' + sitemapUrl
+
+        fs.writeFileSync(robotsPath, robotsTxtWithSitemap)
+      }
+
       res.sendFile(robotsPath)
     } else {
       res.type('text/plain')
@@ -287,6 +300,124 @@ module.exports = function (app) {
       res.json(packages)
     } catch (e) {
       next(e)
+    }
+  })
+
+  app.get('/sitemap.xml', async function(req, res) {
+    res.header('Content-Type', 'application/xml');
+    res.header('Content-Encoding', 'gzip');
+
+    const hostname = config.get('SITE_URL')
+
+    try {
+      const smStream = new SitemapStream({ hostname: hostname })
+      const pipeline = smStream.pipe(createGzip())
+
+      // Home page
+      smStream.write({ url: '/' })
+
+      // Groups
+      const collections = await DmsModel.getCollections()
+      const collectionsArray = Array.from(collections)
+
+      for (let collection of collectionsArray) {
+        smStream.write({
+          url: `/collections/${collection.name}`,
+          img: collection.image
+        })
+      }
+
+      // Organizations
+      const organizations = await DmsModel.getOrganizations()
+      const organizationsArray = Array.from(organizations)
+
+      for (let organization of organizationsArray) {
+        smStream.write({
+          url: `/${organization.name}`,
+          img: organization.image
+        })
+      }
+
+      // Datasets
+      let datasetsArray = []
+      let datasetsOffset = 0
+
+      // In case there are more than 1000 datasets, we need to paginate
+      while (true) {
+        const datasets = await DmsModel.getPackages({
+          start: datasetsOffset
+        })
+
+        datasetsArray = datasetsArray.concat(datasets)
+
+        if (datasets.length < 1000) {
+          break
+        } else {
+          datasetsOffset += 1000
+        }
+      }
+
+      for (let dataset of datasetsArray) {
+        smStream.write({
+          url: `${dataset.organization.name}/${dataset.name}`
+        })
+      }
+
+      // Blog posts
+      let blogPostsArray = []
+      let blogPostsOffset = 0
+
+      // In case there are more than 100 blog posts, we need to paginate
+      while (true) {
+        const blogPosts = await CmsModel.getListOfPostsWithMeta(
+          {
+            type: 'any',
+            number: 100,
+            offset: blogPostsOffset
+          }
+        )
+
+        blogPostsArray = blogPostsArray.concat(blogPosts.posts)
+
+        if (blogPosts.posts.length < 100) {
+          break
+        } else {
+          blogPostsOffset += 100
+        }
+      }
+
+      for (let blogPost of blogPostsArray) {
+        smStream.write({
+          url: `/blog/${blogPost.slug}`,
+          lastmod: blogPost.modified,
+          img: blogPost.featured_image
+        })
+      }
+
+      // Static pages
+      smStream.write({
+        url: '/hvad-er-open-data-dk'
+      })
+      smStream.write({
+        url: '/foreningen'
+      })
+      smStream.write({
+        url: '/medlemmer'
+      })
+      smStream.write({
+        url: '/vejledninger-og-analyser'
+      })
+      smStream.write({
+        url: '/faq'
+      })
+
+      streamToPromise(pipeline).then(sm => sitemap = sm)
+      smStream.end()
+      pipeline.pipe(res).on('error', (e) => {throw e})
+
+    } catch (e) {
+      console.error(e)
+      res.status(500).end()
     }
   })
 

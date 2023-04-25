@@ -44,4 +44,4 @@ User-Agent: trendictionbot
 Disallow: /
 
 User-agent: Buck/2.2
-Disallow:/
+Disallow: /
