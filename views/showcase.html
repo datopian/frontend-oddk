@@ -239,10 +239,10 @@
                 </dd>
               {% endfor %}
               <!-- End of extras -->
-              {% if dataset.license %}
+              {% if dataset.license.title %}
                 <dt class="info-list_title">{{__('License')}}</dt>
                 <dd class="info-list_description">
-                  {{ snippets.listify([dataset.license]) }}
+                  {{ snippets.listify([dataset.license.title]) }}
                 </dd>
               {% endif %}
               {% if dataset.groups %}
