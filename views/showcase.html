@@ -242,7 +242,7 @@
               {% if dataset.license %}
                 <dt class="info-list_title">{{__('License')}}</dt>
                 <dd class="info-list_description">
-                  {{ dataset.license.title }}
+                  <a href="{{ dataset.license.url }}">{{ dataset.license.title }}</a>
                 </dd>
               {% endif %}
               {% if dataset.groups %}
