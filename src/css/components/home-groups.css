@@ -1,9 +1,19 @@
 .home-groups {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   width: 100%;
   margin-top: 20px;
   margin-bottom: 50px;
+  gap: 26px;
+}
+
+@media screen and (max-width: 767px) {
+  .home-groups {
+    gap: 36px;
+  }
+  .home-groups_item {
+    margin-bottom: 10px;
+  }
 }
 
 .home-groups_item {
@@ -13,38 +23,51 @@
 
 .home-groups_link {
   @apply flex-col items-start text-primary;
+  display: flex;
   background-color: transparent;
+}
+
+.home-groups_link:hover {
+  text-decoration: none;
 }
 
 .home-groups_count {  
   background: #C82A0F;  
   border: 1px solid #C82A0F;
   border-radius: 14px;
-  display: inline-block;
+  display: flex;
   color: #fff;
   text-align: center;
   align-self: center;
-  margin-bottom: 0;
-  margin-top: 5px;
-  width: 50px;
+  align-items: center;
+  margin-top: 14px;
+  width: 59px;
+  height: 26px;
+  justify-content: center
 }
 
 .home-groups_icon {
-  @apply p-6 flex justify-center;
+  @apply flex;
   flex-direction: column;
   background: #4E4E4F;
-  width: 110px;
-  height: 110px;
+  width: 150px;
+  height: 112px;
 }
 
 .home-groups_icon:hover {
-  box-shadow: 0 0 0 2px #C82A0F;
+  background: #EF4123;
+}
+
+.home-groups_icon:hover .home-groups_count {
+  background: #4E4E4F
 }
 
 .home-groups_img {
-  object-fit: cover;
+  height: 48px;
+  width: 54px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 12px;
   display: block;
 }
 

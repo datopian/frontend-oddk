@@ -125,13 +125,21 @@
 }
 
 #searchInputHome {
-  width: 90%;
+  width: calc(100% - 40px);
   height: 46px !important;
   border: 1px solid #4E4E4F; 
   margin-left: 40px;
   margin-bottom: 40px;
   padding-left: 10px;
   float: left;
+  position: absolute;
+  top: -40px;
+}
+
+.search-dropdown-container {
+  width: calc(100% - 40px);
+  position: relative;
+  flex: 1;
 }
 
 #home-search-bar {
@@ -237,6 +245,10 @@
   font-size: 16px;
 }
 
+.home-about-links {
+  line-height: 28px;
+}
+
 .home-about:hover, .home-about-links:hover {
   color: #FFFFFF;
 }
@@ -245,6 +257,9 @@
   font-weight: bold;
   font-size: 24px;
   color: #FFFFFF !important;
+  line-height: 36px;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
 .home-about-text-address {
@@ -299,12 +314,29 @@
   background-color: #4E4E4F;
   color: white;
   padding: 10px;
-  margin-bottom: 40px;
+  margin-bottom: 34px;
   height: 46px;
   width: 223px;
   float: right;
   line-height: 24px !important;
   font-size: 16px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .search-all-button {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  #home-group-button, #home-org-button {
+    flex: 0 0 auto;
+    align-items: center;
+    width: 168px !important;
+  }
+  #datavejviser-org-text, #datavejviser-group-text {
+    width: 168px !important;
+  }
 }
 
 .search-button-text {
@@ -335,7 +367,7 @@
   width: 100%;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .blog-posts-container {
     grid-template-columns: 1fr;
     margin-left: 0px;
@@ -353,9 +385,10 @@
   line-height: 90px;
   font-size: 60px;
   margin-top: 36px !important;
+  margin-bottom: 10px !important;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1080px) {
   .home-prefix {
     margin-top: 18px !important;
     font-size: 36px;
@@ -369,9 +402,10 @@
   line-height: 90px;
   font-size: 60px;
   margin-top: 36px !important;
+  margin-bottom: 10px !important;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1080px) {
   .home-tail {
     font-size: 36px;
     margin-top: 18px !important;
@@ -382,10 +416,10 @@
 .home-description {
   line-height: 36px;
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 38px;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
   .home-description {
     font-size: 20px;
     line-height: 30px;
@@ -396,8 +430,23 @@
   margin-top: 36px;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
   .home-text-info {
     margin-top: 18px;
   }
+}
+
+.social-svg {
+  fill: #FFFFFF !important;
+  margin-right: 24px !important;
+  font-size: 36px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+}
+
+#home-find-dataset-text {
+  line-height: 36px;
+  font-size: 24px;
+  margin-top: 100px !important;
+  margin-bottom: 10px !important;
 }

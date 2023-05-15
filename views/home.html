@@ -13,13 +13,13 @@ Open Data DK
 
 {% block content %}
 <main id="main-content" tabindex="-1" aria-label="{{__('Main content')}}">
-  <div class="container mx-auto px-gutter">
+  <div class="container mx-auto px-gutter" id="home-main-container">
     <header class="mb-gutter" aria-label="{{__('Groups')}}">
       <div class="home-text-info">
         <h1 class="home_h1 home-prefix">{{ __('Open data for') }} </h1>
-        <h1 class="home_h1 home-tail">{{ __('research') }}</h1>
-        <p class="home-description">{{ __('Exhibition site for open public data that you can freely experiment with.') }}</p>
+        <h1 class="home_h1 home-tail" id="home-tail">{{ __('collaboration') }}</h1>
       </div>
+      <p class="home-description">{{ __('Find open data from municipalities and other public organisations.') }}</p>
 
       <script type="module" src="/static/js/home_page.js"></script>
 
@@ -28,12 +28,14 @@ Open Data DK
           <div class="relative" id="home-search-bar">
             <span class="home-search-h-text">{{ __('Search datasets') }}</span>
             <div class="search-input-container">
-              <input id="searchInputHome" aria-label="{{__('Search')}}" autocomplete="off" type="text" class="searchInput bg-white py-3 text-lg text-black outline-none" placeholder="{{__('Type a search term ...')}}" name="q" required />
+              <div class="search-dropdown-container">
+                <input id="searchInputHome" aria-label="{{__('Search')}}" autocomplete="off" type="text" class="searchInput bg-white py-3 text-lg text-black outline-none" placeholder="{{__('Type a search term ...')}}" name="q" required />
+                <div id="searchSelectHome" class="searchSelect"></div>
+              </div>
               <a href="/search" class="search-all-button" id="search-all-button">
                 <p class="search-button-text">{{ __('Search') }}</p>
               </a>
             </div>
-            <div id="searchSelectHome" class="searchSelect"></div>
           </div>
         </div>
 
@@ -44,7 +46,7 @@ Open Data DK
         </div>
 
         <div class="home-group-orgs-container" style="display: block; position: relative;">
-          <h2 class="home_h1" style="display: inline; line-height: 36px; font-size: 24px;">{{ __('Find a dataset') }} </h1>
+          <h2 class="home_h1" id="home-find-dataset-text">{{ __('Find a dataset') }} </h1>
           <div class="mt-gutter" id="datavejviser-container">
             <button id="home-group-button" class="home-group-button">
               <p id="datavejviser-group-text">{{ __('Groups') }}</p>
@@ -161,5 +163,14 @@ Open Data DK
 {% endblock %}
 
 {% block scripts %}
+
+<script>
+  var translations = {
+      collaboration: '{{ __("collaboration") }}',
+      research: '{{ __("research") }}',
+      innovation: '{{ __("innovation") }}',
+      testing: '{{ __("testing") }}'
+  };
+</script>
 
 {% endblock %}

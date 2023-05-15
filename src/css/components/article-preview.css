@@ -13,15 +13,16 @@
 
 .article-preview_heading-link {
   color: inherit;
+  font-size: 18px;
 }
 
 .article-preview_content {
   @apply leading-relaxed;
+  margin-bottom: 50px;
 }
 
 #article-grid {
-  display: grid;
-  grid-template-rows: 0.75fr 0.1fr 0.1fr 0.5fr auto;
+  position: relative;
 }
 
 .article-preview_date_div {
@@ -30,9 +31,11 @@
   width: 100%;
   color: #4E4E4F;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
+  justify-content: center;
   font-size: 14px;
-  margin-top: 15px;
+  position: absolute;
+  bottom: 0;
 }
 
 .article-preview_text {
@@ -50,6 +53,7 @@
 
 .article-preview_date {
   padding-bottom: 10px;
+  font-weight: 400;
 }
 
 .article-preview_link {

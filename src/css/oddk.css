@@ -42,9 +42,25 @@ body, html {
 }
 
 .container {
-  margin-left: 5%;
-  margin-right: 5%;
-  max-width: 90%;
+  margin-left: 10%;
+  margin-right: 10%;
+  max-width: 80%;
+}
+
+@media screen and (min-width: 1080px) and (max-width: 1379px) {
+  .container {
+    margin-left: 8%;
+    margin-right: 8%;
+    max-width: 84%;
+  }
+}
+
+@media screen and (max-width: 1079px) {
+  .container {
+    margin-left: 0%;
+    margin-right: 0%;
+    max-width: 100%;
+  }
 }
 
 .search-card:hover {
@@ -53,8 +69,13 @@ body, html {
 
 #searchSelectHome {
   z-index: 1;
-  position: relative;
+  position: absolute;
   display: none;
+  width: calc(100% - 40px);
+  margin-left: 40px;
+  margin-top: 46px;
+  float: left;
+  top: -41px;
 }
 
 @media (max-width: 767px) {

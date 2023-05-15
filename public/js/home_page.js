@@ -17,10 +17,40 @@ $('.home-group-button').on('click', (e) => {
 })
 
 $(document).ready(function() {
-    if (window.matchMedia('(max-width: 1365px)').matches) {
+    if (window.matchMedia('(max-width: 1379px)').matches) {
         const script = document.createElement('script');
         script.type = 'module';
         script.src = '/static/js/search.js';
         document.head.appendChild(script);
     }
-})
+});
+
+$(document).ready(function() {
+    var tailWords = [
+        translations['collaboration'],
+        translations['research'],
+        translations['innovation'],
+        translations['testing']
+    ];
+
+    var tailIndex = 0;
+    var parent = $('#home-tail').parent();
+    parent.css('position', 'relative');
+
+    var tailInterval = setInterval(() => {
+        var updatedLastWord = tailWords[tailIndex];
+        var spaces = '';
+        var longestWord = tailWords.reduce((a, b) => a.length > b.length ? a : b, '');
+
+        if (updatedLastWord.length < longestWord.length) {
+            var spaces = '&nbsp;&nbsp;'.repeat((longestWord.length - updatedLastWord.length));
+        }
+
+        var updatedLastWord = updatedLastWord + spaces;
+        var updatedSentence = ' <span class="red-word">' + updatedLastWord + '</span>';
+
+        $('#home-tail').html(updatedSentence);
+
+        tailIndex = (tailIndex + 1) % tailWords.length;
+    }, 2300);
+});

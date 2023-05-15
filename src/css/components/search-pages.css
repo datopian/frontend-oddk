@@ -80,14 +80,5 @@
 }
 
 .search-buttons-container {
-  display: none;
-}
-
-@media screen and (max-width: 1365px) {
-  .search-buttons-container {
-    display: flex;
-    position: relative;
-    height: 50px;
-    padding-top: 0px !important;
-  }
+  height: 100px !important;
 }
