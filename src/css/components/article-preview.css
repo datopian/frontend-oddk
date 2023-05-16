@@ -63,3 +63,21 @@
 .article-preview_link:hover {
   text-decoration: none;
 }
+
+a.article-as-link {
+  position: absolute;
+  display: block;
+  text-decoration: none;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.article-preview:hover #blog-footer-arrow {
+  text-decoration: none;
+  color: #EF4123 !important;
+}
+
+.article-preview:hover #article-categories {
+  text-decoration: none;
+  background-color: #EF4123 !important;
+}

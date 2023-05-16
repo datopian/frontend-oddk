@@ -112,6 +112,7 @@ Open Data DK
       {% for post in posts %}
       <!-- article-preview -->
       <article class="article-preview" id="article-grid" aria-label="{{ post.title | safe }}">
+        <a class="article-as-link" href="/blog/{{post.slug}}">
         <a class="article-preview_image" href="/blog/{{post.slug}}">
           <img class="article-preview_img" alt="{{ post.imageAlt or post.title or post.imageCaption }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
         </a>
@@ -119,7 +120,7 @@ Open Data DK
           <ul>
             {% for category in post.categories %}
               <li>
-                <a href="/blog?category={{category}}" class="inline px-3 py-1 text-xs text-white mr-3 category-tag" title="category">
+                <a href="/blog?category={{category}}" class="inline px-3 py-1 text-xs text-white mr-3 category-tag" title="category" id="article-categories">
                   {{ category }}
                 </a>
               </li>
@@ -141,6 +142,7 @@ Open Data DK
           <p class="article-preview_date">{{ post.published }}</p>
           <i class="fa fa-arrow-right" id="blog-footer-arrow"></i>
         </div>
+        </a>
         </a>
       </article>
       <!-- article-preview end -->

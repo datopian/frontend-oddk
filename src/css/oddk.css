@@ -82,4 +82,12 @@ body, html {
   #searchSelectHome {
     display: block;
   }
+  #home-about-text-stacked {
+    margin-top: 36px;
+    margin-bottom: 14px;
+  }
+  #home-about-text-stacked-top {
+    margin-top: 16px;
+    margin-bottom: 14px;
+  }
 }
