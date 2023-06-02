@@ -37,16 +37,6 @@
   }
 }
 
-body, html { 
-  font-size: 85%;
-}
-
-.container {
-  margin-left: 10%;
-  margin-right: 10%;
-  max-width: 80%;
-}
-
 @media screen and (min-width: 1080px) and (max-width: 1379px) {
   .container {
     margin-left: 8%;
@@ -61,6 +51,10 @@ body, html {
     margin-right: 0%;
     max-width: 100%;
   }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700 !important;
 }
 
 .search-card:hover {
@@ -89,5 +83,12 @@ body, html {
   #home-about-text-stacked-top {
     margin-top: 16px;
     margin-bottom: 14px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    /* Need to use this to account for the margins on the left and right */
+    max-width: min(calc(100% - 16%), 1380px) !important;
   }
 }

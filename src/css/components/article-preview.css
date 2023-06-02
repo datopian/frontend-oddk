@@ -81,3 +81,9 @@ a.article-as-link {
   text-decoration: none;
   background-color: #EF4123 !important;
 }
+
+#article-categories {
+  position: absolute;
+  top: 16em;
+  left: 0.75em;
+}
