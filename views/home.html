@@ -29,7 +29,7 @@ Open Data DK
             <span class="home-search-h-text">{{ __('Search datasets') }}</span>
             <div class="search-input-container">
               <div class="search-dropdown-container">
-                <input id="searchInputHome" aria-label="{{__('Search')}}" autocomplete="off" type="text" class="searchInput bg-white py-3 text-lg text-black outline-none" placeholder="{{__('Type a search term ...')}}" name="q" required />
+                <input id="searchInputHome" aria-label="{{__('Search')}}" autocomplete="off" type="text" class="searchInput bg-white py-3 text-lg text-black outline-none" placeholder="{{__('Type a search term ...')}}" name="q" />
                 <div id="searchSelectHome" class="searchSelect"></div>
               </div>
               <a href="/search" class="search-all-button" id="search-all-button">
@@ -111,16 +111,16 @@ Open Data DK
       <div class="blog-posts-container">
       {% for post in posts %}
       <!-- article-preview -->
-      <article class="article-preview" id="article-grid" aria-label="{{ post.title | safe }}">
-        <a class="article-as-link" href="/blog/{{post.slug}}">
-        <a class="article-preview_image" href="/blog/{{post.slug}}">
+      <article class="article-preview article-grid" aria-label="{{ post.title | safe }}">
+        <a class="article-as-link" href="/blog/{{post.slug}}" aria-label="{{ post.title | safe }}">
+        <a class="article-preview_image" href="{{post.image or '/static/img/placeholder.svg'}}">
           <img class="article-preview_img" alt="{{ post.imageAlt or post.title or post.imageCaption }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
         </a>
-        <div class="mt-2" id="category-tags">
+        <div class="mt-2">
           <ul>
             {% for category in post.categories %}
               <li>
-                <a href="/blog?category={{category}}" class="inline px-3 py-1 text-xs text-white mr-3 category-tag" title="category" id="article-categories">
+                <a href="/blog?category={{category}}" class="inline px-3 py-1 text-xs text-white mr-3 category-tag article-categories" title="category">
                   {{ category }}
                 </a>
               </li>
@@ -129,7 +129,7 @@ Open Data DK
         </div>
         <div class="article-preview_text">
           <h1 class="article-preview_heading">
-            <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title | safe | truncate(50) }}</a>
+            <span class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title | safe | truncate(50) }}</span>
           </h1>
         </div>
         <div class="article-preview_text">
@@ -137,10 +137,10 @@ Open Data DK
             {{post.content | striptags | safe | truncate(110)}}
           </p>
         </div>
-        <a class="article-preview_link" href="/blog/{{post.slug}}">
+        <a class="article-preview_link" href="/blog/{{post.slug}}/" aria-label="{{ post.title | safe }}">
         <div class="article-preview_date_div">
           <p class="article-preview_date">{{ post.published }}</p>
-          <i class="fa fa-arrow-right" id="blog-footer-arrow"></i>
+          <i class="fa fa-arrow-right blog-footer-arrow"></i>
         </div>
         </a>
         </a>

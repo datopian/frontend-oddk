@@ -9,6 +9,7 @@
 
 .home_h1 {
   @apply font-semibold leading-tight;
+  background: none;
 }
 @screen md {
   .home_h1 {
@@ -134,6 +135,11 @@
   float: left;
   position: absolute;
   top: -40px;
+  outline: none;
+}
+
+#searchInputHome:focus-visible {
+  outline: 1px solid #4e4e4f;
 }
 
 .search-dropdown-container {
@@ -173,7 +179,7 @@
   background-color: #4e4e4f;
   width: 168px;
   height: 46px;
-  color: #B3B3B3;
+  color: #f3f3f3;
   font-weight: 700;
   outline: none;
   font-size: 16px;
@@ -192,6 +198,11 @@
 
 #home-group-button:focus, #home-org-button:focus {
   outline: none;
+}
+
+.home-group-button:focus-visible, .home-org-button:focus-visible {
+  outline: 2px solid #4e4e4f !important;
+  z-index: 999;
 }
 
 .home-group-orgs-container {
@@ -217,6 +228,7 @@
   float: right;
   font-size: 16px;
   margin-top: 20px;
+  background: none;
 }
 
 .datavejviser-text-link {
@@ -386,6 +398,11 @@
   font-size: 60px;
   margin-top: 36px !important;
   margin-bottom: 10px !important;
+  background: none;
+}
+
+.red-word {
+  background: none;
 }
 
 @media screen and (max-width: 1080px) {
@@ -417,6 +434,7 @@
   line-height: 36px;
   font-size: 24px;
   margin-bottom: 38px;
+  background: none;
 }
 
 @media screen and (max-width: 768px) {

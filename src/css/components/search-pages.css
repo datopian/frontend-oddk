@@ -2,6 +2,11 @@
   outline: none;
 }
 
+.home-datasets-button:focus-visible, .home-content-button:focus-visible {
+  outline: 2px solid #4e4e4f !important;
+  z-index: 999;
+}
+
 #datavejviser-container {
   display: flex !important;
   margin-bottom: 40px;
@@ -21,7 +26,7 @@
   background-color: #4e4e4f;
   width: 168px;
   height: 46px;
-  color: #B3B3B3;
+  color: #f3f3f3;
   font-weight: 700;
   outline: none;
   font-size: 16px;
@@ -47,7 +52,7 @@
   background-color: #4e4e4f;
   width: 168px;
   height: 46px;
-  color: #B3B3B3;
+  color: #f3f3f3;
   font-weight: 700;
   outline: none;
   font-size: 16px;
