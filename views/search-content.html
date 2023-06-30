@@ -15,8 +15,6 @@
   </nav>
 </div>
 
-<link rel="stylesheet" type="text/css" href="/static/stylesheets/search-pages.css">
-
 <div class="home-group-orgs-container container mx-auto p-gutter search-buttons-container">
   <div class="mt-gutter" id="datavejviser-container" style="margin-top: 0px !important;">
     <a href="/search">
@@ -49,32 +47,35 @@
 
   let params = new URLSearchParams(location.search);
   let regExp = /(?:[^\s"]+|"[^"]*")+/g;
-  let qAll = params.get('q').match(regExp);
 
-  for (qPart of qAll) {
-    qTerm = (qTerm + " " + qPart).trim();
-  };
-  
-  $("#search-content-input").val(qTerm);
+  if (params.get('q')) {
+    let qAll = params.get('q').match(regExp);
 
-  // capture search term changes
-  $("#search-content-input").on('input', function (event) {
-    qTerm = $(this).val();
-  });
+    for (qPart of qAll) {
+      qTerm = (qTerm + " " + qPart).trim();
+    };
 
-  // click on button event
-  var searchBtn = document.getElementById("search-button");
+    $("#search-content-input").val(qTerm);
 
-  searchBtn.onclick = function(event) {
-    window.location.href = window.location.origin + "/search/content?q=" + qTerm;
-  };
+    // capture search term changes
+    $("#search-content-input").on('input', function (event) {
+      qTerm = $(this).val();
+    });
 
-  // press on Enter event
-  $("#search-content-input").on('keyup', function (event) {
-    if (event.originalEvent.code === "Enter") {
+    // click on button event
+    var searchBtn = document.getElementById("search-button");
+
+    searchBtn.onclick = function(event) {
       window.location.href = window.location.origin + "/search/content?q=" + qTerm;
-    }
-  });
+    };
+
+    // press on Enter event
+    $("#search-content-input").on('keyup', function (event) {
+      if (event.originalEvent.code === "Enter") {
+        window.location.href = window.location.origin + "/search/content?q=" + qTerm;
+      }
+    });
+  }
 
 </script>
 {% endblock %}
