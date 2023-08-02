@@ -1,4 +1,5 @@
 const moment = require('moment')
+const { DmsModel } = require('../../lib/dms')
 const { SitemapStream, streamToPromise } = require('sitemap')
 const { createGzip } = require('zlib')
 
@@ -92,22 +93,16 @@ module.exports = function (app) {
     const collections = await DmsModel.getCollections({
       all_fields: true,
       include_extras: true,
-      include_dataset_count: false
+      include_dataset_count: true
     })
-    // Filter collections as we want to show only featured items
-    const featured = collections.filter(collection => {
-      return collection.extras.find(extra => extra.key === 'featured' && extra.value)
+    const organizations = await DmsModel.getOrganizations(params={
+      all_fields: true,
+      include_extras: true,
+      include_dataset_count: true
     })
-    // Shuffle array
-    let shuffled
-    if (featured.length >= 4) {
-      shuffled = featured.sort(() => 0.5 - Math.random())
-    } else {
-      shuffled = collections.sort(() => 0.5 - Math.random())
-    }
-    // Get sub-array of first n elements after shuffled
-    const randomFour = shuffled.slice(0, 4)
-    res.locals.collections = randomFour
+
+    res.locals.collections = collections
+    res.locals.organizations = organizations
 
     // Get events
     res.locals.events = (await CmsModel.getListOfPosts(
@@ -297,6 +292,16 @@ module.exports = function (app) {
     } else {
       res.type('text/plain')
       res.send("User-agent: *\nAllow: /")
+    }
+  })
+
+  // Add an API endpoint for all packages
+  app.get('/api/packages', async (req, res, next) => {
+    try {
+      const packages = await DmsModel.getAllPackages()
+      res.json(packages)
+    } catch (e) {
+      next(e)
     }
   })
 

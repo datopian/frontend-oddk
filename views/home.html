@@ -1,148 +1,164 @@
 {% extends "base.html" %}
 
 {% block title %}
-Welcome - Home
+Open Data DK
 {% endblock %}
 
 {% block styles %}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.1/tiny-slider.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% block bodyclass %}home{% endblock %}
 
 {% block content %}
 <main id="main-content" tabindex="-1" aria-label="{{__('Main content')}}">
-  <div class="container mx-auto px-gutter">
-    <header class="mb-gutter" aria-label="{{__('Featured groups')}}">
-      <h1 class="home_h1">{{ home_heading | safe }}</h1>
+  <div class="container mx-auto px-gutter" id="home-main-container">
+    <header class="mb-gutter" aria-label="{{__('Groups')}}">
+      <div class="home-text-info">
+        <h1 class="home_h1 home-prefix">{{ __('Open data for') }} </h1>
+        <h1 class="home_h1 home-tail" id="home-tail">{{ __('collaboration') }}</h1>
+      </div>
+      <p class="home-description">{{ __('Find open data from municipalities and other public organisations.') }}</p>
 
-        <div class="lg:flex mt-gutter">
-          <ul class="featured-groups">
-            {% for collection in  collections %}
-              <li class="featured-groups_item">
-                <a href="/collections/{{ collection.name }}" class="featured-groups_link">
-                  <span class="featured-groups_icon">
-                    <img src="{{ collection.image }}" alt="{{ collection.name }}" class="featured-groups_img" />
-                  </span>
-                  <span class="featured-groups_name">{{ collection.title }}</span>
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
+      <script type="module" src="/static/js/home_page.js"></script>
+
         <!-- searchbox -->
-          <div class="dropdown">
-            <div class="relative">
-              <input id="searchInputHome" aria-label="{{__('Search')}}" autocomplete="off" type="text" class="searchInput bg-secondary pl-4 pr-12 py-3 text-lg text-white w-full outline-none" placeholder="{{__('Search ...')}}" name="q" required />
-              <button class="absolute inset-y-0 right-0 px-3 outline-none" type="submit">
-                <svg class="w-6 h-6 fill-white" aria-label="{{__('Search datasets')}}"><use xlink:href="#search" /></svg>
-              </button>
-            </div>
-            <div id="searchSelectHome" class="searchSelect">
-              <div id="searchSelect1DivHome" class="searchSelect1Div relative border-t-2 border-b-2">
-                <input id="searchSelect1Home" aria-label="{{__('Search datasets')}}" readonly type="text" class="searchSelect1 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg text-white w-full outline-none" />
-                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
-                  <svg class="w-6 h-6 fill-white" aria-label="{{__('Search Datasets')}}"><use xlink:href="#search" /></svg>
-                </div>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
-                    {{__('Search datasets')}}
-                  </button>
-                </div>
+        <div class="dropdown searchbox-homepage">
+          <div class="relative" id="home-search-bar">
+            <span class="home-search-h-text">{{ __('Search datasets') }}</span>
+            <div class="search-input-container">
+              <div class="search-dropdown-container">
+                <input id="searchInputHome" aria-label="{{__('Search')}}" autocomplete="off" type="text" class="searchInput bg-white py-3 text-lg text-black outline-none" placeholder="{{__('Type a search term ...')}}" name="q" />
+                <div id="searchSelectHome" class="searchSelect"></div>
               </div>
-
-              <div id="searchSelect2DivHome" class="searchSelect2Div relative">
-                <input id="searchSelect2Home" aria-label="{{__('Search website')}}" readonly type="text" class="searchSelect2 cursor-pointer bg-secondary hover:bg-gray-500 focus:bg-gray-500 pl-10 pr-48 py-3 text-lg text-white w-full outline-none" />
-                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2 text-gray-700">
-                  <svg class="w-6 h-6 fill-white" aria-label="Search content"><use xlink:href="#search" /></svg>
-                </div>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <button class="flex-shrink-0 text-sm border-4 text-white py-1 px-2 rounded" type="button">
-                    {{__('Search website')}}
-                  </button>
-                </div>
-              </div>
+              <a href="/search" class="search-all-button" id="search-all-button">
+                <p class="search-button-text">{{ __('Search') }}</p>
+              </a>
             </div>
           </div>
         </div>
-    </header>
 
-    <section id="article-preview" class="md:flex md:-mx-gutter" aria-label="{{__('Blog posts')}}">
-      {% for post in posts %}
-      <!-- article-preview -->
-      <article class="article-preview my-gutter pb-gutter md:w-1/3 md:mx-gutter" aria-label="{{ post.title | safe }}">
-        <a class="article-preview_image" href="/blog/{{post.slug}}">
-          <img class="article-preview_img" alt="{{ post.imageAlt or post.title or post.imageCaption }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
-        </a>
-        <div class="article-preview_text">
-          <h1 class="article-preview_heading">
-            <a class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title | safe }}</a>
-          </h1>
-          <div class="mb-3">
-            <ul>
-              {% for category in post.categories %}
-                <li>
-                  <a href="/blog?category={{category}}" class="inline px-3 py-1 text-xs text-white rounded mr-3 mb-3 bg-secondary" title="category">
-                    {{ category }}
+        <div id="datavejviser-text-container" style="margin-left: auto; margin-right: 0; width: 100% !important; display: block;">
+          <p id="datavejviser-text">{{ __('Find more data at') }} 
+            <a href="https://datavejviser.dk/" class="datavejviser-text-link">datavejviser.dk</a>
+          </p>
+        </div>
+
+        <div class="home-group-orgs-container" style="display: block; position: relative;">
+          <h2 class="home_h1" id="home-find-dataset-text">{{ __('Find a dataset') }} </h1>
+          <div class="mt-gutter" id="datavejviser-container">
+            <button id="home-group-button" class="home-group-button">
+              <p id="datavejviser-group-text">{{ __('Groups') }}</p>
+            </button>
+            <button id="home-org-button" class="home-org-button">
+              <p id="datavejviser-org-text">{{ __('Organizations') }}</p>
+            </button>
+          </div>
+
+          <div class="mt-gutter home-groups-container">
+            <ul class="home-groups">
+              {% for collection in collections %}
+                <li class="home-groups_item">
+                  <a href="/collections/{{ collection.name }}" class="home-groups_link" aria-label="{{ collection.title }}">
+                    <span class="home-groups_icon">
+                      <img src="{{ collection.image }}" alt="{{ collection.name }}" class="home-groups_img" onerror="retryLoadOrgImg(this)" />
+                      <div class="home-groups_count">{{ collection.count }}</div>
+                    </span>
+                    <span class="home-groups_name">{{ collection.title | truncate(25) }}</span>
                   </a>
                 </li>
               {% endfor %}
             </ul>
           </div>
-          <time class="article-preview_date">{{ post.published }}</time>
+
+          <div class="mt-gutter home-orgs-container">
+            <ul class="home-orgs">
+              {% for organization in organizations %}
+                <li class="home-orgs_item">
+                  <a href="/organization/{{ organization.name }}" class="home-orgs_link" aria-label="{{ organization.title }}">
+                    <span class="home-orgs_icon">
+                      <img src="{{ organization.image }}" alt="{{ organization.name }}" class="home-orgs_img" onerror="retryLoadOrgImg(this)" />
+                      <div class="home-orgs_count">{{ organization.count }}</div>
+                    </span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <script>
+            // Retry loading org image if it fails
+            function retryLoadOrgImg(img) {
+              if (img.getAttribute('data-retries') < 5) { 
+                img.setAttribute('data-retries', parseInt(img.getAttribute('data-retries')) + 1);
+                img.src = img.src;
+              } else {
+                console.error('Failed to load image:', img.src);
+
+                return false;
+              }
+
+              return true;
+            }
+          </script>
+
+        </div>
+    </header>
+
+    <h2 class="home_h1" id="blog-h1">{{ __('Blogs') }}</h2>
+    <section id="article-preview" class="md:flex md:-mx-gutter" aria-label="{{__('Blog posts')}}">
+      <div class="blog-posts-container">
+      {% for post in posts %}
+      <!-- article-preview -->
+      <article class="article-preview article-grid" aria-label="{{ post.title | safe }}">
+        <a class="article-as-link" href="/blog/{{post.slug}}" aria-label="{{ post.title | safe }}">
+        <a class="article-preview_image" href="{{post.image or '/static/img/placeholder.svg'}}">
+          <img class="article-preview_img" alt="{{ post.imageAlt or post.title or post.imageCaption }}" src="{{post.image or '/static/img/placeholder.svg'}}" />
+        </a>
+        <div class="mt-2">
+          <ul>
+            {% for category in post.categories %}
+              <li>
+                <a href="/blog?category={{category}}" class="inline px-3 py-1 text-xs text-white mr-3 category-tag article-categories" title="category">
+                  {{ category }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="article-preview_text">
+          <h1 class="article-preview_heading">
+            <span class="article-preview_heading-link" href="/blog/{{post.slug}}">{{ post.title | safe | truncate(50) }}</span>
+          </h1>
+        </div>
+        <div class="article-preview_text">
           <p class="article-preview_content">
-            {{post.content | striptags | safe | truncate(200)}}
+            {{post.content | striptags | safe | truncate(110)}}
           </p>
         </div>
+        <a class="article-preview_link" href="/blog/{{post.slug}}/" aria-label="{{ post.title | safe }}">
+        <div class="article-preview_date_div">
+          <p class="article-preview_date">{{ post.published }}</p>
+          <i class="fa fa-arrow-right blog-footer-arrow"></i>
+        </div>
+        </a>
+        </a>
       </article>
       <!-- article-preview end -->
       {% endfor %}
+      </div>
     </section>
 
     <!-- Link to all news -->
-    <section class="flex justify-center px-24" aria-label="{{__('Navigate to news')}}">
-      <a class="text-center w-48 block px-3 py-2 hover:text-white hover:bg-secondary border border-secondary" href="/blog" id="news-link" aria-label="{{__('View all news')}}">
-        <span class="">{{__('View all news')}}</span>
+    <section aria-label="{{__('Navigate to news')}}">
+      <div class="news-link-section">
+      <a href="/blog" id="news-link" aria-label="{{__('View all news')}}">
+        <span>{{__('View all news')}}</span>
       </a>
+      </div>
     </section>
     <!-- End of link to all news -->
-
-    <!-- if events -->
-    <section class="home_events lg:w-2/3 my-gutter" aria-label="{{__('Events')}}">
-      <div class="overflow-hidden" id="home-events">
-        <ul class="slider">
-          {% for event in events %}
-          <li>
-            <a class="flex" href="/blog/{{ event.slug }}">
-              <time class="flex flex-col justify-center text-white text-center px-6 py-4 {{'bg-primary' if event.completed else 'bg-secondary'}}">
-                <span class="font-semibold text-3xl leading-none">{{ event.day }}</span> <span class="leading-none">{{ event.month }}</span>
-              </time>
-              <div class="px-6">
-                <h3 class="font-semibold text-2xl text-primary">{{ event.title | safe }}</h3>
-                <p>
-                  {{ event.excerpt | striptags | safe | truncate(120) or event.content | striptags | safe | truncate(120) }}
-                </p>
-              </div>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-
-    </section>
-    <!-- end if -->
-
-    <section id="tweets-container" class="md:flex flex-wrap md:-mx-gutter list-none" aria-label="Tweets">
-    <div class="my-gutter px-3 md:w-1/3 flex">
-      <li class="inline-block bg-gray-900 text-white p-10 ">
-        <h3 class="font-semibold text-2xl">{{ aboutTitle | safe }}</h3>
-        <p class="leading-relaxed">
-          {{ aboutText | safe | truncate(300) }}
-        </p>
-        <a class="font-semibold text-white" href="/about">{{__('More')}}</a>
-      </li>
-      </div>
-      <div id="tweets" class="twitter-feed"></div>
-    </section>
 
   </div>
 </main>
@@ -150,40 +166,13 @@ Welcome - Home
 
 {% block scripts %}
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.1/min/tiny-slider.js"></script>
-
-<script src="/static/js/twitterFetcher_min.js"></script>
-
 <script>
-  // slider
-  var slider = tns({
-    container: '.slider',
-    controls: false
-  });
-
-  // Twitter
-  var configProfile = {
-    "profile": {"screenName": 'OpenDataDK'},
-    "domId": 'tweets',
-    "maxTweets": 5,
-    "showUser": true,
-    "showTime": false,
-    "showImages": false, //https://github.com/jasonmayes/Twitter-Post-Fetcher/issues/182
-    "showRetweet": false
-  };
-  twitterFetcher.fetch(configProfile);
-
-  window.onload =  async function(){
-    var tweetscontainer = document.getElementById('tweets-container');
-    var tweetslist = document.getElementById('tweets');
-    var innerblock = "";
-      for ( var i = 0; i < tweetslist.childNodes[0].childNodes.length; i++) {
-            tweetslist.childNodes[0].childNodes[i].className = "bg-gray-200 p-6";
-            innerblock += '<div class=\"my-gutter px-4 md:w-1/3\  flex twitter-feed"> '+tweetslist.childNodes[0].childNodes[i].outerHTML+'</div>';
-
-      }
-      tweetscontainer.removeChild(tweetslist)
-      tweetscontainer.innerHTML+= innerblock
+  var translations = {
+      collaboration: '{{ __("collaboration") }}',
+      research: '{{ __("research") }}',
+      innovation: '{{ __("innovation") }}',
+      testing: '{{ __("testing") }}'
   };
 </script>
+
 {% endblock %}

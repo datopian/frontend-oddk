@@ -1,5 +1,5 @@
 .main-nav_link {
-  @apply block py-2 px-gutter font-semibold text-primary border-white;
+  @apply block py-2 px-gutter font-semibold text-primary;
   transition: 0.3s;
   &:hover{
     @apply text-secondary;
@@ -17,7 +17,7 @@
 
 @screen lg {
   .main-nav_link {
-    @apply border-b-4 py-1 px-0 flex items-center;
+    @apply py-1 px-0 flex items-center;
   }
 }
 
@@ -55,7 +55,15 @@
 .main-nav_search-toggle {
   display: none;
 }
+@screen md {
+  #content-search-home-icon {
+    padding: .5rem 1.5rem !important;
+  }
+}
 @screen lg {
+  #content-search-home-icon {
+    padding: 0 !important;
+  }
   .main-nav_search-toggle {
     display: block;
   }
@@ -85,5 +93,74 @@
     &[data-expanded="true"] {
       display: block;
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #content-search-home-icon {
+    padding: .5rem 1.5rem !important;
+  } 
+}
+
+.main-nav {
+  background-color: #f5f5f5 !important;
+}
+
+.main-nav_link {
+  border: none !important;
+  border-bottom-width: 0px !important;
+}
+
+#search-link {
+  color: #4e4e4f !important;
+}
+
+#search-link:hover {
+  color: #ef4123 !important;
+}
+
+#content-search-home-icon {
+  margin-top: 7px !important;
+}
+
+#nav-toggle {
+  background-color: #C82A0F;
+  color: #FFFFFF;
+  padding: 10px 12px 10px 12px !important;
+  height: 44px !important;
+  width: 45px !important;
+}
+
+#nav-hamburger {
+  height: 24px;
+  width: 21px;
+}
+
+.header-color {
+  height: 66px !important;
+  display: flex;
+  align-items: center;
+}
+
+#nav-oddk-title {
+  width: 206px !important;
+  height: 16px !important;
+  min-width: 206px !important;
+}
+
+#nav-search-mag-glass {
+  fill: #4e4e4f !important;
+}
+
+@media screen and (max-width: 1080px) {
+  #nav-toggle {
+    margin-right: 12px;
+  }
+  #nav-oddk-logo {
+    padding-left: 0px !important;
+  }  
+  .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 }

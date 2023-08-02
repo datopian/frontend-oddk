@@ -7,42 +7,85 @@
   @apply h-full w-full object-cover;
 }
 
-@screen xl {
-  /* add the decorative bookmark tab */
-  .article-preview_text {
-    @nest .home & {
-      padding-left: 4rem;
-      position: relative;
-
-      &::before {
-        content: '';
-        width: 2.5rem;
-        height: 3.2rem;
-        position: absolute;
-        left: 0;
-        top: 0.4rem;
-        @apply bg-secondary;
-        background-image: url("../img/tab-mask.svg");
-        background-repeat: no-repeat;
-        background-size: 100% auto;
-        background-position: left 2rem;
-      }
-    }
-  }
-}
-
 .article-preview_heading {
-  @apply font-semibold text-2xl leading-snug mt-gutter mb-3;
+  @apply font-semibold text-2xl leading-snug mt-2 mb-3;
 }
 
 .article-preview_heading-link {
   color: inherit;
-}
-
-.article-preview_date {
-  @apply text-gray-500 block mb-2;
+  font-size: 18px;
+  background: none;
 }
 
 .article-preview_content {
   @apply leading-relaxed;
+  margin-bottom: 50px;
+  background: none;
+}
+
+.article-grid {
+  position: relative !important;
+}
+
+.article-preview_date_div {
+  height: 50px;
+  border-bottom: 2px solid #e3e3e3;
+  width: 100%;
+  color: #4E4E4F;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 14px;
+  position: absolute;
+  bottom: 0;
+}
+
+.article-preview_text {
+  font-size: 16px;
+}
+
+.blog-footer-arrow {
+  float: right;
+  margin-left: auto;
+  margin-right: 0px;
+  padding: 15px 15px 15px 15px;
+  font-size: 14px;
+  background-color: #e3e3e3;
+}
+
+.article-preview_date {
+  padding-bottom: 10px;
+  font-weight: 400;
+}
+
+.article-preview_link {
+  text-decoration: none;
+}
+
+.article-preview_link:hover {
+  text-decoration: none;
+}
+
+a.article-as-link {
+  position: absolute;
+  display: block;
+  text-decoration: none;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.article-preview:hover .blog-footer-arrow {
+  text-decoration: none;
+  color: #EF4123 !important;
+}
+
+.article-preview:hover .article-categories {
+  text-decoration: none;
+  background-color: #EF4123 !important;
+}
+
+.article-categories {
+  position: absolute;
+  top: 16em;
+  left: 0.75em;
 }

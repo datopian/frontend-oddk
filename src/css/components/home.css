@@ -8,7 +8,8 @@
 }
 
 .home_h1 {
-  @apply font-semibold text-4xl leading-tight;
+  @apply font-semibold leading-tight;
+  background: none;
 }
 @screen md {
   .home_h1 {
@@ -18,14 +19,13 @@
 }
 @screen lg {
   .home_h1 {
-    font-size: 80px;
-    @apply w-2/3;
+    font-size: 20px;
   }
 }
 
 @screen xl {
   .home_h1 {
-    font-size: 94px;
+    font-size: 30px;
   }
 }
 
@@ -123,4 +123,348 @@
   .home_feed {
     columns: 3;
   }
+}
+
+#searchInputHome {
+  width: calc(100% - 40px);
+  height: 46px !important;
+  border: 1px solid #4E4E4F; 
+  margin-left: 40px;
+  margin-bottom: 40px;
+  padding-left: 10px;
+  float: left;
+  position: absolute;
+  top: -40px;
+  outline: none;
+}
+
+#searchInputHome:focus-visible {
+  outline: 1px solid #4e4e4f;
+}
+
+.search-dropdown-container {
+  width: calc(100% - 40px);
+  position: relative;
+  flex: 1;
+}
+
+#home-search-bar {
+  width: 100%;
+}
+
+#datavejviser-logo {
+  color: #4e4e4f !important;
+}
+
+#datavejviser-logo:hover {
+  color: #4e4e4f !important;
+}
+
+#datavejviser-button:hover {
+  padding: 0px 4px 0px 4px;
+  box-shadow: 1px 1px 1px 1px #ef4123;
+}
+
+#datavejviser-button {
+  padding: 0px 4px 0px 4px;
+  width: 300px !important;
+}
+
+#datavejviser-container {
+  display: flex !important;
+  margin-bottom: 40px;
+}
+
+#datavejviser-group-text {
+  background-color: #4e4e4f;
+  width: 168px;
+  height: 46px;
+  color: #f3f3f3;
+  font-weight: 700;
+  outline: none;
+  font-size: 16px;
+}
+
+#datavejviser-text-container {
+  float: right;
+}
+
+#datavejviser-group-text:hover, #datavejviser-org-text:hover {
+  text-decoration: none;
+  font-weight: 900;
+  box-shadow: 0px 3px 0px 0px #ef4123;
+  outline: none;
+}
+
+#home-group-button:focus, #home-org-button:focus {
+  outline: none;
+}
+
+.home-group-button:focus-visible, .home-org-button:focus-visible {
+  outline: 2px solid #4e4e4f !important;
+  z-index: 999;
+}
+
+.home-group-orgs-container {
+  clear: both;
+}
+
+#datavejviser-org-text {
+  background-color: #E3E3E3;
+  width: 168px;
+  height: 46px;
+  color: #414142;
+  font-weight: 700;
+  outline: none;
+  font-size: 16px;
+}
+
+.home-orgs-container {
+  display: none;
+}
+
+#datavejviser-text {
+  color: #4e4e4f !important;
+  float: right;
+  font-size: 16px;
+  margin-top: 20px;
+  background: none;
+}
+
+.datavejviser-text-link {
+  color: #000000;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#datavejviser-group-text, #datavejviser-org-text {
+  display: flex;
+  height: 46px !important;
+  text-align: center;
+  vertical-align: middle;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-magnifying-glass {
+  margin-left: -40px;
+  vertical-align: middle;
+}
+
+.home-about, .home-about-links {
+  color: #FFFFFF;
+  text-decoration: underline;
+  font-size: 16px;
+}
+
+.home-about-links {
+  line-height: 28px;
+}
+
+.home-about:hover, .home-about-links:hover {
+  color: #FFFFFF;
+}
+
+.home-about-text {
+  font-weight: bold;
+  font-size: 24px;
+  color: #FFFFFF !important;
+  line-height: 36px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.home-about-text-address {
+  color: #FFFFFF !important;
+  font-size: 16px;
+}
+
+.news-link-section {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+#news-link {
+  border: 2px solid #4E4E4F;
+  padding: 16px 24px 16px 24px;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #4E4E4F;
+}
+
+.category-tag {
+  background-color: #4E4E4F !important;
+  border-radius: 14px;
+}
+
+.home-search-h-text {
+  float: left;
+  font-weight: bold;
+  margin-left: 40px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  width: 90%;
+  height: 36px;
+  line-height: 36px;
+  font-size: 24px;
+  color: #FFFFFF;
+}
+
+.searchbox-homepage {
+  height: 166px;
+  width: auto;
+  background-image: url(/static/img/oddk-search.png);
+  background-position: left;
+  background-size: cover;
+}
+
+.search-all-button {
+  right: 0;
+  top: 0;
+  margin-right: 40px;
+  background-color: #4E4E4F;
+  color: white;
+  padding: 10px;
+  margin-bottom: 34px;
+  height: 46px;
+  width: 223px;
+  float: right;
+  line-height: 24px !important;
+  font-size: 16px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .search-all-button {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  #home-group-button, #home-org-button {
+    flex: 0 0 auto;
+    align-items: center;
+    width: 168px !important;
+  }
+  #datavejviser-org-text, #datavejviser-group-text {
+    width: 168px !important;
+  }
+}
+
+.search-button-text {
+  text-align: center;
+  transform: translateY(2.5px)
+}
+
+.home-search-bar {
+  height: 166px;
+}
+
+.search-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  width: 100%;
+}
+
+.blog-posts-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 40px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .blog-posts-container {
+    grid-template-columns: 1fr;
+    margin-left: 0px;
+  }
+}
+
+#blog-h1 {
+  display: inline;
+  line-height: 36px;
+  font-size: 24px;
+}
+
+.home-prefix {
+  display: inline;
+  line-height: 90px;
+  font-size: 60px;
+  margin-top: 36px !important;
+  margin-bottom: 10px !important;
+  background: none;
+}
+
+.red-word {
+  background: none;
+}
+
+@media screen and (max-width: 1080px) {
+  .home-prefix {
+    margin-top: 18px !important;
+    font-size: 36px;
+    line-height: 60px;
+  }
+}
+
+.home-tail {
+  display: inline;
+  color: #EF4123;
+  line-height: 90px;
+  font-size: 60px;
+  margin-top: 36px !important;
+  margin-bottom: 10px !important;
+}
+
+@media screen and (max-width: 1080px) {
+  .home-tail {
+    font-size: 36px;
+    margin-top: 18px !important;
+    line-height: 60px;
+  }
+}
+
+.home-description {
+  line-height: 36px;
+  font-size: 24px;
+  margin-bottom: 38px;
+  background: none;
+}
+
+@media screen and (max-width: 768px) {
+  .home-description {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+.home-text-info {
+  margin-top: 36px;
+}
+
+@media screen and (max-width: 768px) {
+  .home-text-info {
+    margin-top: 18px;
+  }
+}
+
+.social-svg {
+  fill: #FFFFFF !important;
+  margin-right: 24px !important;
+  font-size: 36px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+}
+
+#home-find-dataset-text {
+  line-height: 36px;
+  font-size: 24px;
+  margin-top: 100px !important;
+  margin-bottom: 10px !important;
 }

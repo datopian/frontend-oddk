@@ -15,10 +15,25 @@
         <a class="breadcrumb_link" href="/">{{__('Home')}}</a>
       </li>
       <li class="breadcrumb_item">
-        <a class="breadcrumb_link" href="/search" aria-current="page">{{__('Search')}}</a>
+        <a class="breadcrumb_link" href="/search" aria-current="page">{{__('Search Datasets ')}}</a>
       </li>
     </ol>
   </nav>
+</div>
+
+<div class="home-group-orgs-container container mx-auto p-gutter search-buttons-container">
+  <div class="mt-gutter" id="datavejviser-container" style="margin-top: 0px !important;">
+    <a href="/search">
+      <button id="search-datasets-button" class="home-datasets-button">
+        <p id="search-datasets-text-datasets">{{ __('Search datasets') }}</p>
+      </button>
+    </a>
+    <a href="/search/content">
+      <button id="search-content-button" class="search-content-button">
+        <p id="search-content-text-datasets">{{ __('Search news') }}</p>
+      </button>
+    </a>
+  </div>
 </div>
 
 <div class="container mx-auto md:flex p-gutter">
