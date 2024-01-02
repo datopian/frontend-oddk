@@ -90,16 +90,25 @@ Open Data DK
           <script>
             // Retry loading org image if it fails
             function retryLoadOrgImg(img) {
-              if (img.getAttribute('data-retries') < 5) { 
+              if (img.getAttribute('data-retries') < 5) {
                 img.setAttribute('data-retries', parseInt(img.getAttribute('data-retries')) + 1);
-                img.src = img.src;
+                fetch(img.src, { method: 'HEAD' })
+                  .then(response => {
+                      if (response.ok) {
+                          img.src = response.url;q
+                      } else {
+                          throw new Error('Failed to fetch image');
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error fetching image:', error);
+                      img.src = img.src;
+                  });
+                return true;
               } else {
                 console.error('Failed to load image:', img.src);
-
                 return false;
               }
-
-              return true;
             }
           </script>
 
