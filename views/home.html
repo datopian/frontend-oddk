@@ -78,7 +78,7 @@ Open Data DK
                 <li class="home-orgs_item">
                   <a href="/organization/{{ organization.name }}" class="home-orgs_link" aria-label="{{ organization.title }}">
                     <span class="home-orgs_icon">
-                      <img src="{{ organization.image }}" alt="{{ organization.name }}" class="home-orgs_img" onerror="retryLoadOrgImg(this)" />
+                      <img src="{{ organization.image }}" alt="{{ organization.name }}" class="home-orgs_img" onerror="retryLoadOrgImg(this)" loading="lazy" />
                       <div class="home-orgs_count">{{ organization.count }}</div>
                     </span>
                   </a>
