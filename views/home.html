@@ -78,7 +78,7 @@ Open Data DK
                 <li class="home-orgs_item">
                   <a href="/organization/{{ organization.name }}" class="home-orgs_link" aria-label="{{ organization.title }}">
                     <span class="home-orgs_icon">
-                      <img src="{{ organization.image }}" alt="{{ organization.name }}" class="home-orgs_img" onerror="retryLoadOrgImg(this)" loading="lazy" />
+                      <img src="{{ organization.image }}" alt="{{ organization.name }}" class="home-orgs_img" onerror="retryLoadOrgImg(this)"/>
                       <div class="home-orgs_count">{{ organization.count }}</div>
                     </span>
                   </a>
@@ -92,7 +92,7 @@ Open Data DK
             function retryLoadOrgImg(img) {
               if (img.getAttribute('data-retries') < 5) {
                 img.setAttribute('data-retries', parseInt(img.getAttribute('data-retries')) + 1);
-                fetch(img.src, { method: 'HEAD' })
+                fetch(img.src, { method: 'GET' })
                   .then(response => {
                       if (response.ok) {
                           img.src = response.url;q
