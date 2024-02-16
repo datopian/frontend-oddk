@@ -260,7 +260,7 @@
               {% if dataset.update_frequency %}
                 <dt class="info-list_title">{{__('Update frequency')}}</dt>
                 <dd class="info-list_description">
-                  {{ __(dataset.update_frequency) }}
+                  {{ __(dataset.update_frequency | title) }}
                 </dd>
               {% endif %}
               {% if dataset.update_frequency_notes %}
