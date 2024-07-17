@@ -92,3 +92,16 @@ h1, h2, h3, h4, h5, h6 {
     max-width: min(calc(100% - 16%), 1380px) !important;
   }
 }
+
+.bg-opacity-50 {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+[x-cloak] { display: none !important; }
+
+.preview-modal {
+  max-width: 90vw;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+}
