@@ -34,6 +34,12 @@ gulp.task('icons', function(done) {
     done();
 });
 
+// njk
+gulp.task('njk', function(done) {
+  gulp.src('*.njk', { cwd: './src/views/partials' })
+    .pipe(gulp.dest('./views/partials'));
+    done();
+});
 
 // watching
 gulp.task('watch:css', function() {
@@ -46,8 +52,12 @@ gulp.task('watch:icons', function() {
   gulp.series('icons'));
 });
 
+gulp.task('watch:njk', function() {
+  return gulp.watch(['./src/views/partials/*.njk'],
+  gulp.series('njk'));
+});
 
-gulp.task('watch', gulp.parallel('watch:css', 'watch:icons'));
+gulp.task('watch', gulp.parallel('watch:css', 'watch:icons', 'watch:njk'));
 
 // deafult task
 gulp.task('default', gulp.parallel('watch'));

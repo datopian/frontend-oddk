@@ -43,5 +43,8 @@ Disallow: /
 User-Agent: trendictionbot
 Disallow: /
 
+User-Agent: Bytespider
+Disallow: /
+
 User-agent: Buck/2.2
 Disallow: /
