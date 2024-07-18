@@ -62,7 +62,7 @@ Open Data DK
                 <li class="home-groups_item">
                   <a href="/collections/{{ collection.name }}" class="home-groups_link" aria-label="{{ collection.title }}">
                     <span class="home-groups_icon">
-                      <img src="{{ collection.image }}" alt="{{ collection.name }}" class="home-groups_img" onerror="retryLoadOrgImg(this)" />
+                      <img src="https://images-proxy.datopian.workers.dev?imageUrl={{ collection.image }}" alt="{{ collection.name }}" class="home-groups_img" onerror="retryLoadOrgImg(this)" />
                       <div class="home-groups_count">{{ collection.count }}</div>
                     </span>
                     <span class="home-groups_name">{{ collection.title | truncate(25) }}</span>
@@ -78,7 +78,7 @@ Open Data DK
                 <li class="home-orgs_item">
                   <a href="/organization/{{ organization.name }}" class="home-orgs_link" aria-label="{{ organization.title }}">
                     <span class="home-orgs_icon">
-                      <img src="{{ organization.image }}" alt="{{ organization.name }}" class="home-orgs_img" onerror="retryLoadOrgImg(this)"/>
+                      <img src="https://images-proxy.datopian.workers.dev?imageUrl={{ organization.image }}" alt="{{ organization.name }}" class="home-orgs_img" onerror="retryLoadOrgImg(this)"/>
                       <div class="home-orgs_count">{{ organization.count }}</div>
                     </span>
                   </a>
