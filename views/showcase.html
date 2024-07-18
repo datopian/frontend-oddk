@@ -84,6 +84,9 @@
                   <span title="file size"
                         class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1">{{ resource.size }}</span>
                 {% endif %}
+                  <span title="license"
+                        class="bg-gray-700 rounded text-sm text-gray-100 px-2 py-1">{{ __(resource.license_id) }}</span>
+
               </div>
               <div class="markdown-content mt-2">
                 {{ resource.descriptionHtml | safe }}
@@ -216,18 +219,32 @@ class="data-file-type mr-1" aria-label="{{__('Preview')}} {{ resource.name }}.{{
           <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Metadata') }}</h2>
           <div class="px-4 py-2 text-sm">
             <dl class="info-list">
-              {% if dataset.sources %}
-                <dt class="info-list_title">{{__('Author Email')}}</dt>
-                <dd class="info-list_description">
-                  {{ snippets.listify(dataset.sources) }}
-                </dd>
-              {% endif %}
-              {# {% if dataset.author %}
+              <dt class="info-list_title">{{__('Author')}}</dt>
+              <dd class="info-list_description">
+                <a href="mailto:{{ dataset.sources[0].email }}">{{ dataset.sources[0].name }}</a>
+              </dd>
+
+              <dt class="info-list_title">{{__('Landing page')}}</dt>
+              <dd class="info-list_description">
+                <a href="/{{ owner.name }}/{{ dataset.name }}">{{ dataset.title_translated[locale] or dataset.title or dataset.name }}</a>
+              </dd>
+
+              <dt class="info-list_title">{{__('Update frequency')}}</dt>
+              <dd class="info-list_description">
+                <a href="/search?q=update_frequency:{{ dataset.update_frequency }}">{{ __(dataset.update_frequency | title) }}</a>
+              </dd>
+
+              <dt class="info-list_title">{{__('Documentation')}}</dt>
+              <dd class="info-list_description" style="white-space: normal; overflow-wrap: break-word; word-break: break-all;">
+                <a href="{% if 'http' in dataset.documentation %}{{ dataset.documentation}}{% else %}{{ backendUrl }}/dataset/{{ dataset.name }}/documentation/{{ dataset.id }}{% endif %}" target="_blank">{{ dataset.documentation }}</a>
+              </dd>
+
+              {#{% if dataset.author %}
                 <dt class="info-list_title">{{__('Author Email')}}</dt>
                 <dd class="info-list_description">
                   {{ snippets.listify([dataset.author]) }}
                 </dd>
-              {% endif %}#}
+              {% endif %}
               <!-- Show extras -->
               {% for item in dataset.extras %}
                 {% if item.key === 'data_quality' %}
@@ -270,16 +287,43 @@ class="data-file-type mr-1" aria-label="{{__('Preview')}} {{ resource.name }}.{{
                 <dd class="info-list_description">
                   {{ __(dataset.update_frequency | title) }}
                 </dd>
-              {% endif %}
-              {% if dataset.update_frequency_notes %}
-                <dt class="info-list_title">{{__('Update comments')}}</dt>
-                <dd class="info-list_description">
-                  {{ dataset.update_frequency_notes }}
-                </dd>
-              {% endif %}
+              {% endif %}#}
             </dl>
           </div>
           <!-- Metadata -->
+
+          <!-- Categories -->
+          {% set categories = dataset.data_themes %}
+          {% set category_labels = {
+            "ECON": __("Economy and finance"),
+            "GOVE": __("Government and public sector"),
+            "AGRI": __("Agriculture, fisheries, forestry and food"),
+            "ENVI": __("Environment"),
+            "ENER": __("Energy"),
+            "EDUC": __("Education, culture and sport"),
+            "JUST": __("Justice, legal system and public safety"),
+            "REGI": __("Regions and cities"),
+            "INTR": __("International issues"),
+            "HEAL": __("Health"),
+            "SOCI": __("Population and society"),
+            "OP_DATPRO": __("Provisional data"),
+            "TECH": __("Science and technology"),
+            "TRAN": __("Transport")
+          } %}
+
+          {% if categories %}
+            <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Categories') }}</h2>
+            <div class="px-4 py-2 text-sm">
+              <ul class="list-none">
+                {% for category in categories %}
+                  <li>
+                    <a href="/search?q=data_themes:{{ category }}"
+                       class="text-primary hover:underline">{{ category_labels[category] }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
 
           <!-- Keywords section -->
           {% if dataset.keywords and dataset.keywords.length !== 0 %}
@@ -296,7 +340,7 @@ class="data-file-type mr-1" aria-label="{{__('Preview')}} {{ resource.name }}.{{
           <!-- end Keywords section -->
 
 
-          <!-- share links -->
+          {#<!-- share links -->
           <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Share') }}</h2>
           <ul class="text-sm">
             <li class="border-b-2 border-gray-200">
@@ -306,7 +350,7 @@ class="data-file-type mr-1" aria-label="{{__('Preview')}} {{ resource.name }}.{{
                  target="_blank">Twitter</a>
             </li>
           </ul>
-          <!-- share links end -->
+          <!-- share links end -->#}
 
         </div>
       </div>

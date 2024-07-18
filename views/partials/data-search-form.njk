@@ -24,7 +24,15 @@
   {% for qry in query.qArray %}
   {% if qry.includes(':') %}
     <p class="mb-2">
-      <span class="font-sm">{{facetNames[qry.split(':')[0]] + ':'}}</span>
+      {% set query_field = qry.split(':')[0] %}
+
+      {% set query_label = facetNames[query_field] %}
+
+      {% if not query_label %}
+        {% set query_label = query_field %}
+      {% endif %}
+
+      <span class="font-sm">{{ __(query_label) + ':'}}</span>
       {% set displayName = qry.split(':')[1] %}
       <span class="bg-secondary font-semibold px-3 py-1 text-white rounded-lg mr-4 mb-2 mt-3">
         {% if result.search_facets and result.search_facets[qry.split(':')[0]] %}
