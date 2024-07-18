@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% import '_snippets.html' as snippets %}
+{% import '_instructions.html' as instructions %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="container mx-auto p-gutter">
+    <nav class="breadcrumb" aria-label="{{__('Breadcrumb')}}">
+      <ol>
+        <li class="breadcrumb_item">
+          <a class="breadcrumb_link" href="/">{{ __('Home') }}</a>
+        </li>
+        <li class="breadcrumb_item">
+          <a class="breadcrumb_link" href="/{{ orgOwner }}">{{ orgOwner }}</a>
+        </li>
+        <li class="breadcrumb_item">
+          <a class="breadcrumb_link" href="/{{ orgOwner }}/{{ datasetName }}"
+             aria-current="page">{{ datasetName }}</a>
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <!-- Data Explorer -->
+  <div class="resource" role="application" aria-label="{{__('Application for')}} {{displayResource.resource.name}} {{displayResource.resource.format}}">
+    <div class="container mx-auto p-gutter pb-16">
+
+      <!-- Heading for each view -->
+      <h2 id="resource-{{ displayResource.resource.name }}" class="text-2xl text-secondary font-semibold mb-6">
+        {{ displayResource.resource.title or displayResource.resource.name }}
+      </h2>
+
+      <div class="data-explorer flex flex-col">
+        {% for dataExplorer in displayResource.dataExplorers %}
+          <!-- preview tables, change http:// to https:// to avoid Mixed Content error -->
+          <div id="data-explorer-{{ displayResource.slug }}-{{ loop.index0 }}"
+               class="data-explorer {% if not loop.last %} border-t-2 pb-16 {% endif %}"
+               data-datapackage='{{ datapackage | safe | replace("http://", "https://") }}'>
+          </div>
+          {% if not loop.last %}
+            <span class="border-t-2 w-full h-1"></span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+  <!-- End of Data Explorer -->
+
+{% endblock %}
+
+
+{% block scripts %}
+  <script>
+
+    function goToSearch() {
+      var query = document.getElementById('search-input').value
+      window.location.href = '/search?q=' + query
+    }
+
+    //scroll for preview
+    $("#preview").click(function (e) {
+      e.preventDefault()
+      console.log($(this).attr("href"))
+      var position = $($(this).attr("href")).offset().top
+      console.log(position)
+      $("body, html").animate({
+        scrollTop: position
+      })
+    })
+
+    var modalId
+    var openmodal = document.querySelectorAll('.modal-open')
+    for (var i = 0; i < openmodal.length; i++) {
+      openmodal[i].addEventListener('click', function (event) {
+        event.preventDefault()
+        toggleModal(event, this.getAttribute("href"))
+      })
+    }
+
+    const overlay = document.querySelector('.modal-overlay')
+    overlay.addEventListener('click', toggleModal)
+
+    var closemodal = document.querySelectorAll('.modal-close')
+    for (var i = 0; i < closemodal.length; i++) {
+      closemodal[i].addEventListener('click', toggleModal)
+    }
+
+    document.onkeydown = function (evt) {
+      evt = evt || window.event
+      var isEscape = false
+      if ("key" in evt) {
+        isEscape = (evt.key === "Escape" || evt.key === "Esc")
+      } else {
+        isEscape = (evt.keyCode === 27)
+      }
+      if (isEscape && document.body.classList.contains('modal-active')) {
+        toggleModal()
+      }
+    }
+
+
+    function toggleModal(event, id) {
+      modalId = id || modalId
+      const body = document.querySelector('body')
+      const modal = document.querySelector(modalId)
+      modal.classList.toggle('opacity-0')
+      modal.classList.toggle('pointer-events-none')
+      body.classList.toggle('modal-active')
+    }
+
+  </script>
+
+  <link rel="stylesheet" media="screen" href="/static/stylesheets/main.css">
+  <script type="text/javascript" src="/static/js/main.js"></script>
+
+  <!-- data explorer builds -->
+  <script type="text/javascript" src="/static/js/dataexplorer/runtime~main.a8a9905a.js"></script>
+  <script type="text/javascript" src="/static/js/dataexplorer/2.48b30059.chunk.js"></script>
+  <script type="text/javascript" src="/static/js/dataexplorer/main.f3d0929d.chunk.js"></script>
+{% endblock %}
