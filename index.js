@@ -2,7 +2,7 @@ const moment = require("moment");
 const { DmsModel } = require("../../lib/dms");
 const { SitemapStream, streamToPromise } = require("sitemap");
 const { createGzip } = require("zlib");
-const { DcatDmsModel } = require('./lib/dcat_dms')
+const { DcatDmsModel } = require("./lib/dcat_dms");
 
 function getCurrentLocale(req) {
   var currentLocale = req.locale || "da";
@@ -23,15 +23,15 @@ function getCurrentLocale(req) {
 }
 
 module.exports = function (app) {
-  const utils = app.get('utils')
-  const dms = app.get('dms')
-  const cms = app.get('cms')
-  const config = app.get('config')
-  const DmsModel = new dms.DmsModel(config)
-  const CmsModel = new cms.CmsModel()
-  const path = require('path')
-  const fs = require('fs')
-  const dcatDmsModel = new DcatDmsModel(config)
+  const utils = app.get("utils");
+  const dms = app.get("dms");
+  const cms = app.get("cms");
+  const config = app.get("config");
+  const DmsModel = new dms.DmsModel(config);
+  const CmsModel = new cms.CmsModel();
+  const path = require("path");
+  const fs = require("fs");
+  const dcatDmsModel = new DcatDmsModel(config);
 
   app.use((req, res, next) => {
     // toggle promo banner on all not-in-cms pages
@@ -103,7 +103,7 @@ module.exports = function (app) {
             all_fields: true,
             include_extras: true,
             include_dataset_count: true,
-          }),
+          })
         ),
         CmsModel.getListOfPosts({
           category: "Events",
@@ -118,7 +118,7 @@ module.exports = function (app) {
           eventDate = post.tags[key].name.match(/\d{2}([\/.-])\d{2}\1\d{4}/g);
         } else if (key.startsWith("end:")) {
           eventFinishDate = post.tags[key].name.match(
-            /\d{2}([\/.-])\d{2}\1\d{4}/g,
+            /\d{2}([\/.-])\d{2}\1\d{4}/g
           );
         }
       }
@@ -441,50 +441,52 @@ module.exports = function (app) {
       console.error(e);
       res.status(500).end();
     }
-  })
+  });
 
-  app.get('/katalog.:format', async (req, res, next) => {
+  app.get("/katalog.:format", async (req, res, next) => {
     try {
-      const format = req.params.format
-      const catalog = await dcatDmsModel.getDcatCatalog(format)
+      const format = req.params.format;
+      const catalog = await dcatDmsModel.getDcatCatalog(format);
 
       switch (format) {
-        case 'rdf':
-          res.set('Content-Type', 'application/rdf+xml')
+        case "rdf":
+          res.set("Content-Type", "application/rdf+xml");
           break;
-        case 'ttl':
-          res.set('Content-Type', 'text/turtle')
+        case "ttl":
+          res.set("Content-Type", "text/turtle");
           break;
         default:
-          return res.status(400).send('Unsupported format')
+          return res.status(400).send("Unsupported format");
       }
 
       res.send(catalog);
     } catch (e) {
-      next(e)
+      next(e);
     }
-  })
+  });
 
-  app.get('/:organization/:dataset.:format', async (req, res, next) => {
+  app.get("/:organization/:dataset.:format", async (req, res, next) => {
     try {
-      const format = req.params.format
-      const dataset = await dcatDmsModel.getDcatDataset(req.params.dataset, format)
+      const format = req.params.format;
+      const dataset = await dcatDmsModel.getDcatDataset(
+        req.params.dataset,
+        format
+      );
 
       switch (format) {
-        case 'rdf':
-          res.set('Content-Type', 'application/rdf+xml')
-          break
-        case 'ttl':
-          res.set('Content-Type', 'text/turtle')
-          break
+        case "rdf":
+          res.set("Content-Type", "application/rdf+xml");
+          break;
+        case "ttl":
+          res.set("Content-Type", "text/turtle");
+          break;
         default:
-          return res.status(400).send('Unsupported format')
+          return res.status(400).send("Unsupported format");
       }
 
-      res.send(dataset)
+      res.send(dataset);
     } catch (e) {
-      next(e)
+      next(e);
     }
-  })
-
-}
+  });
+};
