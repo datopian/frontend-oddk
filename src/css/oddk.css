@@ -105,3 +105,8 @@ h1, h2, h3, h4, h5, h6 {
   max-height: 90vh;
   overflow: auto;
 }
+
+#license-name {
+  display: none;
+  color: #E8703D;
+}

@@ -89,7 +89,7 @@
               <div class="markdown-content mt-2">
                 {{ resource.descriptionHtml | safe }}
               </div>
-              <div id="license-name" style="display: none; color: #E8703D;">{{ resource.license_id }}</div>
+              <div id="license-name" class="text-sm">{{ resource.license_id }}</div>
               <nav aria-label="{{__('Download')}} {{__('or')}} {{__('Preview')}} {{resource.name}} {{ resource.format }}">
                 <a class="data-file-type mr-1" href="{{ resource.path }}" aria-label="{{__('Download')}} {{ resource.name }}.{{ resource.format }}">
                   <dl class="data-file-type_inner">
@@ -534,6 +534,7 @@
 
       if (licenseTitle) {
         element.style.display = 'inline-block'
+        element.style.color = '#E8703D'
         element.textContent = licenseTitle
       }
     })
