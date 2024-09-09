@@ -7,12 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<div 
-  x-data="{
-  {% for displayResource in dataset.displayResources %}{% if loop.revindex0 == 0 %} 'show_{{ displayResource.resource.id|replace("-", "_") }}': false{% else %}'show_{{ displayResource.resource.id|replace("-", "_") }}': false,{% endif %}{% endfor %}
-  }"
->
-
+<div>
   <div class="container mx-auto p-gutter">
     <nav class="breadcrumb" aria-label="{{__('Breadcrumb')}}">
       <ol>
@@ -112,15 +107,48 @@
                   </a>
                 {% endfor %}
                 <!-- Preview button -->
-                {% if displayResource.dataExplorers|length %}
-                  <button
-                    @click="show_{{ displayResource.resource.id | replace('-', '_') }} = true" class="data-file-type mr-1" aria-label="{{__('Preview')}} {{ resource.name }}.{{ resource.format }}">
-                    <dl class="data-file-type_inner">
-                      <dt class="data-file-type_term">
-                        {{ __('Preview') }}
-                      </dt>
-                    </dl>
-                  </button>
+                {% if displayResource.dataExplorers|length > 0 %}
+                  <span x-data="{ showPreview: false }" class="inline-block">
+                    <button
+                      @click="showPreview = true"
+                      class="data-file-type mr-1 inline-block"
+                      aria-label="{{ __('Preview') }} {{ resource.name }}.{{ resource.format }}"
+                    >
+                      <dl class="data-file-type_inner">
+                        <dt class="data-file-type_term">{{ __('Preview') }}</dt>
+                      </dl>
+                    </button>
+
+                    <div
+                      x-show="showPreview"
+                      class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
+                      x-transition:enter="motion-safe:ease-out duration-300"
+                      x-transition:enter-start="opacity-0 scale-90"
+                      x-transition:enter-end="opacity-100 scale-100"
+                      style="display: none;"
+                    >
+                      <div class="preview-modal overflow-x-auto px-6 py-4 mx-auto text-left bg-white rounded shadow-lg max-h-[600px]">
+                        <div class="flex items-center justify-between">
+                          <button type="button" @click="showPreview = false" class="z-50 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                          </button>
+                        </div>
+
+                        <div role="application" aria-label="{{ __('Application for') }} {{ resource.name }}.{{ resource.format }}">
+                          <h2 class="text-2xl text-secondary font-semibold mb-6">{{ resource.title or resource.name }}</h2>
+
+                          <div class="data-explorer flex flex-col">
+                            {% for dataExplorer in displayResource.dataExplorers %}
+                              <div id="data-explorer-{{ resource.id|replace('-', '_') }}-{{ loop.index0 }}" class="data-explorer" data-datapackage='{{ dataExplorer | safe | replace("http://", "https://") }}'>
+                              </div>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
                 {% endif %}
                 <!-- End of preview button -->
                 {% if resource.datastore_active %}
@@ -233,7 +261,7 @@
 
               <dt class="info-list_title">{{__('Documentation')}}</dt>
               <dd class="info-list_description" style="white-space: normal; overflow-wrap: break-word; word-break: break-all;">
-                <a href="{% if 'http' in dataset.documentation %}{{ dataset.documentation}}{% else %}{{ backendUrl }}/dataset/{{ dataset.name }}/documentation/{{ dataset.id }}{% endif %}" target="_blank">{{ dataset.documentation }}</a>
+                <a href="{% if dataset.documentation and 'http' in dataset.documentation %}{{ dataset.documentation}}{% else %}{{ backendUrl }}/dataset/{{ dataset.name }}/documentation/{{ dataset.id }}{% endif %}" target="_blank">{{ dataset.documentation }}</a>
               </dd>
 
               <dt class="info-list_title">{{__('Temporal coverage start')}}</dt>
@@ -543,8 +571,13 @@
   <script>
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
 
-    document.getElementById('temporal_start').textContent = new Intl.DateTimeFormat(navigator.language, options).format(new Date('{{ dataset.temporal_start }}'));
-    document.getElementById('temporal_end').textContent = new Intl.DateTimeFormat(navigator.language, options).format(new Date('{{ dataset.temporal_end }}'));
+    function formatDateString(dateString) {
+      const date = new Date(dateString);
+      return isNaN(date.getTime()) ? '' : new Intl.DateTimeFormat(navigator.language, options).format(date);
+    }
+
+    document.getElementById('temporal_start').textContent = formatDateString('{{ dataset.temporal_start }}');
+    document.getElementById('temporal_end').textContent = formatDateString('{{ dataset.temporal_end }}');
   </script>
 
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
