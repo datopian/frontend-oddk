@@ -106,13 +106,16 @@
                     </dl>
                   </a>
                 {% endfor %}
-                <!-- Preview button -->
+                <!-- Preview buttons and modals -->
                 {% if displayResource.dataExplorers|length > 0 %}
-                  <span x-data="{ showPreview: false }" class="inline-block">
+                  <span x-data="{ showPreview: false, hover: false }" class="inline-block cursor-pointer">
                     <button
                       @click="showPreview = true"
                       class="data-file-type mr-1 inline-block"
                       aria-label="{{ __('Preview') }} {{ resource.name }}.{{ resource.format }}"
+                      @mouseenter="hover = true"
+                      @mouseleave="hover = false"
+                      :style="hover ? 'text-decoration: underline;' : ''"
                     >
                       <dl class="data-file-type_inner">
                         <dt class="data-file-type_term">{{ __('Preview') }}</dt>
@@ -120,12 +123,9 @@
                     </button>
 
                     <div
+                      x-cloak
                       x-show="showPreview"
                       class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
-                      x-transition:enter="motion-safe:ease-out duration-300"
-                      x-transition:enter-start="opacity-0 scale-90"
-                      x-transition:enter-end="opacity-100 scale-100"
-                      style="display: none;"
                     >
                       <div class="preview-modal overflow-x-auto px-6 py-4 mx-auto text-left bg-white rounded shadow-lg max-h-[600px]">
                         <div class="flex items-center justify-between">
@@ -150,7 +150,7 @@
                     </div>
                   </span>
                 {% endif %}
-                <!-- End of preview button -->
+                <!-- End of preview buttons and modals -->
                 {% if resource.datastore_active %}
                   <!-- Data API -->
                   <a class="data-file-type mr-1 bg-gray-500 text-white modal-open"
@@ -331,62 +331,6 @@
     </div>
   </main>
 
-
-  <!-- Data Explorer -->
-  {% for displayResource in dataset.displayResources %}
-
-    {% if displayResource.dataExplorers|length %}
-
-    <!-- Modal -->
-    <div
-        class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
-        x-cloak
-        x-show="show_{{ displayResource.resource.id|replace('-', '_') }}"
-    >
-        <div
-            class="preview-modal overflow-x-auto px-6 py-4 mx-auto text-left bg-white rounded shadow-lg max-h-[600px]"
-            x-transition:enter="motion-safe:ease-out duration-300"
-            x-transition:enter-start="opacity-0 scale-90"
-            x-transition:enter-end="opacity-100 scale-100"
-        >
-            <div class="flex items-center justify-between">
-                <button type="button" class="z-50 cursor-pointer" @click="show_{{ displayResource.resource.id | replace('-', '_') }} = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-
-      <div role="application" aria-label="{{__('Application for')}} {{displayResource.resource.name}} {{displayResource.resource.format}}">
-        <div>
-
-          <!-- Heading for each view -->
-          <h2 id="resource-{{ displayResource.resource.name }}" class="text-2xl text-secondary font-semibold mb-6">
-            {{ displayResource.resource.title or displayResource.resource.name }}
-          </h2>
-
-          <div class="data-explorer flex flex-col">
-            {% for dataExplorer in displayResource.dataExplorers %}
-              <!-- preview tables, change http:// to https:// to avoid Mixed Content error -->
-              <div id="data-explorer-{{ displayResource.slug }}-{{ loop.index0 }}"
-                   class="data-explorer {% if not loop.last %} border-t-2{% endif %}"
-                   data-datapackage='{{ dataExplorer | safe | replace("http://", "https://") }}'>
-              </div>
-              {% if not loop.last %}
-                <span class="border-t-2 w-full h-1"></span>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-
-</div>
-
-    {% endif %}
-
-  {% endfor %}
-
-  <!-- End of Data Explorer -->
 </div>
 
 {% endblock %}
