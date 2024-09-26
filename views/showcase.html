@@ -7,12 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<div 
-  x-data="{
-  {% for displayResource in dataset.displayResources %}{% if loop.revindex0 == 0 %} 'show_{{ displayResource.resource.id|replace("-", "_") }}': false{% else %}'show_{{ displayResource.resource.id|replace("-", "_") }}': false,{% endif %}{% endfor %}
-  }"
->
-
+<div>
   <div class="container mx-auto p-gutter">
     <nav class="breadcrumb" aria-label="{{__('Breadcrumb')}}">
       <ol>
@@ -84,13 +79,12 @@
                   <span title="file size"
                         class="bg-gray-600 rounded text-sm text-gray-100 px-2 py-1">{{ resource.size }}</span>
                 {% endif %}
-                  <span title="license"
-                        class="bg-gray-700 rounded text-sm text-gray-100 px-2 py-1">{{ __(resource.license_id) }}</span>
 
               </div>
               <div class="markdown-content mt-2">
                 {{ resource.descriptionHtml | safe }}
               </div>
+              <div id="license-name" class="text-sm">{{ resource.license_id }}</div>
               <nav aria-label="{{__('Download')}} {{__('or')}} {{__('Preview')}} {{resource.name}} {{ resource.format }}">
                 <a class="data-file-type mr-1" href="{{ resource.path }}" aria-label="{{__('Download')}} {{ resource.name }}.{{ resource.format }}">
                   <dl class="data-file-type_inner">
@@ -112,20 +106,51 @@
                     </dl>
                   </a>
                 {% endfor %}
-                <!-- Preview button -->
-                {% if displayResource.dataExplorers|length %}
-                  <button
-                    @click="show_{{ displayResource.resource.id | replace('-', '_') }} = true"
-class="data-file-type mr-1" aria-label="{{__('Preview')}} {{ resource.name }}.{{ resource.format }}">
-                    <dl class="data-file-type_inner">
-                      <dt class="data-file-type_term"
->
-                        {{ __('Preview') }}
-                      </dt>
-                    </dl>
-                  </button>
+                <!-- Preview buttons and modals -->
+                {% if displayResource.dataExplorers|length > 0 %}
+                  <span x-data="{ showPreview: false, hover: false }" class="inline-block cursor-pointer">
+                    <button
+                      @click="showPreview = true"
+                      class="data-file-type mr-1 inline-block"
+                      aria-label="{{ __('Preview') }} {{ resource.name }}.{{ resource.format }}"
+                      @mouseenter="hover = true"
+                      @mouseleave="hover = false"
+                      :style="hover ? 'text-decoration: underline;' : ''"
+                    >
+                      <dl class="data-file-type_inner">
+                        <dt class="data-file-type_term">{{ __('Preview') }}</dt>
+                      </dl>
+                    </button>
+
+                    <div
+                      x-cloak
+                      x-show="showPreview"
+                      class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
+                    >
+                      <div class="preview-modal overflow-x-auto px-6 py-4 mx-auto text-left bg-white rounded shadow-lg max-h-[600px]">
+                        <div class="flex items-center justify-between">
+                          <button type="button" @click="showPreview = false" class="z-50 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                          </button>
+                        </div>
+
+                        <div role="application" aria-label="{{ __('Application for') }} {{ resource.name }}.{{ resource.format }}">
+                          <h2 class="text-2xl text-secondary font-semibold mb-6">{{ resource.title or resource.name }}</h2>
+
+                          <div class="data-explorer flex flex-col">
+                            {% for dataExplorer in displayResource.dataExplorers %}
+                              <div id="data-explorer-{{ resource.id|replace('-', '_') }}-{{ loop.index0 }}" class="data-explorer" data-datapackage='{{ dataExplorer | safe | replace("http://", "https://") }}'>
+                              </div>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
                 {% endif %}
-                <!-- End of preview button -->
+                <!-- End of preview buttons and modals -->
                 {% if resource.datastore_active %}
                   <!-- Data API -->
                   <a class="data-file-type mr-1 bg-gray-500 text-white modal-open"
@@ -236,58 +261,18 @@ class="data-file-type mr-1" aria-label="{{__('Preview')}} {{ resource.name }}.{{
 
               <dt class="info-list_title">{{__('Documentation')}}</dt>
               <dd class="info-list_description" style="white-space: normal; overflow-wrap: break-word; word-break: break-all;">
-                <a href="{% if 'http' in dataset.documentation %}{{ dataset.documentation}}{% else %}{{ backendUrl }}/dataset/{{ dataset.name }}/documentation/{{ dataset.id }}{% endif %}" target="_blank">{{ dataset.documentation }}</a>
+                <a href="{% if dataset.documentation and 'http' in dataset.documentation %}{{ dataset.documentation}}{% else %}{{ backendUrl }}/dataset/{{ dataset.name }}/documentation/{{ dataset.id }}{% endif %}" target="_blank">{{ dataset.documentation }}</a>
               </dd>
 
-              {#{% if dataset.author %}
-                <dt class="info-list_title">{{__('Author Email')}}</dt>
-                <dd class="info-list_description">
-                  {{ snippets.listify([dataset.author]) }}
-                </dd>
-              {% endif %}
-              <!-- Show extras -->
-              {% for item in dataset.extras %}
-                {% if item.key === 'data_quality' %}
-                  {% set fieldName = __('Data quality') %}
-                  {% elif item.key === 'office' %}
-                  {% set fieldName = __('Office') %}
-                  {% elif item.key === 'office_email' %}
-                  {% set fieldName = __('Office email') %}
-                  {% elif item.key === 'quality_note' %}
-                  {% set fieldName = __('Quality note') %}
-                  {% elif item.key === 'update_frequency' %}
-                  {% set fieldName = __('Update frequency') %}
-                {% endif %}
-                <dt class="info-list_title">{{ fieldName or item.key }}</dt>
-                <dd class="info-list_description truncate" title="{{ item.value }}">
-                  {{ item.value }}
-                </dd>
-              {% endfor %}
-              <!-- End of extras -->
-              {% if dataset.license %}
-                <dt class="info-list_title">{{__('License')}}</dt>
-                <dd class="info-list_description">
-                  <a href="{{ dataset.license.url }}">{{ dataset.license.title }}</a>
-                </dd>
-              {% endif %}
-              {% if dataset.groups %}
-                <dt class="info-list_title">{{__('Group')}}</dt>
-                <dd class="info-list_description">
-                  {% for group in dataset.groups %}
-                    <p>
-                    <span class="colGroup break-words">
-                  <a href="/collections/{{ group.name }}" class="text-secondary">{{ group.title }}</a>
-                </span>
-                    </p>
-                  {% endfor %}
-                </dd>
-              {% endif %}
-              {% if dataset.update_frequency %}
-                <dt class="info-list_title">{{__('Update frequency')}}</dt>
-                <dd class="info-list_description">
-                  {{ __(dataset.update_frequency | title) }}
-                </dd>
-              {% endif %}#}
+              <dt class="info-list_title">{{__('Temporal coverage start')}}</dt>
+              <dd class="info-list_description" id="temporal_start">
+                {{ dataset.temporal_start }}
+              </dd>
+
+              <dt class="info-list_title">{{__('Temporal coverage end')}}</dt>
+              <dd class="info-list_description" id="temporal_end">
+                {{ dataset.temporal_end }}
+              </dd>
             </dl>
           </div>
           <!-- Metadata -->
@@ -339,19 +324,6 @@ class="data-file-type mr-1" aria-label="{{__('Preview')}} {{ resource.name }}.{{
           {% endif %}
           <!-- end Keywords section -->
 
-
-          {#<!-- share links -->
-          <h2 class="bg-gray-200 px-4 py-3 font-bold mt-4 mb-1">{{ __('Share') }}</h2>
-          <ul class="text-sm">
-            <li class="border-b-2 border-gray-200">
-              <a class="block px-4 py-3 text-primary text-semibold"
-                 aria-label="Tweet {{ dataset.title or dataset.name }}"
-                 href="https://twitter.com/intent/tweet?url={{ thisPageFullUrl }}&text={{ dataset.title or dataset.name }}"
-                 target="_blank">Twitter</a>
-            </li>
-          </ul>
-          <!-- share links end -->#}
-
         </div>
       </div>
       <!-- meta end -->
@@ -359,68 +331,199 @@ class="data-file-type mr-1" aria-label="{{__('Preview')}} {{ resource.name }}.{{
     </div>
   </main>
 
-
-  <!-- Data Explorer -->
-  {% for displayResource in dataset.displayResources %}
-
-    {% if displayResource.dataExplorers|length %}
-
-    <!-- Modal -->
-    <div
-        class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
-        x-cloak
-        x-show="show_{{ displayResource.resource.id|replace('-', '_') }}"
-    >
-        <div
-            class="preview-modal overflow-x-auto px-6 py-4 mx-auto text-left bg-white rounded shadow-lg max-h-[600px]"
-            x-transition:enter="motion-safe:ease-out duration-300"
-            x-transition:enter-start="opacity-0 scale-90"
-            x-transition:enter-end="opacity-100 scale-100"
-        >
-            <div class="flex items-center justify-between">
-                <button type="button" class="z-50 cursor-pointer" @click="show_{{ displayResource.resource.id | replace('-', '_') }} = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-
-      <div role="application" aria-label="{{__('Application for')}} {{displayResource.resource.name}} {{displayResource.resource.format}}">
-        <div">
-
-          <!-- Heading for each view -->
-          <h2 id="resource-{{ displayResource.resource.name }}" class="text-2xl text-secondary font-semibold mb-6">
-            {{ displayResource.resource.title or displayResource.resource.name }}
-          </h2>
-
-          <div class="data-explorer flex flex-col">
-            {% for dataExplorer in displayResource.dataExplorers %}
-              <!-- preview tables, change http:// to https:// to avoid Mixed Content error -->
-              <div id="data-explorer-{{ displayResource.slug }}-{{ loop.index0 }}"
-                   class="data-explorer {% if not loop.last %} border-t-2{% endif %}"
-                   data-datapackage='{{ dataExplorer | safe | replace("http://", "https://") }}'>
-              </div>
-              {% if not loop.last %}
-                <span class="border-t-2 w-full h-1"></span>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-
-</div>
-
-    {% endif %}
-
-  {% endfor %}
-
-  <!-- End of Data Explorer -->
 </div>
 
 {% endblock %}
 
 
 {% block scripts %}
+  <script>
+    const licenses = {
+      "COM_REUSE": "{{ __('European Commission reuse notice') }}",
+      "ISA_OML": "{{ __('ISA Open Metadata Licence 1.1') }}",
+      "CC0": "{{ __('Creative Commons CC0 1.0 Universal') }}",
+      "CC_BY": "{{ __('Creative Commons Attribution 4.0 International') }}",
+      "CC_BYSA": "{{ __('Creative Commons Attribution–ShareAlike 4.0 International') }}",
+      "CC_BYND": "{{ __('Creative Commons Attribution–NoDerivatives 4.0 International') }}",
+      "CC_BYNC": "{{ __('Creative Commons Attribution–NonCommercial 4.0 International') }}",
+      "CC_BYNCSA": "{{ __('Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International') }}",
+      "CC_BYNCND": "{{ __('Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International') }}",
+      "CC_BY_3_0": "{{ __('Creative Commons Attribution 3.0 Unported') }}",
+      "CC_BYSA_3_0": "{{ __('Creative Commons Attribution–ShareAlike 3.0 Unported') }}",
+      "CC_BYND_3_0": "{{ __('Creative Commons Attribution–NoDerivs 3.0 Unported') }}",
+      "CC_BYNC_3_0": "{{ __('Creative Commons Attribution–NonCommercial 3.0 Unported') }}",
+      "CC_BYNCSA_3_0": "{{ __('Creative Commons Attribution–NonCommercial–ShareAlike 3.0 Unported') }}",
+      "CC_BYNCND_3_0": "{{ __('Creative Commons Attribution–NonCommercial–NoDerivs 3.0 Unported') }}",
+      "CC_BY_2_0": "{{ __('Creative Commons Attribution 2.0 Generic') }}",
+      "CC_BYSA_2_0": "{{ __('Creative Commons Attribution–ShareAlike 2.0 Generic') }}",
+      "CC_BYND_2_0": "{{ __('Creative Commons Attribution–NoDerivs 2.0 Generic') }}",
+      "CC_BYNC_2_0": "{{ __('Creative Commons Attribution–NonCommercial 2.0 Generic') }}",
+      "CC_BYNCSA_2_0": "{{ __('Creative Commons Attribution–NonCommercial–ShareAlike 2.0 Generic') }}",
+      "CC_BYNCND_2_0": "{{ __('Creative Commons Attribution–NonCommercial–NoDerivs 2.0 Generic') }}",
+      "CC_BY_1_0": "{{ __('Creative Commons Attribution 1.0 Generic') }}",
+      "CC_BYSA_1_0": "{{ __('Creative Commons Attribution–ShareAlike 1.0 Generic') }}",
+      "CC_BYND_1_0": "{{ __('Creative Commons Attribution–NoDerivs 1.0 Generic') }}",
+      "CC_BYNC_1_0": "{{ __('Creative Commons Attribution–NonCommercial 1.0 Generic') }}",
+      "CC_BYNCSA_1_0": "{{ __('Creative Commons Attribution–NonCommercial–ShareAlike 1.0 Generic') }}",
+      "CC_BYNCND_1_0": "{{ __('Creative Commons Attribution–NoDerivs–NonCommercial 1.0 Generic') }}",
+      "ODC_PDDL": "{{ __('Open Data Commons Public Domain Dedication and License 1.0') }}",
+      "ODC_BY": "{{ __('Open Data Commons Attribution License v1.0') }}",
+      "ODC_BL": "{{ __('Open Data Commons Open Database License v1.0') }}",
+      "GNU_FDL": "{{ __('GNU Free Documentation License') }}",
+      "CC_BY_2_5": "{{ __('Creative Commons Attribution 2.5 Generic') }}",
+      "CC_BYSA_2_5": "{{ __('Creative Commons Attribution–ShareAlike 2.5 Generic') }}",
+      "CC_BYND_2_5": "{{ __('Creative Commons Attribution–NoDerivs 2.5 Generic') }}",
+      "CC_BYNC_2_5": "{{ __('Creative Commons Attribution–NonCommercial 2.5 Generic') }}",
+      "CC_BYNCSA_2_5": "{{ __('Creative Commons Attribution–NonCommercial–ShareAlike 2.5 Generic') }}",
+      "CC_BYNCND_2_5": "{{ __('Creative Commons Attribution–NonCommercial–NoDerivs 2.5 Generic') }}",
+      "EUPL_1_0": "{{ __('European Union Public Licence v.1.0') }}",
+      "EUPL_1_1": "{{ __('European Union Public Licence v. 1.1') }}",
+      "EUPL_1_2": "{{ __('European Union Public Licence v. 1.2') }}",
+      "CC_BY_4_0": "{{ __('Creative Commons Attribution 4.0 International') }}",
+      "CC_BYNC_4_0": "{{ __('Creative Commons Attribution–NonCommercial 4.0 International') }}",
+      "CC_BYNCND_4_0": "{{ __('Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International') }}",
+      "CC_BYNCSA_4_0": "{{ __('Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International') }}",
+      "CC_BYND_4_0": "{{ __('Creative Commons Attribution–NoDerivatives 4.0 International') }}",
+      "CC_BYSA_4_0": "{{ __('Creative Commons Attribution–ShareAlike 4.0 International') }}",
+      "CC_BYSA_3_0_NL": "{{ __('Attribution-ShareAlike 3.0 Netherlands') }}",
+      "CC_BY_3_0_NL": "{{ __('Attribution 3.0 Netherlands') }}",
+      "CC_PDM_1_0": "{{ __('Public Domain Mark 1.0') }}",
+      "CC_BY_3_0_AT": "{{ __('Attribution 3.0 Austria') }}",
+      "DLDE_BYNC_1_0": "{{ __('Data licence Germany – attribution – non-commercial – Version 1.0') }}",
+      "DLDE_BY_1_0": "{{ __('Data licence Germany – attribution – Version 1.0') }}",
+      "DLDE_BY_2_0": "{{ __('Data licence Germany – attribution – Version 2.0') }}",
+      "DLDE_ZERO_2_0": "{{ __('Data licence Germany – Zero – Version 2.0') }}",
+      "GNU_FDL_1_1": "{{ __('GNU Free Documentation License 1.1') }}",
+      "GNU_FDL_1_2": "{{ __('GNU Free Documentation License 1.2') }}",
+      "HROD": "{{ __('Open Licence – The Republic of Croatia') }}",
+      "IODL_1_0": "{{ __('Italian Open Data License v1.0') }}",
+      "IODL_2_0": "{{ __('Italian Open Data License v2.0') }}",
+      "NLOD_1_0": "{{ __('Norwegian Licence for Open Government Data 1.0') }}",
+      "OGL_NC": "{{ __('Non-Commercial Government Licence') }}",
+      "OGL_ROU_1_0": "{{ __('Non-Commercial Government Licence 1.0') }}",
+      "OGL_1_0": "{{ __('Open Government Licence 1.0') }}",
+      "OGL_2_0": "{{ __('Open Government Licence 2.0') }}",
+      "OGL_3_0": "{{ __('Open Government Licence 3.0') }}",
+      "PSEUL": "{{ __('INSPIRE End User Licence') }}",
+      "BSD_2_CLAUSE": "{{ __('2-Clause BSD License') }}",
+      "BSD_3_CLAUSE": "{{ __('3-Clause BSD License') }}",
+      "APL_1_0": "{{ __('Adaptive Public License 1.0') }}",
+      "APACHE_1_1": "{{ __('Apache Software License, version 1.1 (Apache-1.1)') }}",
+      "APACHE_2_0": "{{ __('Apache License, Version 2.0') }}",
+      "APSL_2_0": "{{ __('Apple Public Source License 2.0') }}",
+      "ARTISTIC_1_0": "{{ __('Artistic License 1.0 (Artistic-1.0)') }}",
+      "ARTISTIC_2_0": "{{ __('Artistic License 2.0') }}",
+      "BSL_1_0": "{{ __('Boost Software License 1.0') }}",
+      "BSD_PLUS_PATENT": "{{ __('BSD+Patent') }}",
+      "CECILL_2_1": "{{ __('CEA CNRS Inria Free Software License Agreement, v2.1 (CECILL-2.1)') }}",
+      "CDDL_1_0": "{{ __('Common Development and Distribution License 1.0') }}",
+      "CPAL_1_0": "{{ __('Common Public Attribution License Version 1.0 (CPAL-1.0)') }}",
+      "CPL_1_0": "{{ __('Common Public License, version 1.0 (CPL-1.0)') }}",
+      "CATOSL_1_1": "{{ __('Computer Associates Trusted Open Source License 1.1 (CATOSL-1.1)') }}",
+      "EPL_1_0": "{{ __('Eclipse Public License 1.0 (EPL-1.0)') }}",
+      "EPL_2_0": "{{ __('Eclipse Public License version 2.0') }}",
+      "ECOS_2_0": "{{ __('eCos License version 2.0') }}",
+      "ECL_1_0": "{{ __('Educational Community License version 1.0 (ECL-1.0)') }}",
+      "ECL_2_0": "{{ __('Educational Community License version 2.0 (ECL-2.0)') }}",
+      "EFL_1_0": "{{ __('The Eiffel Forum License, version 1 (EFL-1.0)') }}",
+      "EFL_2": "{{ __('Eiffel Forum License, version 2') }}",
+      "ENTESSA": "{{ __('Entessa Public License Version 1.0 (Entessa)') }}",
+      "EU_DATAGRID": "{{ __('EU DataGrid Software License (EUDatagrid)') }}",
+      "FAIR": "{{ __('Fair License (Fair)') }}",
+      "FRAMEWORX_1_0": "{{ __('Frameworx License 1.0 (Frameworx-1.0)') }}",
+      "AGPL_3_0": "{{ __('GNU Affero General Public License version 3') }}",
+      "GPL_2_0": "{{ __('GNU General Public License version 2') }}",
+      "GPL_3_0": "{{ __('GNU General Public License version 3') }}",
+      "LGPL_2_1": "{{ __('GNU Lesser General Public License version 2.1') }}",
+      "LGPL_3_0": "{{ __('GNU Lesser General Public License version 3') }}",
+      "HPND": "{{ __('Historical Permission Notice and Disclaimer (HPND)') }}",
+      "IPL_1_0": "{{ __('IBM Public License Version 1.0 (IPL-1.0)') }}",
+      "IPA": "{{ __('IPA Font License (IPA)') }}",
+      "ISC": "{{ __('ISC License (ISC)') }}",
+      "LPPL_1_3C": "{{ __('LaTeX Project Public License v1.3c (LPPL-1.3c)') }}",
+      "BSD_3_CLAUSE_LBNL": "{{ __('Lawrence Berkeley National Labs BSD Variant License (BSD-3-Clause-LBNL)') }}",
+      "LILIQ_P_1_1": "{{ __('Québec Free and Open-Source Licence – Permissive (LiLiQ-P) version 1.1') }}",
+      "LILIQ_R_1_1": "{{ __('Québec Free and Open-Source Licence – Reciprocity (LiLiQ-R) version 1.1') }}",
+      "LILIQ_RPLUS_1_1": "{{ __('Québec Free and Open-Source Licence – Strong Reciprocity (LiLiQ-R+) version 1.1') }}",
+      "LPL_1_0": "{{ __('Lucent Public License, Plan 9, version 1.0 (LPL-1.0)') }}",
+      "LPL_1_02": "{{ __('Lucent Public License Version 1.02 (LPL-1.02)') }}",
+      "MS_PL": "{{ __('Microsoft Public License (MS-PL)') }}",
+      "MS_RL": "{{ __('Microsoft Reciprocal License (MS-RL)') }}",
+      "MIROS": "{{ __('MirOS License (MirOS)') }}",
+      "MIT": "{{ __('The MIT License') }}",
+      "MOTOSOTO": "{{ __('Motosoto Open Source License – Version 0.9.1 (Motosoto)') }}",
+      "MPL_1_0": "{{ __('The Mozilla Public License (MPL), version 1.0 (MPL-1.0)') }}",
+      "MPL_1_1": "{{ __('Mozilla Public License (MPL), version 1.1 (MPL-1.1)') }}",
+      "MPL_2_0": "{{ __('Mozilla Public License (MPL), version 2.0 (MPL-2.0)') }}",
+      "MULTICS": "{{ __('Multics License (Multics)') }}",
+      "NASA_1_3": "{{ __('NASA Open Source Agreement v1.3 (NASA-1.3)') }}",
+      "NAUMEN": "{{ __('NAUMEN Public License (Naumen)') }}",
+      "NGPL": "{{ __('The Nethack General Public License (NGPL)') }}",
+      "NOKIA": "{{ __('Nokia Open Source License Version 1.0a (NOKIA)') }}",
+      "NPOSL_3_0": "{{ __('The Non-Profit Open Software License version 3.0 (NPOSL-3.0)') }}",
+      "NTP": "{{ __('NTP License (NTP)') }}",
+      "OCLC_2_0": "{{ __('The OCLC Research Public License 2.0 License (OCLC-2.0)') }}",
+      "OGTSL": "{{ __('The Open Group Test Suite License (OGTSL)') }}",
+      "OSL_1_0": "{{ __('Open Software License, version 1.0 (OSL-1.0)') }}",
+      "OSL_2_1": "{{ __('The Open Software License, version 2.1 (OSL-2.1)') }}",
+      "OSL_3_0": "{{ __('Open Software License, version 3.0 (OSL-3.0)') }}",
+      "OPL_2_1": "{{ __('OSET Public License version 2.1') }}",
+      "PHP_3_0": "{{ __('The PHP License 3.0 (PHP-3.0)') }}",
+      "POSTGRE_SQL": "{{ __('The PostgreSQL Licence (PostgreSQL)') }}",
+      "PYTHON_2_0": "{{ __('Python License (Python-2.0)') }}",
+      "CNRI_PYTHON": "{{ __('The CNRI portion of the multi-part Python License (CNRI-Python)') }}",
+      "QPL_1_0": "{{ __('The Q Public License Version (QPL-1.0)') }}",
+      "RPSL_1_0": "{{ __('RealNetworks Public Source License Version 1.0 (RPSL-1.0)') }}",
+      "RPL_1_1": "{{ __('Reciprocal Public License, version 1.1') }}",
+      "RPL_1_5": "{{ __('Reciprocal Public License 1.5 (RPL-1.5)') }}",
+      "RSCPL": "{{ __('The Ricoh Source Code Public License (RSCPL)') }}",
+      "OFL_1_1": "{{ __('SIL Open Font License (OFL-1.1)') }}",
+      "SIMPL_2_0": "{{ __('Simple Public License (SimPL-2.0)') }}",
+      "SLEEPYCAT": "{{ __('The Sleepycat License (Sleepycat)') }}",
+      "SPL_1_0": "{{ __('Sun Public License Version 1.0 (SPL-1.0)') }}",
+      "WATCOM_1_0": "{{ __('The Sybase Open Source Licence (Watcom-1.0)') }}",
+      "UPL_1_0": "{{ __('The Universal Permissive License (UPL), Version 1.0') }}",
+      "NCSA": "{{ __('The University of Illinois/NCSA Open Source License (NCSA)') }}",
+      "UCL_1_0": "{{ __('Upstream Compatibility License v1.0') }}",
+      "VSL_1_0": "{{ __('The Vovida Software License v. 1.0 (VSL-1.0)') }}",
+      "W3C": "{{ __('The W3C Software Notice and License (W3C)') }}",
+      "WXWINDOWS": "{{ __('The wxWindows Library Licence (wxWindows)') }}",
+      "XNET": "{{ __('The X.Net, Inc. License (Xnet)') }}",
+      "0BSD": "{{ __('Zero-Clause BSD / Free Public License 1.0.0 (0BSD)') }}",
+      "ZPL_2_0": "{{ __('The Zope Public License Version 2.0 (ZPL-2.0)') }}",
+      "ZLIB": "{{ __('The zlib/libpng License (Zlib)') }}",
+      "NLOD_2_0": "{{ __('Norwegian Licence for Open Government Data (NLOD) 2.0') }}",
+      "GNU_FDL_1_3": "{{ __('GNU Free Documentation License 1.3') }}",
+      "CLARIN_ACA_1_0": "{{ __('Clarin Academic End-User Licence (ACA) 1.0') }}",
+      "ISA_OML_1_1": "{{ __('ISA Open Metadata Licence 1.1') }}",
+      "ETALAB_2_0": "{{ __('Etalab Open Licence V 2.0') }}",
+      "EUROGEO_2022": "{{ __('EuroGeographics Open Data Licence v.2022') }}"
+    }
+
+    document.querySelectorAll('#license-name').forEach(element => {
+      const licenseId = element.textContent
+      const licenseTitle = licenses[licenseId]
+
+      if (licenseTitle) {
+        element.style.display = 'inline-block'
+        element.style.color = '#E8703D'
+        element.textContent = licenseTitle
+      }
+    })
+  </script>
+
+  <script>
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+
+    function formatDateString(dateString) {
+      const date = new Date(dateString);
+      return isNaN(date.getTime()) ? '' : new Intl.DateTimeFormat(navigator.language, options).format(date);
+    }
+
+    document.getElementById('temporal_start').textContent = formatDateString('{{ dataset.temporal_start }}');
+    document.getElementById('temporal_end').textContent = formatDateString('{{ dataset.temporal_end }}');
+  </script>
+
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script>
 
@@ -450,7 +553,11 @@ class="data-file-type mr-1" aria-label="{{__('Preview')}} {{ resource.name }}.{{
     }
 
     const overlay = document.querySelector('.modal-overlay')
-    overlay.addEventListener('click', toggleModal)
+    if (overlay) {
+      overlay.addEventListener('click', toggleModal)
+    } else {
+      console.warn('No overlay found')
+    }
 
     var closemodal = document.querySelectorAll('.modal-close')
     for (var i = 0; i < closemodal.length; i++) {
