@@ -249,11 +249,6 @@
                 <a href="mailto:{{ dataset.sources[0].email }}">{{ dataset.sources[0].name }}</a>
               </dd>
 
-              <dt class="info-list_title">{{__('Landing page')}}</dt>
-              <dd class="info-list_description">
-                <a href="/{{ owner.name }}/{{ dataset.name }}">{{ dataset.title_translated[locale] or dataset.title or dataset.name }}</a>
-              </dd>
-
               <dt class="info-list_title">{{__('Update frequency')}}</dt>
               <dd class="info-list_description">
                 <a href="/search?q=update_frequency:{{ dataset.update_frequency }}">{{ __(dataset.update_frequency) }}</a>
