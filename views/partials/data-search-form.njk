@@ -73,3 +73,11 @@
 
 </form>
 <!-- End of Form -->
+
+{% if result.results | length < 1 %}
+<br>
+  <div>
+    <p>Fandt du ikke, hvad du søgte? Du kan prøve at søge på <a href="https://www.datavejviser.dk" class="text-primary font-semibold">www.datavejviser.dk</a>, som er Danmarks vejviser til offentlige data.</p><br>
+    <p>Didn't find what you were looking for? You can try searching on <a href="https://www.datavejviser.dk" class="text-primary font-semibold">www.datavejviser.dk</a>, which is Denmark's directory for public data.</p><br>
+  </div>
+{% endif %}
