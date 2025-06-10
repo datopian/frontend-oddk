@@ -91,12 +91,7 @@ Cypress.Commands.add('updateResourceMetadata', (datasetName) => {
   })
 })
 
-Cypress.Commands.add('deleteDataset', (datasetName) => {
-  cy.visit({url: '/dataset/delete/' + datasetName}).then(() => {
-    cy.get('form#confirm-dataset-delete-form > .btn-primary').click()
-    cy.contains('Dataset has been deleted.')
-  })
-})
+
 
 Cypress.Commands.add('purgeDataset', (datasetName) => {
   const request = cy.request({
@@ -109,26 +104,6 @@ Cypress.Commands.add('purgeDataset', (datasetName) => {
   })
 })
 
-Cypress.Commands.add('createOrganization', () => {
-  const organizationName = getRandomOrganizationName()
-  cy.get('.nav > :nth-child(2) > a').first().click()
-  cy.get('.page_primary_action > .btn').click()
-  cy.get('#field-name').type(organizationName)
-  cy.get('.btn-xs').click()
-  cy.get('#field-url').clear().type(organizationName)
-  cy.get('.form-actions > .btn').click()
-  cy.location('pathname').should('eq', '/organization/' + organizationName)
-  cy.wrap(organizationName)
-})
-
-Cypress.Commands.add('deleteOrganization', (orgName) => {
-  cy.visit({url: '/organization/' + orgName}).then(() => {
-    cy.get('.content_action > .btn').click()
-    cy.get('.form-actions > .btn-danger').click()
-    cy.get('.btn-primary').click()
-    cy.contains('Organization has been deleted.')
-  })
-})
 
 // Command for frontend test sepecific
 Cypress.Commands.add('createOrganizationAPI', (name) => {
