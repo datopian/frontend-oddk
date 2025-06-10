@@ -111,6 +111,19 @@ describe('Frontend ODDK Homepage Test', () => {
   }
   );
 
+  it("should search from homepage with autocomplete", () => {
+    cy.visit('/');
+    cy.viewport(1366, 768);
+    cy.wait(1000); 
+    cy.get('input#searchInputHome').should('be.visible').type(datasetName1.substring(0, 6));
+    cy.wait(1000); 
+    cy.contains(datasetName1).should('be.visible');
+    cy.contains(org1).should('be.visible');
+    cy.contains(datasetName1).click();
+    cy.contains("test dataset 1");
+  }
+  );
+
 
   after(() => {
     // Delete in reverse order: resources, datasets, groups, organizations
