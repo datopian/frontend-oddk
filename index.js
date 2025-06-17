@@ -455,6 +455,15 @@ module.exports = function (app) {
         case "ttl":
           res.set("Content-Type", "text/turtle");
           break;
+        case "jsonld":
+          res.set("Content-Type", "application/ld+json");
+          break;
+        case "xml":
+          res.set("Content-Type", "application/xml");
+          break;
+        case "n3":
+          res.set("Content-Type", "text/n3");
+          break;
         default:
           return res.status(400).send("Unsupported format");
       }
