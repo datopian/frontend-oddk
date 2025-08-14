@@ -75,9 +75,34 @@
 <!-- End of Form -->
 
 {% if result.results | length < 1 %}
-<br>
-  <div>
-    <p>Fandt du ikke, hvad du søgte? Du kan prøve at søge på <a href="https://www.datavejviser.dk" class="text-primary font-semibold">www.datavejviser.dk</a>, som er Danmarks vejviser til offentlige data.</p><br>
-    <p>Didn't find what you were looking for? You can try searching on <a href="https://www.datavejviser.dk" class="text-primary font-semibold">www.datavejviser.dk</a>, which is Denmark's directory for public data.</p><br>
-  </div>
+  {% set query_q = query.q | default('') %}
+
+  {% if query_q and query_q.includes(':') %}
+    {% set query_field = query_q.split(':')[0] %}
+
+    {% if query_field == 'organization' %}
+      {% set org_found = true %}
+      {% set org_name = query_q.split(':')[1] %}
+    {% endif %}
+  {% endif %}
+
+  {% if org_found %}
+    {% set is_org_page = true %}
+  {% else %}
+    {% set is_org_page = false %}
+  {% endif %}
+
+  {% if is_org_page %}
+    <br>
+    <div>
+      <p>Denne myndighed har endnu ikke udstillet data på <a href="https://www.opendata.dk" class="text-primary font-semibold">www.opendata.dk</a>. Hvis du har brug for data fra dem, kan du efterspørge det <a href="https://www.survey-xact.dk/LinkCollector?key=X3LGR2APJJ15" class="text-primary font-semibold">her</a>.</p><br>
+      <p>This authority has not yet published any data on <a href="https://www.opendata.dk" class="text-primary font-semibold">www.opendata.dk</a>. If you need data from them, you can request it <a href="https://www.survey-xact.dk/LinkCollector?key=X3LGR2APJJ15" class="text-primary font-semibold">here</a>.</p><br>
+    </div>
+  {% else %}
+    <br>
+    <div>
+      <p>Fandt du ikke, hvad du søgte? Du kan prøve at søge på <a href="https://www.datavejviser.dk" class="text-primary font-semibold">www.datavejviser.dk</a>, som er Danmarks vejviser til offentlige data.</p><br>
+      <p>Didn't find what you were looking for? You can try searching on <a href="https://www.datavejviser.dk" class="text-primary font-semibold">www.datavejviser.dk</a>, which is Denmark's directory for public data.</p><br>
+    </div>
+  {% endif %}
 {% endif %}
