@@ -143,7 +143,7 @@
 }
 
 #nav-oddk-title {
-  height: 40px !important;
+  max-height: 38px !important;
 }
 
 #nav-search-mag-glass {
