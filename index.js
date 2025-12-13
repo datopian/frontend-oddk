@@ -22,6 +22,13 @@ function getCurrentLocale(req) {
   return currentLocale;
 }
 
+async function getSortedAboutPages(CmsModel) {
+  const pages = await CmsModel.getListOfPosts({ type: "page" });
+  return pages
+    .filter((p) => p.parent && p.parent.ID === 11)
+    .sort((a, b) => (b.menu_order || 0) - (a.menu_order || 0));
+}
+
 module.exports = function (app) {
   const utils = app.get("utils");
   const dms = app.get("dms");
@@ -49,9 +56,7 @@ module.exports = function (app) {
 
   app.use(async (req, res, next) => {
     // Get links for the navbar from CMS (WP)
-    res.locals.aboutPages = (
-      await CmsModel.getListOfPosts({ type: "page" })
-    ).filter((page) => page.parent && page.parent.ID === 11);
+    res.locals.aboutPages = await getSortedAboutPages(CmsModel);
     next();
   });
 
@@ -65,9 +70,11 @@ module.exports = function (app) {
     }
 
     if (!res.locals.aboutPages) {
-      res.locals.aboutPages = (
-        await CmsModel.getListOfPosts({ type: "page" })
-      ).filter((page) => page.parent && page.parent.ID === 11);
+      res.locals.aboutPages = await getSortedAboutPages(CmsModel);
+    }
+    for (let page of res.locals.aboutPages) {
+      console.log("About page:", page.title);
+      console.log("ORDER:", page.menu_order);
     }
     // Add featured posts
     res.locals.featuredPosts = (
