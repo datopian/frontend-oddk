@@ -56,7 +56,11 @@ module.exports = function (app) {
 
   app.use(async (req, res, next) => {
     // Get links for the navbar from CMS (WP)
-    res.locals.aboutPages = await getSortedAboutPages(CmsModel);
+    try {
+      res.locals.aboutPages = await getSortedAboutPages(CmsModel);
+    } catch (err) {
+      res.locals.aboutPages = [];
+    }
     next();
   });
 
@@ -69,29 +73,36 @@ module.exports = function (app) {
       res.locals.PROMO_BANNER = process.env.PROMO_BANNER;
     }
 
-    if (!res.locals.aboutPages) {
-      res.locals.aboutPages = await getSortedAboutPages(CmsModel);
+    try {
+      if (!res.locals.aboutPages) {
+        res.locals.aboutPages = await getSortedAboutPages(CmsModel);
+      }
+      for (let page of res.locals.aboutPages) {
+        console.log("About page:", page.title);
+        console.log("ORDER:", page.menu_order);
+      }
+      // Add featured posts
+      res.locals.featuredPosts = (
+        await CmsModel.getListOfPosts({
+          tag: "featured",
+          number: 5,
+        })
+      ).map((post) => {
+        return {
+          slug: post.slug,
+          title: post.title,
+          content: post.content,
+          published: moment(post.date).format("Do MMMM YYYY"),
+          modified: moment(post.modified).format("Do MMMM YYYY"),
+          image: post.featured_image,
+        };
+      });
+    } catch (err) {
+      if (!res.locals.aboutPages) {
+        res.locals.aboutPages = [];
+      }
+      res.locals.featuredPosts = [];
     }
-    for (let page of res.locals.aboutPages) {
-      console.log("About page:", page.title);
-      console.log("ORDER:", page.menu_order);
-    }
-    // Add featured posts
-    res.locals.featuredPosts = (
-      await CmsModel.getListOfPosts({
-        tag: "featured",
-        number: 5,
-      })
-    ).map((post) => {
-      return {
-        slug: post.slug,
-        title: post.title,
-        content: post.content,
-        published: moment(post.date).format("Do MMMM YYYY"),
-        modified: moment(post.modified).format("Do MMMM YYYY"),
-        image: post.featured_image,
-      };
-    });
     next();
   });
 
@@ -99,7 +110,7 @@ module.exports = function (app) {
     // Set up main heading text from wp:
     const [siteInfo, collections, organizations, _events, aboutPage] =
       await Promise.all([
-        CmsModel.getSiteInfo(),
+        CmsModel.getSiteInfo().catch(() => ({ description: "" })),
         DmsModel.getCollections({
           all_fields: true,
           include_extras: true,
@@ -115,8 +126,8 @@ module.exports = function (app) {
         CmsModel.getListOfPosts({
           category: "Events",
           number: 5,
-        }),
-        CmsModel.getPost({ slug: "about" }).catch(console.error),
+        }).catch(() => []),
+        CmsModel.getPost({ slug: "about" }).catch(() => null),
       ]);
     const events = _events.map((post) => {
       let eventDate, eventFinishDate;
@@ -187,27 +198,32 @@ module.exports = function (app) {
   });
 
   app.get("/blog", async (req, res, next) => {
-    // Get list of categories
-    const { found, categories } = await CmsModel.getCategories();
-    res.locals.categories = categories;
-    res.locals.selectedCategory = req.query.category;
+    try {
+      // Get list of categories
+      const { found, categories } = await CmsModel.getCategories();
+      res.locals.categories = categories;
+      res.locals.selectedCategory = req.query.category;
 
-    // Add featured posts
-    res.locals.featuredPosts = (
-      await CmsModel.getListOfPosts({
-        tag: "featured",
-        number: 5,
-      })
-    ).map((post) => {
-      return {
-        slug: post.slug,
-        title: post.title,
-        content: post.content,
-        published: moment(post.date).format("Do MMMM YYYY"),
-        modified: moment(post.modified).format("Do MMMM YYYY"),
-        image: post.featured_image,
-      };
-    });
+      // Add featured posts
+      res.locals.featuredPosts = (
+        await CmsModel.getListOfPosts({
+          tag: "featured",
+          number: 5,
+        })
+      ).map((post) => {
+        return {
+          slug: post.slug,
+          title: post.title,
+          content: post.content,
+          published: moment(post.date).format("Do MMMM YYYY"),
+          modified: moment(post.modified).format("Do MMMM YYYY"),
+          image: post.featured_image,
+        };
+      });
+    } catch (err) {
+      res.locals.categories = [];
+      res.locals.featuredPosts = [];
+    }
     next();
   });
 
@@ -395,31 +411,35 @@ module.exports = function (app) {
 
       // Blog posts
       let blogPostsArray = [];
-      let blogPostsOffset = 0;
+      try {
+        let blogPostsOffset = 0;
 
-      // In case there are more than 100 blog posts, we need to paginate
-      while (true) {
-        const blogPosts = await CmsModel.getListOfPostsWithMeta({
-          type: "any",
-          number: 100,
-          offset: blogPostsOffset,
-        });
+        // In case there are more than 100 blog posts, we need to paginate
+        while (true) {
+          const blogPosts = await CmsModel.getListOfPostsWithMeta({
+            type: "any",
+            number: 100,
+            offset: blogPostsOffset,
+          });
 
-        blogPostsArray = blogPostsArray.concat(blogPosts.posts);
+          blogPostsArray = blogPostsArray.concat(blogPosts.posts);
 
-        if (blogPosts.posts.length < 100) {
-          break;
-        } else {
-          blogPostsOffset += 100;
+          if (blogPosts.posts.length < 100) {
+            break;
+          } else {
+            blogPostsOffset += 100;
+          }
         }
-      }
 
-      for (let blogPost of blogPostsArray) {
-        smStream.write({
-          url: `/blog/${blogPost.slug}`,
-          lastmod: blogPost.modified,
-          img: blogPost.featured_image,
-        });
+        for (let blogPost of blogPostsArray) {
+          smStream.write({
+            url: `/blog/${blogPost.slug}`,
+            lastmod: blogPost.modified,
+            img: blogPost.featured_image,
+          });
+        }
+      } catch (err) {
+        // WP might be private or unavailable, skip blog posts in sitemap
       }
 
       // Static pages
