@@ -77,10 +77,6 @@ module.exports = function (app) {
       if (!res.locals.aboutPages) {
         res.locals.aboutPages = await getSortedAboutPages(CmsModel);
       }
-      for (let page of res.locals.aboutPages) {
-        console.log("About page:", page.title);
-        console.log("ORDER:", page.menu_order);
-      }
       // Add featured posts
       res.locals.featuredPosts = (
         await CmsModel.getListOfPosts({
