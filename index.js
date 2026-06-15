@@ -102,30 +102,6 @@ module.exports = function (app) {
     next();
   });
 
-  // Override /organization route to filter out organizations with 0 datasets
-  app.get('/organization', async (req, res, next) => {
-    try {
-      const organizations = await DmsModel.getOrganizations({
-        all_fields: true,
-        include_extras: true,
-        include_dataset_count: true,
-      });
-      
-      const collections = organizations.filter(
-        (organization) => Number(organization.count ?? organization.package_count ?? 0) >= 1
-      );
-      
-      res.render('collections-home.html', {
-        title: 'Organizations',
-        description: 'CKAN Organizations are used to create, manage and publish collections of datasets. Users can have different roles within an Organization, depending on their level of authorisation to create, edit and publish.',
-        collections,
-        slug: 'organization'
-      });
-    } catch (e) {
-      next(e);
-    }
-  });
-
   app.get("/", async (req, res, next) => {
     // Set up main heading text from wp:
     const [siteInfo, collections, organizations, _events, aboutPage] =
@@ -204,9 +180,7 @@ module.exports = function (app) {
     res.locals.home_heading = siteInfo.description || "";
     // Get collections with extras
     res.locals.collections = collections;
-    res.locals.organizations = organizations.filter(
-      (organization) => Number(organization.count ?? organization.package_count ?? 0) >= 1
-    );
+    res.locals.organizations = organizations;
 
     // Get events
     res.locals.events = events;
